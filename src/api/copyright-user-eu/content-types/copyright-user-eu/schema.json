@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "copyright_user_eus",
+  "info": {
+    "singularName": "copyright-user-eu",
+    "pluralName": "copyright-user-eus",
+    "displayName": "Copyright User EU",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "PROTECTED WORKS",
+        "ECONOMIC RIGHTS",
+        "RELATED RIGHTS",
+        "MORAL RIGHTS",
+        "AUTHORS AND OWNERS",
+        "THE PUBLIC DOMAIN",
+        "COPYRIGHT DURATION",
+        "COPYRIGHT EXCEPTIONS",
+        "MANDATORY EXCEPTIONS",
+        "OPTIONAL EXCEPTIONS",
+        "GETTING PERMISSION",
+        "CONTRACTS AND TPMS",
+        "ORPHAN WORKS",
+        "OUT OF COMMERCE WORKS",
+        "GIVING PERMISSION",
+        "COLLECTING SOCIETIES",
+        "ENFORCEMENT",
+        "PRIVATE ENFORCEMENT",
+        "ONLINE INTERMEDIARIES",
+        "PUBLIC ENFORCEMENT"
+      ]
+    },
+    "content": {
+      "type": "text"
+    },
+    "excerpt": {
+      "type": "text"
+    },
+    "u_id": {
+      "type": "uid"
+    },
+    "types": {
+      "type": "text"
+    },
+    "copyright_flexibilities": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::copyright-flexibilities.copyright-flexibilities",
+      "inversedBy": "copyright_user_eus"
+    }
+  }
+}

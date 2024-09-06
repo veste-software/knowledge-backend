@@ -1,0 +1,76 @@
+{
+  "collectionName": "components_embellished_copyright_evidence_embellished_copyright_evidences",
+  "info": {
+    "displayName": "Embellished Copyright Evidence",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "CE_Title": {
+      "type": "string",
+      "default": "CE_Title",
+      "unique": false
+    },
+    "CE_Authors": {
+      "type": "string"
+    },
+    "paperId": {
+      "type": "string"
+    },
+    "corpusId": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "abstract": {
+      "type": "richtext"
+    },
+    "venue": {
+      "type": "string"
+    },
+    "year": {
+      "type": "integer"
+    },
+    "referenceCount": {
+      "type": "integer"
+    },
+    "citationCount": {
+      "type": "integer"
+    },
+    "influentialCitationCount": {
+      "type": "integer"
+    },
+    "openAccessPdf": {
+      "type": "string"
+    },
+    "fieldsOfStudy": {
+      "type": "string"
+    },
+    "publicationDate": {
+      "type": "date"
+    },
+    "journal": {
+      "type": "json"
+    },
+    "citationStyles": {
+      "type": "json"
+    },
+    "authors": {
+      "type": "json"
+    },
+    "externalIds": {
+      "type": "json"
+    },
+    "s2FieldsOfStudy": {
+      "type": "json"
+    },
+    "publicationTypes": {
+      "type": "json"
+    }
+  }
+}

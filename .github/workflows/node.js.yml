@@ -1,0 +1,78 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Create .env file
+        run: |
+          echo "HOST=${{ secrets.HOST }}" > .env
+          echo "PORT=${{ secrets.PORT }}" >> .env
+          echo "APP_KEYS=${{ secrets.APP_KEYS }}" >> .env
+          echo "API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}" >> .env
+          echo "ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}" >> .env
+          echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}" >> .env
+          echo "DATABASE_CLIENT=${{ secrets.DATABASE_CLIENT }}" >> .env
+          echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> .env
+          echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> .env
+          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "STRAPI_ADMIN_API_TOKEN=${{ secrets.STRAPI_ADMIN_API_TOKEN }}" >> .env
+          echo "STRAPI_ADMIN_LIVE_STRIPE_SECRET_KEY=${{ secrets.STRAPI_ADMIN_LIVE_STRIPE_SECRET_KEY }}" >> .env
+          echo "STRAPI_ADMIN_TEST_STRIPE_SECRET_KEY=${{ secrets.STRAPI_ADMIN_TEST_STRIPE_SECRET_KEY }}" >> .env
+          echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" >> .env
+          echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> .env
+          echo "SMTP_USERNAME=${{ secrets.SMTP_USERNAME }}" >> .env
+          echo "SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}" >> .env
+          echo "SMTP_FROM=${{ secrets.SMTP_FROM }}" >> .env
+          echo "SMTP_REPLY_TO=${{ secrets.SMTP_REPLY_TO }}" >> .env
+
+      - name: Install PM2
+        run: npm install pm2 -g
+
+      - name: Install Strapi
+        run: npm install strapi -g
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Strapi application
+        run: npm run build
+
+      - name: Deploy Strapi application
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
+          EXCLUDE: "public/uploads"
+
+      - name: check node version
+        run: node -v
+
+      - name: Start Strapi app
+        run: NODE_ENV=production pm2 start ecosystem.config.js
+
+      - name: Check PM2 status before
+        run: pm2 status
+
+      - name: Sync PM2
+        run: pm2 save

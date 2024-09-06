@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "you_can_plays",
+  "info": {
+    "singularName": "you-can-play",
+    "pluralName": "you-can-plays",
+    "displayName": "You Can Play",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "game_title": {
+      "type": "text"
+    },
+    "publisher": {
+      "type": "string"
+    },
+    "other": {
+      "type": "text"
+    },
+    "sources": {
+      "type": "text"
+    },
+    "fanworks": {
+      "type": "text"
+    },
+    "game_videos": {
+      "type": "text"
+    },
+    "passive_ad_revenues": {
+      "type": "text"
+    },
+    "original_soundtrack": {
+      "type": "text"
+    },
+    "screenshots": {
+      "type": "text"
+    },
+    "merchandise": {
+      "type": "text"
+    },
+    "mods": {
+      "type": "text"
+    },
+    "commercial_use": {
+      "type": "text"
+    }
+  }
+}

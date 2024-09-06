@@ -1,0 +1,86 @@
+{
+  "kind": "collectionType",
+  "collectionName": "suggestions_copyright_evidences",
+  "info": {
+    "singularName": "suggestions-copyright-evidence",
+    "pluralName": "suggestions-copyright-evidences",
+    "displayName": "Suggestions_Copyright_Evidence",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "approved": {
+      "type": "boolean"
+    },
+    "paperId": {
+      "type": "string"
+    },
+    "corpusId": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "title": {
+      "type": "text"
+    },
+    "venue": {
+      "type": "string"
+    },
+    "year": {
+      "type": "integer"
+    },
+    "citationCount": {
+      "type": "integer"
+    },
+    "referenceCount": {
+      "type": "integer"
+    },
+    "influentialCitationCount": {
+      "type": "integer"
+    },
+    "fieldsOfStudy": {
+      "type": "string"
+    },
+    "publicationDate": {
+      "type": "date"
+    },
+    "journal": {
+      "type": "json"
+    },
+    "citationStyles": {
+      "type": "json"
+    },
+    "authors": {
+      "type": "json"
+    },
+    "externalIds": {
+      "type": "json"
+    },
+    "s2FieldsOfStudy": {
+      "type": "json"
+    },
+    "publicationTypes": {
+      "type": "json"
+    },
+    "suggestionCount": {
+      "type": "integer",
+      "default": 1
+    },
+    "CE_ENTRY_LINK": {
+      "type": "string"
+    },
+    "approvalLog": {
+      "type": "text"
+    },
+    "openAccessPdf": {
+      "type": "json"
+    },
+    "abstract": {
+      "type": "text"
+    }
+  }
+}

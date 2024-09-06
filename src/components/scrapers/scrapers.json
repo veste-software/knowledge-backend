@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_scrapers_scrapers",
+  "info": {
+    "displayName": "Scrapers",
+    "icon": "server"
+  },
+  "options": {},
+  "attributes": {
+    "ScraperIdentifier": {
+      "type": "string"
+    }
+  }
+}

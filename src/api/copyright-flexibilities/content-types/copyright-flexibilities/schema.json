@@ -1,0 +1,332 @@
+{
+  "kind": "collectionType",
+  "collectionName": "copyright_flexibilitiess",
+  "info": {
+    "singularName": "copyright-flexibilities",
+    "pluralName": "copyright-flexibilitiess",
+    "displayName": "Copyright Flexibilities",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "cf_id": {
+      "type": "uid"
+    },
+    "flexibility_category": {
+      "type": "enumeration",
+      "enum": [
+        "Temporary, de minimis and lawful uses",
+        "Private copy and reprography",
+        "Freedom of expression",
+        "Uses for teaching and research purposes",
+        "Uses for information purposes",
+        "Uses by public authorities",
+        "Socially oriented uses",
+        "Cultural uses (access, preservation, reuse)",
+        "Flexibilities for persons with disabilities",
+        "Other non-infringing uses",
+        "Three-step-test",
+        "Public domain",
+        "External copyright flexibilities",
+        "Quotation",
+        "Parody, caricature, pastiche",
+        "Special licensing schemes (compulsory, statutory, ECL)"
+      ],
+      "default": "Uses by public authorities"
+    },
+    "flexibility_subcategory": {
+      "type": "text",
+      "default": ""
+    },
+    "legal_text": {
+      "type": "text",
+      "default": "Not implemented."
+    },
+    "notes_on_legal_text": {
+      "type": "text"
+    },
+    "legal_provision": {
+      "type": "text",
+      "default": "Not implemented."
+    },
+    "notes_on_legal_provision": {
+      "type": "text"
+    },
+    "rights_or_uses_covered": {
+      "type": "text",
+      "default": "Uses in administrative and judicial proceedings"
+    },
+    "country": {
+      "type": "enumeration",
+      "enum": [
+        "Austria",
+        "Belgium",
+        "Bulgaria",
+        "Croatia",
+        "Cyprus",
+        "Czechia",
+        "Denmark",
+        "Estonia",
+        "Finland",
+        "France",
+        "Germany",
+        "Greece",
+        "Ireland",
+        "Italy",
+        "Latvia",
+        "Lithuania",
+        "Luxembourg",
+        "Malta",
+        "Netherlands",
+        "Poland",
+        "Portugal",
+        "Romania",
+        "Slovakia",
+        "Slovenia",
+        "Spain",
+        "Sweden",
+        "Hungary"
+      ],
+      "default": "Austria"
+    },
+    "notes_on_statutory_reference": {
+      "type": "text"
+    },
+    "specificities_in_implementation": {
+      "type": "text"
+    },
+    "entry_into_force": {
+      "type": "string",
+      "default": "n/a"
+    },
+    "notes_on_entry_into_force": {
+      "type": "text"
+    },
+    "eu_source": {
+      "type": "text",
+      "default": "Article 9(c) Database"
+    },
+    "notes_on_eu_source": {
+      "type": "text"
+    },
+    "eu_provision": {
+      "type": "text",
+      "default": "Article 9(c) Database"
+    },
+    "notes_on_eu_provision": {
+      "type": "text"
+    },
+    "related_eu_provision": {
+      "type": "text",
+      "default": "Article 9(c) Database"
+    },
+    "notes_on_related_eu_provision": {
+      "type": "text"
+    },
+    "legal_text_in_english": {
+      "type": "text",
+      "default": "n/a"
+    },
+    "notes_on_legal_text_in_english": {
+      "type": "text"
+    },
+    "beneficiaries": {
+      "type": "text",
+      "default": "n/a"
+    },
+    "notes_on_beneficiaries": {
+      "type": "text"
+    },
+    "beneficiaries_score": {
+      "type": "enumeration",
+      "enum": [
+        "n-5",
+        "n-4",
+        "n-3",
+        "n-2",
+        "n-1",
+        "n0",
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5"
+      ]
+    },
+    "subject_matter": {
+      "type": "text",
+      "default": "n/a"
+    },
+    "notes_on_subject_matter": {
+      "type": "text"
+    },
+    "subject_matter_score": {
+      "type": "enumeration",
+      "enum": [
+        "n-5",
+        "n-4",
+        "n-3",
+        "n-2",
+        "n-1",
+        "n0",
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5"
+      ]
+    },
+    "rights_or_uses_covered_score": {
+      "type": "enumeration",
+      "enum": [
+        "n-5",
+        "n-4",
+        "n-3",
+        "n-2",
+        "n-1",
+        "n0",
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5"
+      ]
+    },
+    "purpose_of_the_use": {
+      "type": "text",
+      "default": "n/a"
+    },
+    "notes_on_purpose_of_the_use": {
+      "type": "text"
+    },
+    "purpose_of_the_use_score": {
+      "type": "enumeration",
+      "enum": [
+        "n-5",
+        "n-4",
+        "n-3",
+        "n-2",
+        "n-1",
+        "n0",
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5"
+      ]
+    },
+    "remuneration": {
+      "type": "boolean",
+      "default": true
+    },
+    "notes_on_remuneration": {
+      "type": "text"
+    },
+    "remuneration_score": {
+      "type": "enumeration",
+      "enum": [
+        "n-5",
+        "n-4",
+        "n-3",
+        "n-2",
+        "n-1",
+        "n0",
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5"
+      ]
+    },
+    "attribution": {
+      "type": "boolean",
+      "default": true
+    },
+    "notes_on_attribution": {
+      "type": "text"
+    },
+    "attribution_score": {
+      "type": "enumeration",
+      "enum": [
+        "n-5",
+        "n-4",
+        "n-3",
+        "n-2",
+        "n-1",
+        "n0",
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5"
+      ]
+    },
+    "other_conditions_of_applicability": {
+      "type": "text",
+      "default": "n/a"
+    },
+    "notes_on_other_conditions_of_applicability": {
+      "type": "text"
+    },
+    "other_conditions_of_applicability_score": {
+      "type": "enumeration",
+      "enum": [
+        "n-5",
+        "n-4",
+        "n-3",
+        "n-2",
+        "n-1",
+        "n0",
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5"
+      ]
+    },
+    "case_law": {
+      "type": "text"
+    },
+    "notes_on_case_law": {
+      "type": "text"
+    },
+    "related_case_law": {
+      "type": "text",
+      "default": "n/a"
+    },
+    "notes_on_related_case_law": {
+      "type": "text"
+    },
+    "type_of_remuneration": {
+      "type": "text"
+    },
+    "notes_on_type_of_remuneration": {
+      "type": "text"
+    },
+    "statutory_reference": {
+      "type": "text"
+    },
+    "special_characteristics_of_the_scheme": {
+      "type": "text"
+    },
+    "notes_on_special_characteristics_of_the_scheme": {
+      "type": "text"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "EUsource",
+        "Provision"
+      ]
+    },
+    "copyright_user_eus": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::copyright-user-eu.copyright-user-eu",
+      "mappedBy": "copyright_flexibilities"
+    }
+  }
+}

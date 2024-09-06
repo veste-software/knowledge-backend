@@ -1,0 +1,74 @@
+<VirtualHost *:80>
+        ServerName copyrightevidence.org
+        ServerAlias www.copyrightevidence.org
+        ServerAdmin peter.bennett@glasgow.ac.uk
+        Redirect / https://www.copyrightevidence.org/
+        DocumentRoot /var/www/vhosts/ce/
+        ErrorLog /var/www/vhosts/ce/logs/error.log
+        CustomLog /var/www/vhosts/ce/logs/access.log combined
+
+        # Document Root
+    <Directory "/var/www/vhosts/ce/">
+        Options -Indexes +SymLinksIfOwnerMatch +ExecCGI
+    </Directory>
+
+    # On campus access only
+#    <Directory "/var/www/vhosts/ce/campus/">
+#        Options -Indexes +SymLinksIfOwnerMatch +ExecCGI
+#        Order deny,allow
+#        deny from all
+#        allow from 130.209
+#    </Directory>
+
+    # Password protected stats directory
+#    <Directory "/var/www/html/copyrightevidence.org/www/campus/stats">
+#        AuthType Basic
+#        AuthName "Authentication Required"
+#        AuthUserFile "/var/www/html/copyrightevidence.org/.statspasswd"
+#        Require valid-user
+#        Order allow,deny
+#        Allow from all
+#    </Directory>
+
+RewriteEngine on
+RewriteCond %{SERVER_NAME} =www.copyrightevidence.org [OR]
+RewriteCond %{SERVER_NAME} =copyrightevidence.org
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>
+
+<VirtualHost *:443>
+        ServerName copyrightevidence.org
+        ServerAlias www.copyrightevidence.org
+        ServerAdmin peter.bennett@glasgow.ac.uk
+        DocumentRoot /var/www/vhosts/ce/
+        ErrorLog /var/www/vhosts/ce/logs/error.log
+        CustomLog /var/www/vhosts/ce/logs/access.log combined
+
+        # Document Root
+    <Directory "/var/www/vhosts/ce/www/">
+        Options -Indexes +SymLinksIfOwnerMatch +ExecCGI
+    </Directory>
+
+    # On campus access only
+#    <Directory "/var/www/html/copyrightevidence.org/www/campus/">
+#        Options -Indexes +SymLinksIfOwnerMatch +ExecCGI
+#        Order deny,allow
+#        deny from all
+#        allow from 130.209
+#    </Directory>
+
+    # Password protected stats directory
+#    <Directory "/var/www/html/copyrightevidence.org/www/campus/stats">
+#        AuthType Basic
+#        AuthName "Authentication Required"
+#        AuthUserFile "/var/www/html/copyrightevidence.org/.statspasswd"
+#        Require valid-user
+#        Order allow,deny
+#        Allow from all
+#    </Directory>
+
+#Include /etc/letsencrypt/options-ssl-apache.conf
+Include /etc/letsencrypt/options-ssl-apache.conf
+SSLCertificateFile /etc/letsencrypt/live/copyrightevidence.org/fullchain.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/copyrightevidence.org/privkey.pem
+</VirtualHost>

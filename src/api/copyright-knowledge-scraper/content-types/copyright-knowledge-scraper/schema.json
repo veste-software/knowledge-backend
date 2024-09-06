@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "copyright_knowledge_scrapers",
+  "info": {
+    "singularName": "copyright-knowledge-scraper",
+    "pluralName": "copyright-knowledge-scrapers",
+    "displayName": "Copyright Knowledge Scrapers Configuration",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "configuration": {
+      "type": "json"
+    },
+    "Pattern": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "IntervalInHours": {
+      "type": "integer"
+    },
+    "DestinationDatabase": {
+      "type": "enumeration",
+      "enum": [
+        "Copyright Evidence",
+        "Copyright Flexibilities",
+        "Copyright User EU",
+        "Copyright User",
+        "Copyright History",
+        "General"
+      ],
+      "required": true
+    },
+    "Scrape_Sources": {
+      "type": "enumeration",
+      "enum": [
+        "Wikipedia",
+        "Bielefeld Collection",
+        "Placeholder Source"
+      ]
+    }
+  }
+}
