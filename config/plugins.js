@@ -2,30 +2,34 @@ module.exports = {
   "strapi-plugin-entity-relationship-chart": {
     enabled: false,
   },
+  'strapi-plugin-cron': {
+    enabled: false,
+//    resolve: './src/plugins/strapi-plugin-cron',
+  },
    'import-export-entries': {
       enabled: false,
       config: {
         // See `Config` section.
       },
     },
-  email: {
-      config: {
-        provider: 'nodemailer',
-        providerOptions: {
-          host: 'smtp.gmail.com',
-          port: 465,
-          auth: {
-            user: 'gmail_username',
-            pass: 'gmail_password',
-          },
-        },
-        settings: {
-          defaultFrom: 'dietmar.aumann@gmail.com',
-          defaultReplyTo: 'dietmar.aumann@gmail.com',
-          testAddress: 'dietmar.aumann@gmail.com',
-        },
-      },
-    },
+//  email: {
+//      config: {
+//        provider: 'nodemailer',
+//        providerOptions: {
+//          host: 'smtp.gmail.com',
+//          port: 465,
+//          auth: {
+//            user: 'gmail_username',
+//            pass: 'gmail_password',
+//          },
+//        },
+//        settings: {
+//          defaultFrom: 'dietmar.aumann@gmail.com',
+//          defaultReplyTo: 'dietmar.aumann@gmail.com',
+//          testAddress: 'dietmar.aumann@gmail.com',
+//        },
+//      },
+//    },
   "apollo-sandbox": {
     // enables the plugin only in development mode
     // if you also want to use it in production, set this to true
