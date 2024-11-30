@@ -181,9 +181,10 @@ async function writeOrUpdateOrNothing(embellishedEntry, suggestions_list, embell
       const existingSuggestion = suggestions_list.find((suggestion) => suggestion.paperId === paperId);
       if (existingSuggestion && existingSuggestion.approved !== false) {
       console.debug('Updating suggestion:', suggestions_list, existingSuggestion);
-        await strapi.entityService.update('api::suggestions-copyright-evidence.suggestions-copyright-evidence', existingSuggestion.id,
-           {data: { suggestionCount: existingSuggestion.suggestionCount + 1 } }
-        );
+        await strapi.documents('api::suggestions-copyright-evidence.suggestions-copyright-evidence').update({
+          documentId: "__TODO__",
+          data: { suggestionCount: existingSuggestion.suggestionCount + 1 }
+        });
       }
     }
   }

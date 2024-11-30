@@ -1,9 +1,9 @@
 module.exports = {
-"strapi-chatgpt": {
-    enabled: true,
+  "strapi-plugin-entity-relationship-chart": {
+    enabled: false,
   },
    'import-export-entries': {
-      enabled: true,
+      enabled: false,
       config: {
         // See `Config` section.
       },
@@ -30,13 +30,13 @@ module.exports = {
     // enables the plugin only in development mode
     // if you also want to use it in production, set this to true
     // keep in mind that graphql playground has to be enabled
-    enabled: true,
+    enabled: false,
     config: {
       // endpoint: "https://tunneled-strapi.com/graphql", // OPTIONAL - endpoint has to be accessible from the browser
     }
   },
    "entity-relationship-chart": {
-      enabled: true,
+      enabled: false,
       config: {
         // By default all contentTypes and components are included.
         // To exlclude strapi's internal models, use:
