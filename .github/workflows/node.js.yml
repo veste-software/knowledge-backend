@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
 
 jobs:
   deploy:
@@ -35,12 +35,6 @@ jobs:
           echo "STRAPI_ADMIN_API_TOKEN=${{ secrets.STRAPI_ADMIN_API_TOKEN }}" >> .env
           echo "STRAPI_ADMIN_LIVE_STRIPE_SECRET_KEY=${{ secrets.STRAPI_ADMIN_LIVE_STRIPE_SECRET_KEY }}" >> .env
           echo "STRAPI_ADMIN_TEST_STRIPE_SECRET_KEY=${{ secrets.STRAPI_ADMIN_TEST_STRIPE_SECRET_KEY }}" >> .env
-          echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" >> .env
-          echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> .env
-          echo "SMTP_USERNAME=${{ secrets.SMTP_USERNAME }}" >> .env
-          echo "SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}" >> .env
-          echo "SMTP_FROM=${{ secrets.SMTP_FROM }}" >> .env
-          echo "SMTP_REPLY_TO=${{ secrets.SMTP_REPLY_TO }}" >> .env
 
       - name: Install PM2
         run: npm install pm2 -g
