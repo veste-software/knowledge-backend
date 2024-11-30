@@ -14,18 +14,22 @@
     "@creazy231/strapi-plugin-apollo-sandbox": "^0.0.15",
     "@innovato/strapi-plugin-cron": "^1.0.5",
     "@strapi/plugin-graphql": "^4.15.0",
-    "@strapi/plugin-i18n": "4.13.7",
-    "@strapi/plugin-users-permissions": "4.13.7",
+    "@strapi/plugin-i18n": "^4.25.10",
+    "@strapi/plugin-users-permissions": "^4.25.10",
     "@strapi/provider-email-nodemailer": "^4.15.4",
-    "@strapi/strapi": "4.13.7",
+    "@strapi/strapi": "^4.25.10",
     "better-sqlite3": "8.6.0",
     "patch-package": "^8.0.0",
     "pg": "^8.12.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^5.3.4",
     "request": "^2.88.2",
     "strapi-chatgpt": "^1.0.2",
     "strapi-plugin-entity-relationship-chart": "^4.14.6",
     "strapi-plugin-graphs-builder": "^1.0.0",
-    "strapi-plugin-import-export-entries": "^1.23.1"
+    "strapi-plugin-import-export-entries": "^1.23.1",
+    "styled-components": "^5.3.11"
   },
   "author": {
     "name": "A Strapi developer"

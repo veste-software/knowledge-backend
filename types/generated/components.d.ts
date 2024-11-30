@@ -1,5 +1,16 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
+export interface ScrapersScrapers extends Schema.Component {
+  collectionName: 'components_scrapers_scrapers';
+  info: {
+    displayName: 'Scrapers';
+    icon: 'server';
+  };
+  attributes: {
+    ScraperIdentifier: Attribute.String;
+  };
+}
+
 export interface EmbellishedCopyrightEvidenceEmbellishedCopyrightEvidence
   extends Schema.Component {
   collectionName: 'components_embellished_copyright_evidence_embellished_copyright_evidences';
@@ -33,22 +44,11 @@ export interface EmbellishedCopyrightEvidenceEmbellishedCopyrightEvidence
   };
 }
 
-export interface ScrapersScrapers extends Schema.Component {
-  collectionName: 'components_scrapers_scrapers';
-  info: {
-    displayName: 'Scrapers';
-    icon: 'server';
-  };
-  attributes: {
-    ScraperIdentifier: Attribute.String;
-  };
-}
-
-declare module '@strapi/strapi' {
+declare module '@strapi/types' {
   export module Shared {
     export interface Components {
-      'embellished-copyright-evidence.embellished-copyright-evidence': EmbellishedCopyrightEvidenceEmbellishedCopyrightEvidence;
       'scrapers.scrapers': ScrapersScrapers;
+      'embellished-copyright-evidence.embellished-copyright-evidence': EmbellishedCopyrightEvidenceEmbellishedCopyrightEvidence;
     }
   }
 }
