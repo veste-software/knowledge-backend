@@ -35,6 +35,10 @@ jobs:
           echo "STRAPI_ADMIN_API_TOKEN=${{ secrets.STRAPI_ADMIN_API_TOKEN }}" >> .env
           echo "STRAPI_ADMIN_LIVE_STRIPE_SECRET_KEY=${{ secrets.STRAPI_ADMIN_LIVE_STRIPE_SECRET_KEY }}" >> .env
           echo "STRAPI_ADMIN_TEST_STRIPE_SECRET_KEY=${{ secrets.STRAPI_ADMIN_TEST_STRIPE_SECRET_KEY }}" >> .env
+          echo "DATABASE_SSL=${{ secrets.DATABASE_SSL }}" >> .env
+          echo "DATABASE_SSL_KEY=${{ secrets.DATABASE_SSL_KEY }}" >> .env
+          echo "DATABASE_SSL_CERT=${{ secrets.DATABASE_SSL_CERT }}" >> .env
+          echo "DATABASE_SSL_CA=${{ secrets.DATABASE_SSL_CA }}" >> .env
 
       - name: Install PM2
         run: npm install pm2 -g
