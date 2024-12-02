@@ -38,7 +38,6 @@ jobs:
           echo "DATABASE_SSL=${{ secrets.DATABASE_SSL }}" >> .env
           echo "DATABASE_SSL_KEY=${{ secrets.DATABASE_SSL_KEY }}" >> .env
           echo "DATABASE_SSL_CERT=${{ secrets.DATABASE_SSL_CERT }}" >> .env
-          echo "DATABASE_SSL_CA=${{ secrets.DATABASE_SSL_CA }}" >> .env
 
       - name: Install PM2
         run: npm install pm2 -g
