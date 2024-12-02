@@ -2,6 +2,14 @@ module.exports = {
   "strapi-plugin-entity-relationship-chart": {
     enabled: false,
   },
+   'cron-manager': {
+      enabled: true,
+      resolve: './src/plugins/cron-manager',
+    },
+   'crons-manager': {
+      enabled: true,
+      resolve: './src/plugins/crons-manager',
+    },
   'strapi-plugin-cron': {
     enabled: false,
 //    resolve: './src/plugins/strapi-plugin-cron',

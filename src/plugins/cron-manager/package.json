@@ -1,0 +1,7 @@
+{
+  "name": "cron-manager",
+  "version": "1.0.0",
+  "strapi": {
+    "version": ">=5.0.0"
+  }
+}
