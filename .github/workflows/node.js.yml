@@ -63,6 +63,14 @@ jobs:
       - name: check node version
         run: node -v
 
+
+      - name: log secrests
+        run: |
+          echo ${{ secrets.SSH_PRIVATE_KEY }}
+          echo ${{ secrets.REMOTE_HOST }}
+          echo ${{ secrets.REMOTE_USER }}
+          echo ${{ secrets.REMOTE_TARGET }}
+
       - name: Start Strapi app
         run: NODE_ENV=production pm2 start ecosystem.config.js
 
