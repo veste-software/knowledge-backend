@@ -686,6 +686,38 @@ export interface ApiDataEmbellishedCopyrightEvidenceDataEmbellishedCopyrightEvid
   };
 }
 
+export interface ApiKnowledgeGraphKnowledgeGraph
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'knowledge_graphs';
+  info: {
+    description: '';
+    displayName: 'Knowledge Graph';
+    pluralName: 'knowledge-graphs';
+    singularName: 'knowledge-graph';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    body: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    data: Schema.Attribute.JSON;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::knowledge-graph.knowledge-graph'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    uuid: Schema.Attribute.UID;
+  };
+}
+
 export interface ApiSuggestionsCopyrightEvidenceSuggestionsCopyrightEvidence
   extends Struct.CollectionTypeSchema {
   collectionName: 'suggestions_copyright_evidences';
@@ -1291,6 +1323,7 @@ declare module '@strapi/strapi' {
       'api::copyright-knowledge-scraper.copyright-knowledge-scraper': ApiCopyrightKnowledgeScraperCopyrightKnowledgeScraper;
       'api::copyright-user-eu.copyright-user-eu': ApiCopyrightUserEuCopyrightUserEu;
       'api::data-embellished-copyright-evidence.data-embellished-copyright-evidence': ApiDataEmbellishedCopyrightEvidenceDataEmbellishedCopyrightEvidence;
+      'api::knowledge-graph.knowledge-graph': ApiKnowledgeGraphKnowledgeGraph;
       'api::suggestions-copyright-evidence.suggestions-copyright-evidence': ApiSuggestionsCopyrightEvidenceSuggestionsCopyrightEvidence;
       'api::you-can-play.you-can-play': ApiYouCanPlayYouCanPlay;
       'plugin::content-releases.release': PluginContentReleasesRelease;
