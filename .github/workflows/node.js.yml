@@ -39,10 +39,6 @@ jobs:
           echo "DATABASE_SSL_KEY=${{ secrets.DATABASE_SSL_KEY }}" >> .env
           echo "DATABASE_SSL_CERT=${{ secrets.DATABASE_SSL_CERT }}" >> .env
           echo "CS=${{ secrets.CS }}" >> .env
-          echo "SSH_PRIVATE_KEY=${{ secrets.SSH_PRIVATE_KEY }}" >> .env
-          echo "REMOTE_HOST=${{ secrets.REMOTE_HOST }}" >> .env
-          echo "REMOTE_USER=${{ secrets.REMOTE_USER }}" >> .env
-          echo "REMOTE_TARGET=${{ secrets.REMOTE_TARGET }}" >> .env
 
       - name: Install PM2
         run: npm install pm2 -g
