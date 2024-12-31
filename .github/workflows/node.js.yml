@@ -31,6 +31,7 @@ jobs:
           echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> .env
           echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> .env
           echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> .env
+          echo "v=1" >> .env
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
           echo "STRAPI_ADMIN_API_TOKEN=${{ secrets.STRAPI_ADMIN_API_TOKEN }}" >> .env
           echo "STRAPI_ADMIN_LIVE_STRIPE_SECRET_KEY=${{ secrets.STRAPI_ADMIN_LIVE_STRIPE_SECRET_KEY }}" >> .env
