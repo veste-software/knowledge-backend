@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "knowledge_graphs",
+  "info": {
+    "singularName": "knowledge-graph",
+    "pluralName": "knowledge-graphs",
+    "displayName": "Knowledge Graph",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "uuid": {
+      "type": "uid"
+    },
+    "body": {
+      "type": "text"
+    },
+    "data": {
+      "type": "json"
+    },
+    "title": {
+      "type": "text"
+    },
+    "description": {
+      "type": "text"
+    },
+    "list": {
+      "type": "boolean"
+    },
+    "author": {
+      "type": "string"
+    }
+  }
+}

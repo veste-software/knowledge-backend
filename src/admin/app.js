@@ -48,7 +48,7 @@ export default {
       },
     },
     // Disable video tutorials
-    tutorials: false,
+    tutorials: true,
     // Disable notifications about new Strapi releases
     notifications: { releases: false },
   },

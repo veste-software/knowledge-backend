@@ -1,5 +1,6 @@
-const https = require('https');
+const { updateEmbelishCE } = require('../src/cronjobs/updateEmbelishCE.ts');
 
+const https = require('https');
 const S2_API_KEY = 'EEnArnIbFz7UyomYkXSJf8KnAOiBmqQc41oZnjpH';
 
 // Function to fetch data from a given URL
@@ -88,6 +89,18 @@ module.exports = {
 //      console.debug("recommendationResponse", recommendationResponse);
 //        console.error('Error in cron job "syncCopyrightEvidence":', error.message);
 //      }
+    },
+    options: {
+      start: true,
+      cron: '0 0 * * *', // Run every hour
+    },
+  },
+  updateEmbelishCE: {
+    task: async ({ strapi }) => {
+      console.log('Starting update cron job "updateEmbelishCE"');
+      strapi.log.info('Starting update cron job "updateEmbelishCE"');
+      await updateEmbelishCE(strapi);
+
     },
     options: {
       start: true,

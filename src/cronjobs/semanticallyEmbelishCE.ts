@@ -77,16 +77,22 @@ async function main() {
 
     const itemId = item[0];
     const CE_Title = item[1].printouts.Title[0];
+
+    const Industry = (item[1].printouts.industry || []).map((industry) => industry.fulltext);
+    const EvidenceBasedPolicy = (item[1].printouts.EvidenceBasedPolicy || []).map((industry) => industry.fulltext);
+
     if (!ceTitles.includes(CE_Title)) {
       const CE_Authors = item[1].printouts.Author.map((author) => author.fulltext);
 
       // Fetch Semantic Scholar data
-      const semanticScholarData = await fetchSemanticScholarData(CE_Title);
+      const semanticScholarData = {} // await fetchSemanticScholarData(CE_Title);
 
       // Flatten SemanticScholarData and add it to the resultObject
       updatedResultObject[itemId] = {
         CE_Title,
         CE_Authors,
+        EvidenceBasedPolicy,
+        Industry,
         ...(semanticScholarData || {}),
       };
 

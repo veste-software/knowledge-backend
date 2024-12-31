@@ -699,11 +699,14 @@ export interface ApiKnowledgeGraphKnowledgeGraph
     draftAndPublish: true;
   };
   attributes: {
+    author: Schema.Attribute.String;
     body: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     data: Schema.Attribute.JSON;
+    description: Schema.Attribute.Text;
+    list: Schema.Attribute.Boolean;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -711,6 +714,7 @@ export interface ApiKnowledgeGraphKnowledgeGraph
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
