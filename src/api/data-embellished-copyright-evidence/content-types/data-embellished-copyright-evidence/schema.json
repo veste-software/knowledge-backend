@@ -74,6 +74,15 @@
     },
     "abstract": {
       "type": "text"
+    },
+    "Industry": {
+      "type": "json"
+    },
+    "EvidenceBasedPolicy": {
+      "type": "json"
+    },
+    "Country": {
+      "type": "string"
     }
   }
 }

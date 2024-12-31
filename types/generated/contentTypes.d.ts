@@ -656,11 +656,14 @@ export interface ApiDataEmbellishedCopyrightEvidenceDataEmbellishedCopyrightEvid
     citationCount: Schema.Attribute.Integer;
     citationStyles: Schema.Attribute.JSON;
     corpusId: Schema.Attribute.String;
+    Country: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    EvidenceBasedPolicy: Schema.Attribute.JSON;
     externalIds: Schema.Attribute.JSON;
     fieldsOfStudy: Schema.Attribute.String;
+    Industry: Schema.Attribute.JSON;
     influentialCitationCount: Schema.Attribute.Integer;
     journal: Schema.Attribute.JSON;
     locale: Schema.Attribute.String & Schema.Attribute.Private;

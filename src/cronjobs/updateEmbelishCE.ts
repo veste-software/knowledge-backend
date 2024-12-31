@@ -72,6 +72,7 @@ async function updateEmbelishCE(strapi) {
 
     for (const [id, item] of dataEntries) {
       const CE_Title = item.printouts.Title[0];
+      const Country = item.printouts.Country[0].fulltext;
       const Industry = (item.printouts.industry || []).map(industry => industry.fulltext);
       const EvidenceBasedPolicy = (item.printouts.EvidenceBasedPolicy || []).map(policy => policy.fulltext);
 
@@ -84,7 +85,8 @@ async function updateEmbelishCE(strapi) {
         // Flatten SemanticScholarData and add it to the resultObject
         updatedResultObject[id] = {
           EvidenceBasedPolicy,
-          Industry
+          Industry,
+          Country
         };
 
         // Update the existing entry
@@ -99,7 +101,7 @@ async function updateEmbelishCE(strapi) {
         }
 
         // Wait for 1 second before making the next request (to comply with rate limiting)
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 200));
       }
     }
   } catch (error) {
