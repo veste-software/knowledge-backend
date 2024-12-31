@@ -97,9 +97,9 @@ module.exports = {
   },
   updateEmbelishCE: {
     task: async ({ strapi }) => {
-      console.log('Starting update cron job "updateEmbelishCE"');
-      strapi.log.info('Starting update cron job "updateEmbelishCE"');
-      await updateEmbelishCE(strapi);
+      console.log('Starting disabled update cron job "updateEmbelishCE"');
+      strapi.log.info('Starting disabled update cron job "updateEmbelishCE"');
+//      await updateEmbelishCE(strapi);
 
     },
     options: {
