@@ -72,7 +72,7 @@ async function updateEmbelishCE(strapi) {
 
     for (const [id, item] of dataEntries) {
       const CE_Title = item.printouts.Title[0];
-      const Country = item.printouts.Country[0].fulltext;
+      const Country = (item.printouts.Country[0] || {}).fulltext;
       const Industry = (item.printouts.industry || []).map(industry => industry.fulltext);
       const EvidenceBasedPolicy = (item.printouts.EvidenceBasedPolicy || []).map(policy => policy.fulltext);
 
