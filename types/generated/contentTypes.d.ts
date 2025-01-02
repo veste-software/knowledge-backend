@@ -458,8 +458,7 @@ export interface ApiCopyrightFlexibilitiesCopyrightFlexibilities
       ]
     > &
       Schema.Attribute.DefaultTo<'Uses by public authorities'>;
-    flexibility_subcategory: Schema.Attribute.Text &
-      Schema.Attribute.DefaultTo<''>;
+    flexibility_subcategory: Schema.Attribute.Text;
     legal_provision: Schema.Attribute.Text &
       Schema.Attribute.DefaultTo<'Not implemented.'>;
     legal_text: Schema.Attribute.Text &
@@ -620,6 +619,10 @@ export interface ApiCopyrightUserEuCopyrightUserEu
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    data_embellished_copyright_evidences: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::data-embellished-copyright-evidence.data-embellished-copyright-evidence'
+    >;
     excerpt: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -655,6 +658,10 @@ export interface ApiDataEmbellishedCopyrightEvidenceDataEmbellishedCopyrightEvid
     CE_Title: Schema.Attribute.String;
     citationCount: Schema.Attribute.Integer;
     citationStyles: Schema.Attribute.JSON;
+    copyright_user_eus: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::copyright-user-eu.copyright-user-eu'
+    >;
     corpusId: Schema.Attribute.String;
     Country: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;

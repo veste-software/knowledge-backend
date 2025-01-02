@@ -54,6 +54,12 @@
       "relation": "manyToMany",
       "target": "api::copyright-flexibilities.copyright-flexibilities",
       "inversedBy": "copyright_user_eus"
+    },
+    "data_embellished_copyright_evidences": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::data-embellished-copyright-evidence.data-embellished-copyright-evidence",
+      "inversedBy": "copyright_user_eus"
     }
   }
 }

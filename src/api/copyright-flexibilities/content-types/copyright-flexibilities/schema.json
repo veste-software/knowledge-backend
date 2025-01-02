@@ -38,8 +38,7 @@
       "default": "Uses by public authorities"
     },
     "flexibility_subcategory": {
-      "type": "text",
-      "default": ""
+      "type": "text"
     },
     "legal_text": {
       "type": "text",

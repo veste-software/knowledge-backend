@@ -1,5 +1,5 @@
 const { updateEmbelishCE } = require('../src/cronjobs/updateEmbelishCE.ts');
-
+const { populateRelations } = require('../src/cronjobs/populate_relations_userseu_ce.ts');
 const https = require('https');
 const S2_API_KEY = 'EEnArnIbFz7UyomYkXSJf8KnAOiBmqQc41oZnjpH';
 
@@ -56,39 +56,50 @@ module.exports = {
       console.log('Starting cron job "syncCopyrightEvidence"');
       strapi.log.info('Starting cron job "syncCopyrightEvidence"');
 
-// waiting for API key
-//      try {
-//        // Step 1: Fetch records from Strapi collections
-//        const suggestions_list = await strapi.db.query('api::suggestions-copyright-evidence.suggestions-copyright-evidence').findMany();
-//        const embellished_list = await strapi.db.query('api::data-embellished-copyright-evidence.data-embellished-copyright-evidence').findMany();
-//
-//        // Step 2: Create an array of all paperIds from embellished_list and shuffle
-//        const allPaperIds = embellished_list.filter((entry) => entry.paperId).map((entry) => entry.paperId);
-//        const randomizedPaperIds = shuffleArray(allPaperIds);
-//
-//        // Step 3: Iterate through paperIds and process recommendations
-//        for (let i = 0; i < randomizedPaperIds.length; i += 20) {
-//          const myPositivePaperIds = randomizedPaperIds.slice(i, i + 20);
-//
-//          const apiUrl = 'https://api.semanticscholar.org/recommendations/v1/papers/?fields=externalIds,url,citationCount,paperId,corpusId,title,venue,year,externalIds,abstract,referenceCount,citationCount,influentialCitationCount,openAccessPdf,fieldsOfStudy,s2FieldsOfStudy,publicationTypes,publicationDate,journal,citationStyles,authors&limit=50';
-//          const payload = { positivePaperIds: myPositivePaperIds };
-//
-//          console.debug('Posting to Semantic Scholar API with payload:', payload);
-//          const recommendationResponse = await fetchData(apiUrl, 'POST', payload);
-//
-//          if (Array.isArray(recommendationResponse.recommendedPapers)) {
-//            for (const recommendation of recommendationResponse.recommendedPapers) {
-//              await writeOrUpdateOrNothing(recommendation, suggestions_list, embellished_list, strapi);
-//            }
-//          } else {
-//      console.debug("recommendationResponse", recommendationResponse);
-//            console.error('Invalid response format from Semantic Scholar API.');
-//          }
-//        }
-//      } catch (error) {
-//      console.debug("recommendationResponse", recommendationResponse);
-//        console.error('Error in cron job "syncCopyrightEvidence":', error.message);
-//      }
+      // waiting for API key
+      // try {
+      //   // Step 1: Fetch records from Strapi collections
+      //   const suggestions_list = await strapi.db.query('api::suggestions-copyright-evidence.suggestions-copyright-evidence').findMany();
+      //   const embellished_list = await strapi.db.query('api::data-embellished-copyright-evidence.data-embellished-copyright-evidence').findMany();
+
+      //   // Step 2: Create an array of all paperIds from embellished_list and shuffle
+      //   const allPaperIds = embellished_list.filter((entry) => entry.paperId).map((entry) => entry.paperId);
+      //   const randomizedPaperIds = shuffleArray(allPaperIds);
+
+      //   // Step 3: Iterate through paperIds and process recommendations
+      //   for (let i = 0; i < randomizedPaperIds.length; i += 20) {
+      //     const myPositivePaperIds = randomizedPaperIds.slice(i, i + 20);
+
+      //     const apiUrl = 'https://api.semanticscholar.org/recommendations/v1/papers/?fields=externalIds,url,citationCount,paperId,corpusId,title,venue,year,externalIds,abstract,referenceCount,citationCount,influentialCitationCount,openAccessPdf,fieldsOfStudy,s2FieldsOfStudy,publicationTypes,publicationDate,journal,citationStyles,authors&limit=50';
+      //     const payload = { positivePaperIds: myPositivePaperIds };
+
+      //     console.debug('Posting to Semantic Scholar API with payload:', payload);
+      //     const recommendationResponse = await fetchData(apiUrl, 'POST', payload);
+
+      //     if (Array.isArray(recommendationResponse.recommendedPapers)) {
+      //       for (const recommendation of recommendationResponse.recommendedPapers) {
+      //         await writeOrUpdateOrNothing(recommendation, suggestions_list, embellished_list, strapi);
+      //       }
+      //     } else {
+      //       console.debug("recommendationResponse", recommendationResponse);
+      //       console.error('Invalid response format from Semantic Scholar API.');
+      //     }
+      //   }
+      // } catch (error) {
+      //   console.debug("recommendationResponse", recommendationResponse);
+      //   console.error('Error in cron job "syncCopyrightEvidence":', error.message);
+      // }
+    },
+    options: {
+      start: true,
+      cron: '0 0 * * *', // Run every hour
+    },
+  },
+  populateRelationsCE_CU: {
+    task: async ({ strapi }) => {
+      console.log('Starting cron job "populateRelationsCE_CU"');
+      strapi.log.info('Starting cron job "populateRelationsCE_CU"');
+      await populateRelations(strapi);
     },
     options: {
       start: true,
@@ -99,8 +110,7 @@ module.exports = {
     task: async ({ strapi }) => {
       console.log('Starting disabled update cron job "updateEmbelishCE"');
       strapi.log.info('Starting disabled update cron job "updateEmbelishCE"');
-//      await updateEmbelishCE(strapi);
-
+      // await updateEmbelishCE(strapi);
     },
     options: {
       start: true,

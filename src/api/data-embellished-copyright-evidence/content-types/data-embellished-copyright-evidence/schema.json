@@ -83,6 +83,12 @@
     },
     "Country": {
       "type": "string"
+    },
+    "copyright_user_eus": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::copyright-user-eu.copyright-user-eu",
+      "mappedBy": "data_embellished_copyright_evidences"
     }
   }
 }
