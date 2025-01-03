@@ -14,7 +14,7 @@ async function populateRelations(strapi) {
     "ONLINE INTERMEDIARIES": { "policy_issue": "B. Exceptions (distinguish innovation and public policy purposes; open-ended/closed list; commercial/non-commercial distinction)", "keywords": [] },
     "MASS DIGITISATION AND ORPHAN WORKS": { "policy_issue": "B. Exceptions (distinguish innovation and public policy purposes; open-ended/closed list; commercial/non-commercial distinction)", "keywords": [] },
     "ORPHAN WORKS": { "policy_issue": "C. Mass digitisation/orphan works (non-use; extended collective licensing)", "keywords": [] },
-    "OUT-OF-COMMERCE WORKS": { "policy_issue": "C. Mass digitisation/orphan works (non-use; extended collective licensing)", "keywords": [] },
+    "OUT OF COMMERCE WORKS": { "policy_issue": "C. Mass digitisation/orphan works (non-use; extended collective licensing)", "keywords": [] },
     "GETTING PERMISSION": { "policy_issue": "D. Licensing and Business models (collecting societies; meta data; exchanges/hubs; windowing; crossborder availability)", "keywords": [] },
     "GIVING PERMISSION": { "policy_issue": "D. Licensing and Business models (collecting societies; meta data; exchanges/hubs; windowing; crossborder availability)", "keywords": [] },
     "COLLECTING SOCIETIES": { "policy_issue": "D. Licensing and Business models (collecting societies; meta data; exchanges/hubs; windowing; crossborder availability)", "keywords": [] },
