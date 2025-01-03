@@ -61,7 +61,7 @@ async function populateRelations(strapi) {
 
         // If no keyword matches the policy, just add 3 that match the policy
         const relatedEvidences = matchingEvidences.length > 0 ? matchingEvidences :
-          copyrightEvidences.filter(evidence => Array.isArray(evidence.EvidenceBasedPolicy) && evidence.EvidenceBasedPolicy.includes(policy_issue)).slice(0, 3);
+          copyrightEvidences.filter(evidence => Array.isArray(evidence.EvidenceBasedPolicy) && evidence.EvidenceBasedPolicy.includes(policy_issue)).slice(0, 10);
 
         const relatedEvidenceIds = relatedEvidences.map(evidence => evidence.id);
 
@@ -91,7 +91,7 @@ async function populateRelations(strapi) {
           const currentUserEus = evidence.copyright_user_eus.map(eu => eu.id);
           const updatedUserEus = Array.from(new Set([...currentUserEus, user.id]));
 
-          console.debug(updatedUserEus, "updatedUserEus");
+          console.debug(updatedUserEus, "updatedUserEus", "evidenceId", evidenceId);
 
           const result = await strapi.db.query('api::data-embellished-copyright-evidence.data-embellished-copyright-evidence').update({
             where: { id: evidenceId },
