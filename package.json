@@ -8,6 +8,7 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
+    "postinstall": "npx patch-package",
     "patchstart": "npx patch-package @strapi/admin && npm run strapi build && npm start"
   },
   "dependencies": {
