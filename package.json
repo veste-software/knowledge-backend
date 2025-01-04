@@ -7,8 +7,7 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi",
-    "patchstart": "npx patch-package @strapi/admin && npm run strapi build && npm start"
+    "strapi": "strapi"
   },
   "dependencies": {
     "@strapi/design-system": "^2.0.0-rc.14",
