@@ -5,7 +5,13 @@ module.exports = [
     config: {
       contentSecurityPolicy: {
         directives: {
-          "frame-src": [ "http://localhost:*", "self", "sandbox.embed.apollographql.com" ],
+          "frame-src": [
+             "http://localhost:*",
+             "self",
+             "sandbox.embed.apollographql.com",
+             "https://www.youtube.com/"
+           ],
+          "default-src": ["'self'"],
         },
       },
     },
