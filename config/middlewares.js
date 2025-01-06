@@ -16,6 +16,15 @@ module.exports = [
       },
     },
   },
+  {
+    name: "strapi::body",
+    config: {
+      jsonLimit: "30mb",
+      formLimit: "30mb",
+      textLimit: "30mb",
+      formidable: { maxFileSize: 30 * 1024 * 1024, },
+    },
+  },
   'strapi::cors',
   'strapi::poweredBy',
   'strapi::logger',
