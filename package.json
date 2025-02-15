@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "@strapi/design-system": "^2.0.0-rc.14",
-    "@strapi/plugin-graphql": "^5.4.2",
-    "@strapi/plugin-users-permissions": "^5.4.2",
-    "@strapi/strapi": "^5.4.2",
+    "@strapi/plugin-graphql": "^5.10.2",
+    "@strapi/plugin-users-permissions": "^5.10.2",
+    "@strapi/strapi": "^5.10.2",
     "better-sqlite3": "11.3.0",
     "patch-package": "^8.0.0",
     "pg": "^8.12.0",
