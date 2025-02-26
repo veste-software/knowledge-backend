@@ -1,59 +1,40 @@
 diff --git a/node_modules/@strapi/admin/dist/admin/chunks/HomePage-CFTx_SgI.mjs b/node_modules/@strapi/admin/dist/admin/chunks/HomePage-CFTx_SgI.mjs
-index 1345c66..77970ca 100644
+index 1345c66..ddbfd05 100644
 --- a/node_modules/@strapi/admin/dist/admin/chunks/HomePage-CFTx_SgI.mjs
 +++ b/node_modules/@strapi/admin/dist/admin/chunks/HomePage-CFTx_SgI.mjs
-@@ -324,8 +324,8 @@ const RecentDocumentsTable = ({ documents })=>{
- const LastEditedWidget = ()=>{
-     return /*#__PURE__*/ jsx(Widget.Root, {
-         title: {
--            id: 'content-manager.widget.last-edited.title',
--            defaultMessage: 'Last edited entries'
-+            id: 'content-manager.widget.last-edited.subtitle2',
-+            defaultMessage: 'Last edited entries 2'
-         },
-         icon: Pencil,
-         children: /*#__PURE__*/ jsx(LastEditedWidgetContent, {})
-@@ -502,7 +502,31 @@ const GuidedTour = ()=>{
+@@ -6,7 +6,7 @@ import { b as Layouts } from './index-BUGouNML.mjs';
+ import { c as useTracking, x as capitalise, m as useGuidedTour, u as useAuth, P as Page } from './Theme-CDaBfQ-7.mjs';
+ import { a as adminApi } from './admin-BBS7sDVu.mjs';
+ import { u as useEnterprise } from './useEnterprise-Dy8wMNV5.mjs';
+-import { PuzzlePiece, WarningCircle, Pencil, CheckCircle, ArrowRight } from '@strapi/icons';
++import { PuzzlePiece, GraphQl, Book, WarningCircle, Pencil, CheckCircle, ArrowRight } from '@strapi/icons';
+ import { useNavigate, Link, NavLink } from 'react-router-dom';
+ import { styled } from 'styled-components';
+ import { R as RelativeTime } from './RelativeTime-r7oMqUVy.mjs';
+@@ -502,54 +502,184 @@ const GuidedTour = ()=>{
      const { formatMessage } = useIntl();
      const user = useAuth('HomePageCE', (state)=>state.user);
      const displayName = user?.firstname ?? user?.username ?? user?.email;
 -    return /*#__PURE__*/ jsxs(Main, {
-+    const icon = PuzzlePiece
-+const IconWrapper = styled(Flex)`
-+  transform: translate(-50%, -50%);
-+`;
-+const TypographyWordBreak = styled(Typography)`
-+  color: ${({ theme })=>theme.colors.neutral800};
-+  word-break: break-all;
-+`;
-+const showFrames = true;
-+const endAction = true;
-+  return /* @__PURE__ */ jsxs(Flex, {
-+    shadow: "tableShadow",
-+    hasRadius: true,
-+    padding: 6,
-+    background: "neutral0",
-+    children: [
-+      /* @__PURE__ */ jsx(IconWrapper, {
-+        background: "alternative100",
-+        hasRadius: true,
-+        padding: 3
-+      }),
-+      /* @__PURE__ */ jsxs(Flex, {
-+        direction: "column",
-+        alignItems: "stretch",
-+        gap: endAction ? 0 : 1,
-         children: [
-             /*#__PURE__*/ jsx(Page.Title, {
-                 children: formatMessage({
-@@ -519,37 +543,55 @@ const GuidedTour = ()=>{
-                 }),
-                 subtitle: formatMessage({
-                     id: 'HomePage.header.subtitle',
+-        children: [
+-            /*#__PURE__*/ jsx(Page.Title, {
+-                children: formatMessage({
+-                    id: 'HomePage.head.title',
+-                    defaultMessage: 'Homepage'
+-                })
+-            }),
+-            /*#__PURE__*/ jsx(Layouts.Header, {
+-                title: formatMessage({
+-                    id: 'HomePage.header.title',
+-                    defaultMessage: 'Hello {name}'
+-                }, {
+-                    name: displayName
+-                }),
+-                subtitle: formatMessage({
+-                    id: 'HomePage.header.subtitle',
 -                    defaultMessage: 'Welcome to your administration panel'
-+                    defaultMessage: 'Welcome to Copyright Knowledge administration panel!'
-                 })
-             }),
+-                })
+-            }),
 -            /*#__PURE__*/ jsx(Layouts.Content, {
 -                children: /*#__PURE__*/ jsxs(Flex, {
 -                    direction: "column",
@@ -64,69 +45,197 @@ index 1345c66..77970ca 100644
 -                        /*#__PURE__*/ jsx(GuidedTour, {}),
 -                        /*#__PURE__*/ jsxs(Grid.Root, {
 -                            gap: 5,
--                            children: [
++
++
++            return /*#__PURE__*/ jsxs(Main, {
++                children: [
++                    /*#__PURE__*/ jsx(Page.Title, {
++                        children: formatMessage({
++                            id: 'HomePage.head.title',
++                            defaultMessage: 'Homepage'
++                        })
++                    }),
++                    /*#__PURE__*/ jsx(Layouts.Header, {
++                        title: formatMessage({
++                            id: 'HomePage.header.title',
++                            defaultMessage: 'Hello {name}'
++                        }, {
++                            name: displayName
++                        }),
++                        subtitle: formatMessage({
++                            id: 'HomePage.header.subtitle',
++                            defaultMessage: 'Welcome to your administration panel'
++                        })
++                    }),
++                    /*#__PURE__*/ jsx(Box, {
++                        padding: 8,
++                        children: /*#__PURE__*/ jsxs(Grid, {
++                            gap: 6,
+                             children: [
 -                                /*#__PURE__*/ jsx(Grid.Item, {
 -                                    col: 6,
 -                                    s: 12,
 -                                    children: /*#__PURE__*/ jsx(LastEditedWidget, {})
--                                }),
++                                /*#__PURE__*/ jsx(LinkButton, {
++                                    onClick: () => {},
++                                    to: "/graph-visualization/",
++                                    children: /*#__PURE__*/ jsxs(Flex, {
++                                        padding: 4,
++                                        children: [
++                                            /*#__PURE__*/ jsx(Box, {
++                                                padding: 2,
++                                                children: /*#__PURE__*/ jsx(PuzzlePiece, {
++                                                    width: 16,
++                                                    height: 16
++                                                })
++                                            }),
++                                            /*#__PURE__*/ jsxs(Flex, {
++                                                direction: "column",
++                                                gap: 2,
++                                                children: [
++                                                    /*#__PURE__*/ jsx(Typography, {
++                                                        variant: "delta",
++                                                        children: "Graph Visualization"
++                                                    }),
++                                                    /*#__PURE__*/ jsx(Typography, {
++                                                        textColor: "neutral600",
++                                                        children: "A customizable graph visualization tool that can be used to visualize the relationships between different data points"
++                                                    })
++                                                ]
++                                            })
++                                        ]
++                                    })
+                                 }),
 -                                /*#__PURE__*/ jsx(Grid.Item, {
 -                                    col: 6,
 -                                    s: 12,
 -                                    children: /*#__PURE__*/ jsx(LastPublishedWidget, {})
--                                })
--                            ]
--                        })
++                                /*#__PURE__*/ jsx(LinkButton, {
++                                    onClick: () => {},
++                                    to: "/graphql",
++                                    children: /*#__PURE__*/ jsxs(Flex, {
++                                        padding: 4,
++                                        children: [
++                                            /*#__PURE__*/ jsx(Box, {
++                                                padding: 2,
++                                                children: /*#__PURE__*/ jsx(GraphQl, {
++                                                    width: 16,
++                                                    height: 16
++                                                })
++                                            }),
++                                            /*#__PURE__*/ jsxs(Flex, {
++                                                direction: "column",
++                                                gap: 2,
++                                                children: [
++                                                    /*#__PURE__*/ jsx(Typography, {
++                                                        variant: "delta",
++                                                        children: "GraphQL Builder"
++                                                    }),
++                                                    /*#__PURE__*/ jsx(Typography, {
++                                                        textColor: "neutral600",
++                                                        children: "The Apollo GraphQL Studio can be used to construct queries that can be used to access the copyright data from external websites"
++                                                    })
++                                                ]
++                                            })
++                                        ]
++                                    })
++                                }),
++                                /*#__PURE__*/ jsx(Box, {
++                                    hasRadius: true,
++                                    shadow: "tableShadow",
++                                    background: "neutral0",
++                                    children: /*#__PURE__*/ jsxs(Flex, {
++                                        padding: 4,
++                                        direction: "column",
++                                        gap: 4,
++                                        children: [
++                                            /*#__PURE__*/ jsxs(Flex, {
++                                                gap: 4,
++                                                children: [
++                                                    /*#__PURE__*/ jsx(Box, {
++                                                        padding: 2,
++                                                        background: "primary600",
++                                                        hasRadius: true,
++                                                        children: /*#__PURE__*/ jsx(Book, {
++                                                            width: 16,
++                                                            height: 16,
++                                                            color: "neutral0"
++                                                        })
++                                                    }),
++                                                    /*#__PURE__*/ jsxs(Flex, {
++                                                        direction: "column",
++                                                        gap: 2,
++                                                        children: [
++                                                            /*#__PURE__*/ jsx(Typography, {
++                                                                variant: "delta",
++                                                                children: "Documentation"
++                                                            }),
++                                                            /*#__PURE__*/ jsx(Typography, {
++                                                                textColor: "neutral600",
++                                                                children: "For basic Strapi documentation, please click the bottom right button. For more advanced documentation, please click the top right button."
++                                                            })
++                                                        ]
++                                                    })
++                                                ]
++                                            }),
++                                            /*#__PURE__*/ jsxs(Grid, {
++                                                gap: 4,
++                                                children: [
++                                                    /*#__PURE__*/ jsx(Box, {
++                                                        children: /*#__PURE__*/ jsx("iframe", {
++                                                            src: "https://www.youtube.com/embed/wZcxJbMzgGo?si=-D9xmhIg2RKp0DE7",
++                                                            width: "100%",
++                                                            height: "315",
++                                                            frameBorder: "0",
++                                                            allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
++                                                            allowFullScreen: true
++                                                        })
++                                                    }),
++                                                    /*#__PURE__*/ jsx(Box, {
++                                                        children: /*#__PURE__*/ jsx("iframe", {
++                                                            src: "https://www.youtube.com/embed/Gqe0oBM1qns?si=qAaMZP0oAWD4lwkM",
++                                                            width: "100%",
++                                                            height: "315",
++                                                            frameBorder: "0",
++                                                            allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
++                                                            allowFullScreen: true
++                                                        })
++                                                    }),
++                                                    /*#__PURE__*/ jsx(Box, {
++                                                        children: /*#__PURE__*/ jsx("iframe", {
++                                                            src: "https://www.youtube.com/embed/JM4FdsHbTn8?si=LRjw9BevkVYn6m2_",
++                                                            width: "100%",
++                                                            height: "315",
++                                                            frameBorder: "0",
++                                                            allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
++                                                            allowFullScreen: true
++                                                        })
++                                                    }),
++                                                    /*#__PURE__*/ jsx(Box, {
++                                                        children: /*#__PURE__*/ jsx("iframe", {
++                                                            src: "https://www.youtube.com/embed/73kXOhZlr2k?si=f2m4_RxDcfBGNXcl",
++                                                            width: "100%",
++                                                            height: "315",
++                                                            frameBorder: "0",
++                                                            allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
++                                                            allowFullScreen: true
++                                                        })
++                                                    })
++                                                ]
++                                            })
++                                        ]
++                                    })
+                                 })
+                             ]
+                         })
 -                    ]
 -                })
 -            })
-+          showFrames
-+            ? jsx("div", {
-+                children: [
-+                  jsx("iframe", {
-+                    src: "https://www.youtube.com/embed/wZcxJbMzgGo?si=-D9xmhIg2RKp0DE7",
-+                    width: "560",
-+                    height: "315",
-+                    padding: "1em",
-+                    frameBorder: "0",
-+                    allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-+                    allowFullScreen: true
-+                  }),
-+                  jsx("iframe", {
-+                    src: "https://www.youtube.com/embed/Gqe0oBM1qns?si=qAaMZP0oAWD4lwkM",
-+                    width: "560",
-+                    height: "315",
-+                    padding: "1em",
-+                    frameBorder: "0",
-+                    allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-+                    allowFullScreen: true
-+                  }),
-+                  jsx("iframe", {
-+                    src: "https://www.youtube.com/embed/JM4FdsHbTn8?si=LRjw9BevkVYn6m2_",
-+                    width: "560",
-+                    height: "315",
-+                    padding: "1em",
-+                    frameBorder: "0",
-+                    allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-+                    allowFullScreen: true
-+                  }),
-+                  jsx("iframe", {
-+                    src: "https://www.youtube.com/embed/73kXOhZlr2k?si=f2m4_RxDcfBGNXcl",
-+                    width: "560",
-+                    height: "315",
-+                    padding: "1em",
-+                    frameBorder: "0",
-+                    allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-+                    allowFullScreen: true
-+                  })
-+                ]
-+              })
-+            : null
-         ]
+-        ]
 -    });
-+      })
-+    ]
-+  });
++                    })
++                ]
++            });
  };
  /* -------------------------------------------------------------------------------------------------
   * HomePage
