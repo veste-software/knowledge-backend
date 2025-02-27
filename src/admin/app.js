@@ -48,7 +48,7 @@ export default {
     "global.documentation": "GraphQL Builder",
     "app.components.BlockLink.documentation.content": "The Apollo GraphQL Studio can be used to construct queries that can be used to access the copyright data from external websites",
     "app.components.BlockLink.code": "Documentation",
-    "app.components.HomePage.welcomeBlock.content.again": "Welcome to the Copyright Knowledge Admin Dashboard!",
+    "app.components.HomePage.welcomeBlock.content.again": "Welcome to our Copyright Teams Collaboration Tool!",
     "app.components.BlockLink.code.content": "For basic Strapi documentation, please click the bottom right button. For more advanced documentation, please click the top right button.",
     },
       fr: {

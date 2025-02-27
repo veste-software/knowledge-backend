@@ -1,59 +1,34 @@
 diff --git a/node_modules/@strapi/admin/dist/admin/chunks/HomePage-CFTx_SgI.mjs b/node_modules/@strapi/admin/dist/admin/chunks/HomePage-CFTx_SgI.mjs
-index 1345c66..6840c48 100644
+index 1345c66..fea7637 100644
 --- a/node_modules/@strapi/admin/dist/admin/chunks/HomePage-CFTx_SgI.mjs
 +++ b/node_modules/@strapi/admin/dist/admin/chunks/HomePage-CFTx_SgI.mjs
-@@ -1,566 +1,575 @@
--import { jsxs, jsx } from 'react/jsx-runtime';
--import * as React from 'react';
+@@ -1,16 +1,17 @@
+ import { jsxs, jsx } from 'react/jsx-runtime';
+ import * as React from 'react';
 -import { Flex, Typography, Box, Loader, Table, Tbody, Tr, Td, IconButton, Status, LinkButton, Button, Main, Grid } from '@strapi/design-system';
-+import { jsx, jsxs } from 'react/jsx-runtime';
-+import { LinkButton, Box, Flex, Typography, Button, Grid, Main, Link } from '@strapi/design-system';
-+import { ArrowRight, ExternalLink } from '@strapi/icons';
-+import { GitHub, Discord, Reddit, Strapi, X, Discourse, InformationSquare, CodeSquare, PlaySquare, FeatherSquare } from '@strapi/icons/symbols';
++import { Flex, Typography, Box, Loader, Table, Tbody, Tr, Td, IconButton, Status, LinkButton, Button, Main, Link, Grid } from '@strapi/design-system';
  import { useIntl } from 'react-intl';
 -import { b as Layouts } from './index-BUGouNML.mjs';
 -import { c as useTracking, x as capitalise, m as useGuidedTour, u as useAuth, P as Page } from './Theme-CDaBfQ-7.mjs';
--import { a as adminApi } from './admin-BBS7sDVu.mjs';
--import { u as useEnterprise } from './useEnterprise-Dy8wMNV5.mjs';
++import { b as Layouts,  v as ContentBox } from './index-BUGouNML.mjs';
++import { m as useGuidedTour, c as useTracking, e as useAPIErrorHandler, a as useNotification, P as Page, p as useAppInfo } from './Theme-CDaBfQ-7.mjs';
+ import { a as adminApi } from './admin-BBS7sDVu.mjs';
+ import { u as useEnterprise } from './useEnterprise-Dy8wMNV5.mjs';
 -import { PuzzlePiece, WarningCircle, Pencil, CheckCircle, ArrowRight } from '@strapi/icons';
 -import { useNavigate, Link, NavLink } from 'react-router-dom';
-+import { NavLink, useNavigate } from 'react-router-dom';
++import { PuzzlePiece, WarningCircle, Pencil, CheckCircle, ArrowRight, ExternalLink, GraphQl, OneToMany } from '@strapi/icons';
++import { useNavigate, NavLink } from 'react-router-dom';
  import { styled } from 'styled-components';
--import { R as RelativeTime } from './RelativeTime-r7oMqUVy.mjs';
--import { EmptyDocuments } from '@strapi/icons/symbols';
-+import { b as Layouts, v as ContentBox } from './index-BUGouNML.mjs';
-+import { b as useTypedSelector, a as useNotification, c as useTracking, x as capitalise, m as useGuidedTour, u as useAuth, p as useAppInfo, P as Page, e as useAPIErrorHandler } from './Theme-CDaBfQ-7.mjs';
+ import { R as RelativeTime } from './RelativeTime-r7oMqUVy.mjs';
+ import { EmptyDocuments } from '@strapi/icons/symbols';
++import { GitHub, Discord, Reddit, Strapi, X, Discourse, InformationSquare, CodeSquare, PlaySquare, FeatherSquare } from '@strapi/icons/symbols';
  import { L as LAYOUT_DATA, N as Number, V as VerticalDivider, S as STATES } from './Ornaments-DlP663hn.mjs';
--import 'react-dom/client';
--import 'invariant';
--import 'lodash/isFunction';
--import 'lodash/merge';
--import 'lodash/pick';
--import 'immer';
--import 'react-redux';
--import 'react-query';
--import 'lodash/camelCase';
--import 'yup';
--import 'fractional-indexing';
--import 'lodash/isEqual';
--import 'lodash/omit';
--import 'formik';
--import '@reduxjs/toolkit';
--import 'lodash/throttle';
--import 'qs';
--import '@radix-ui/react-context';
--import 'lodash/clone';
--import 'lodash/toPath';
--import 'axios';
--import 'lodash/get';
--import 'lodash/set';
--import 'use-context-selector';
--import 'lodash/defaultsDeep';
--import 'lodash/trimEnd';
--import '@reduxjs/toolkit/query/react';
--import 'lodash/fp/pipe';
--import 'date-fns';
--
+ import 'react-dom/client';
+ import 'invariant';
+@@ -42,515 +43,460 @@ import '@reduxjs/toolkit/query/react';
+ import 'lodash/fp/pipe';
+ import 'date-fns';
+ 
 -const homepageService = adminApi.enhanceEndpoints({
 -    // TODO: remove when the CM widgets are moved to the CM package, the type already exists there
 -    addTagTypes: [
@@ -195,10 +170,7 @@ index 1345c66..6840c48 100644
 -    Error,
 -    NoData
 -};
-+import * as React from 'react';
-+import { a as adminApi } from './admin-BBS7sDVu.mjs';
-+import { u as useEnterprise } from './useEnterprise-Dy8wMNV5.mjs';
- 
+-
 -const CellTypography = styled(Typography).attrs({
 -    maxWidth: '14.4rem',
 -    display: 'block'
@@ -323,6 +295,14 @@ index 1345c66..6840c48 100644
 -    }
 -    if (error || !data) {
 -        return /*#__PURE__*/ jsx(Widget.Error, {});
+-    }
+-    if (data.length === 0) {
+-        return /*#__PURE__*/ jsx(Widget.NoData, {
+-            children: formatMessage({
+-                id: 'content-manager.widget.last-edited.no-data',
+-                defaultMessage: 'No edited entries'
+-            })
+-        });
 +const GuidedTourHomepage = () => {
 +  const guidedTourState = useGuidedTour("GuidedTourHomepage", (state) => state.guidedTourState);
 +  const setSkipped = useGuidedTour("GuidedTourHomepage", (state) => state.setSkipped);
@@ -391,14 +371,6 @@ index 1345c66..6840c48 100644
 +        /* @__PURE__ */ jsx(Flex, { justifyContent: "flex-end", children: /* @__PURE__ */ jsx(Button, { variant: "tertiary", onClick: handleSkip, children: formatMessage({ id: "app.components.GuidedTour.skip", defaultMessage: "Skip the tour" }) }) })
 +      ]
      }
--    if (data.length === 0) {
--        return /*#__PURE__*/ jsx(Widget.NoData, {
--            children: formatMessage({
--                id: 'content-manager.widget.last-edited.no-data',
--                defaultMessage: 'No edited entries'
--            })
--        });
--    }
 -    return /*#__PURE__*/ jsx(RecentDocumentsTable, {
 -        documents: data
 -    });
@@ -550,22 +522,15 @@ index 1345c66..6840c48 100644
 +          }) }),
 +          /* @__PURE__ */ jsx(WordWrap, { textColor: "neutral600", variant: "epsilon", children: hasAlreadyCreatedContentTypes ? formatMessage({
 +            id: "app.components.HomePage.welcomeBlock.content.again",
-+            defaultMessage: "We hope you are making progress on your project! Feel free to read the latest news about Strapi. We are giving our best to improve the product based on your feedback."
++            defaultMessage: "We hope you are making progress on your pr3oject! Feel free to read the latest news about Strapi. We are giving our best to improve the product based on your feedback."
 +          }) : formatMessage({
 +            id: "app.components.HomePage.welcomeBlock.content",
 +            defaultMessage: "Congrats! You are logged as the first administrator. To discover the powerful features provided by Strapi, we recommend you to create your first Content type!"
-+          }) }),
-+          hasAlreadyCreatedContentTypes ? /* @__PURE__ */ jsx(Link, { isExternal: true, href: "https://strapi.io/blog", children: formatMessage({
-+            id: "app.components.HomePage.button.blog",
-+            defaultMessage: "See more on the blog"
-+          }) }) : /* @__PURE__ */ jsx(Button, { size: "L", onClick: handleClick, endIcon: /* @__PURE__ */ jsx(ArrowRight, {}), children: formatMessage({
-+            id: "app.components.HomePage.create",
-+            defaultMessage: "Create your first Content type"
 +          }) })
 +        ] }) }) }) }) }),
 +        /* @__PURE__ */ jsxs(Grid.Root, { gap: 6, children: [
-+          /* @__PURE__ */ jsx(Grid.Item, { col: 8, s: 12, direction: "column", alignItems: "stretch", children: showGuidedTour ? /* @__PURE__ */ jsx(GuidedTourHomepage, {}) : /* @__PURE__ */ jsx(ContentBlocks, {}) }),
-+          /* @__PURE__ */ jsx(Grid.Item, { col: 4, s: 12, direction: "column", alignItems: "stretch", children: /* @__PURE__ */ jsx(SocialLinks, {}) })
++          /* @__PURE__ */ jsx(Grid.Item, { col: 8, s: 12, direction: "column", alignItems: "stretch", children: showGuidedTour ? /* @__PURE__ */ jsx(GuidedTourHomepage, {}) : /* @__PURE__ */ jsx(ContentBlocks, {}) })
++          /* @__PURE__ */
 +        ] })
 +      ] })
 +    ] })
@@ -575,6 +540,18 @@ index 1345c66..6840c48 100644
 +  position: absolute;
 +  top: 0;
 +  right: 0;
++
++  img {
++    width: 15rem;
++  }
++`;
++const WordWrap = styled(Typography)`
++  word-break: break-word;
++`;
++const ContentBlocks = () => {
++  const { formatMessage } = useIntl();
++  const { trackUsage } = useTracking();
++  return /* @__PURE__ */ jsxs(Flex, { direction: "column", alignItems: "stretch", gap: 5, children: [
  
 -const GuidedTourHomepage = ()=>{
 -    const guidedTourState = useGuidedTour('GuidedTourHomepage', (state)=>state.guidedTourState);
@@ -590,67 +567,27 @@ index 1345c66..6840c48 100644
 -                to: val.home.cta.target,
 -                endIcon: /*#__PURE__*/ jsx(ArrowRight, {}),
 -                children: formatMessage(val.home.cta.title)
-+  img {
-+    width: 15rem;
-+  }
-+`;
-+const WordWrap = styled(Typography)`
-+  word-break: break-word;
-+`;
-+const ContentBlocks = () => {
-+  const { formatMessage } = useIntl();
-+  const { trackUsage } = useTracking();
-+  return /* @__PURE__ */ jsxs(Flex, { direction: "column", alignItems: "stretch", gap: 5, children: [
 +    /* @__PURE__ */ jsx(
 +      BlockLink,
 +      {
-+        href: "https://cloud.strapi.io",
++        href: "/graph-visualization/",
 +        target: "_blank",
 +        rel: "noopener noreferrer nofollow",
-+        onClick: () => {
-+          trackUsage("didClickOnTryStrapiCloudSection");
-+        },
-+        children: /* @__PURE__ */ jsxs(
-+          Flex,
++        onClick: () => trackUsage("didClickonBlogSection"),
++        children: /* @__PURE__ */ jsx(
++          ContentBox,
 +          {
-+            shadow: "tableShadow",
-+            hasRadius: true,
-+            padding: 6,
-+            background: "neutral0",
-+            position: "relative",
-+            gap: 6,
-+            children: [
-+              /* @__PURE__ */ jsx(CloudCustomWrapper, { hasRadius: true, padding: 3, children: /* @__PURE__ */ jsx(
-+                CloudIconWrapper,
-+                {
-+                  width: "3.2rem",
-+                  height: "3.2rem",
-+                  justifyContent: "center",
-+                  hasRadius: true,
-+                  alignItems: "center",
-+                  children: /* @__PURE__ */ jsx("svg", { xmlns: "http://www.w3.org/2000/svg", width: "24", height: "15", fill: "none", children: /* @__PURE__ */ jsx(
-+                    "path",
-+                    {
-+                      fill: "#fff",
-+                      fillRule: "evenodd",
-+                      d: "M4.39453 13.8298C1.93859 13.6455 0 11.468 0 8.80884 0 6.0289 2.11876 3.7753 4.73238 3.7753c.46775 0 .91964.07218 1.34638.20664C7.21234 1.62909 9.66469 0 12.5073 0c2.5102 0 4.7161 1.27036 5.9782 3.18766a4.54297 4.54297 0 0 1 .6132-.04144C21.8056 3.14622 24 5.54066 24 8.49436c0 2.89194-2.1036 5.24784-4.7323 5.34504v.0031l-1.8948.278a38.18054 38.18054 0 0 1-11.08354 0l-1.89483-.278v-.0127Z",
-+                      clipRule: "evenodd"
-+                    }
-+                  ) })
-+                }
-+              ) }),
-+              /* @__PURE__ */ jsxs(Flex, { gap: 1, direction: "column", alignItems: "start", children: [
-+                /* @__PURE__ */ jsx(Typography, { fontWeight: "semiBold", variant: "pi", textColor: "neutral800", children: formatMessage({
-+                  id: "app.components.BlockLink.cloud",
-+                  defaultMessage: "Strapi Cloud"
-+                }) }),
-+                /* @__PURE__ */ jsx(Typography, { textColor: "neutral600", children: formatMessage({
-+                  id: "app.components.BlockLink.cloud.content",
-+                  defaultMessage: "Fully-managed cloud hosting for your Strapi project."
-+                }) }),
-+                /* @__PURE__ */ jsx(Box, { src: cloudFlagsImage, position: "absolute", top: 0, right: 0, tag: "img" })
-+              ] })
-+            ]
++            title: formatMessage({
++              id: "app.components.BlockLink.blog",
++              defaultMessage: "Blog"
++            }),
++            subtitle: formatMessage({
++              id: "app.components.BlockLink.blog.content",
++              defaultMessage: "Read the latest news about Strapi and the ecosystem."
++            }),
++            icon: /* @__PURE__ */ jsx(OneToMany, {}),
++            iconBackground: "alternative100",
++            showFrames: false
 +          }
 +        )
 +      }
@@ -658,7 +595,7 @@ index 1345c66..6840c48 100644
 +    /* @__PURE__ */ jsx(
 +      BlockLink,
 +      {
-+        href: "https://strapi.io/resource-center",
++        href: "/graphql",
 +        target: "_blank",
 +        rel: "noopener noreferrer nofollow",
 +        onClick: () => trackUsage("didClickonReadTheDocumentationSection"),
@@ -672,26 +609,6 @@ index 1345c66..6840c48 100644
 +            subtitle: formatMessage({
 +              id: "app.components.BlockLink.documentation.content",
 +              defaultMessage: "Discover the essential concepts, guides and instructions."
-+            }),
-+            icon: /* @__PURE__ */ jsx(InformationSquare, {}),
-+            iconBackground: "primary100"
-+          }
-+        )
-+      }
-+    ),
-+    /* @__PURE__ */ jsx(
-+      BlockLink,
-+      {
-+        href: "https://strapi.io/starters",
-+        target: "_blank",
-+        rel: "noopener noreferrer nofollow",
-+        onClick: () => trackUsage("didClickonCodeExampleSection"),
-+        children: /* @__PURE__ */ jsx(
-+          ContentBox,
-+          {
-+            title: formatMessage({
-+              id: "app.components.BlockLink.code",
-+              defaultMessage: "Code example"
              }),
 -            isDone: Object.values(guidedTourState[key]).every((value)=>value === true)
 -        }));
@@ -768,9 +685,23 @@ index 1345c66..6840c48 100644
 -                        })
 -                    })
 -                ]
-+            subtitle: formatMessage({
-+              id: "app.components.BlockLink.code.content",
-+              defaultMessage: "Learn by using ready-made starters for your projects."
++            icon: /* @__PURE__ */ jsx(GraphQl, {}),
++            iconBackground: "primary100",
++            showFrames: false
++          }
++        )
++      }
++    ),
++    /* @__PURE__ */ jsx(
++      BlockLink,
++      {
++        onClick: () => trackUsage("didClickonCodeExampleSection"),
++        children: /* @__PURE__ */ jsx(
++          ContentBox,
++          {
++            title: formatMessage({
++              id: "app.components.BlockLink.code",
++              defaultMessage: "Code example"
              }),
 -            /*#__PURE__*/ jsx(Flex, {
 -                justifyContent: "flex-end",
@@ -785,56 +716,13 @@ index 1345c66..6840c48 100644
 -            })
 -        ]
 -    });
-+            icon: /* @__PURE__ */ jsx(CodeSquare, {}),
-+            iconBackground: "warning100"
-+          }
-+        )
-+      }
-+    ),
-+    /* @__PURE__ */ jsx(
-+      BlockLink,
-+      {
-+        href: "https://strapi.io/blog/categories/tutorials",
-+        target: "_blank",
-+        rel: "noopener noreferrer nofollow",
-+        onClick: () => trackUsage("didClickonTutorialSection"),
-+        children: /* @__PURE__ */ jsx(
-+          ContentBox,
-+          {
-+            title: formatMessage({
-+              id: "app.components.BlockLink.tutorial",
-+              defaultMessage: "Tutorials"
-+            }),
 +            subtitle: formatMessage({
-+              id: "app.components.BlockLink.tutorial.content",
-+              defaultMessage: "Follow step-by-step instructions to use and customize Strapi."
++              id: "app.components.BlockLink.code.content",
++              defaultMessage: "Learn by using ready-made starters for your projects."
 +            }),
-+            icon: /* @__PURE__ */ jsx(PlaySquare, {}),
-+            iconBackground: "secondary100"
-+          }
-+        )
-+      }
-+    ),
-+    /* @__PURE__ */ jsx(
-+      BlockLink,
-+      {
-+        href: "https://strapi.io/blog",
-+        target: "_blank",
-+        rel: "noopener noreferrer nofollow",
-+        onClick: () => trackUsage("didClickonBlogSection"),
-+        children: /* @__PURE__ */ jsx(
-+          ContentBox,
-+          {
-+            title: formatMessage({
-+              id: "app.components.BlockLink.blog",
-+              defaultMessage: "Blog"
-+            }),
-+            subtitle: formatMessage({
-+              id: "app.components.BlockLink.blog.content",
-+              defaultMessage: "Read the latest news about Strapi and the ecosystem."
-+            }),
-+            icon: /* @__PURE__ */ jsx(FeatherSquare, {}),
-+            iconBackground: "alternative100"
++            icon: /* @__PURE__ */ jsx(InformationSquare, {}),
++            iconBackground: "warning100",
++            showFrames: true
 +          }
 +        )
 +      }
@@ -888,16 +776,6 @@ index 1345c66..6840c48 100644
 +      gap: 7,
 +      children: [
 +        /* @__PURE__ */ jsxs(Flex, { direction: "column", alignItems: "stretch", gap: 5, children: [
-+          /* @__PURE__ */ jsxs(Flex, { direction: "column", alignItems: "stretch", gap: 3, children: [
-+            /* @__PURE__ */ jsx(Typography, { variant: "delta", tag: "h2", id: "join-the-community", children: formatMessage({
-+              id: "app.components.HomePage.community",
-+              defaultMessage: "Join the community"
-+            }) }),
-+            /* @__PURE__ */ jsx(Typography, { textColor: "neutral600", children: formatMessage({
-+              id: "app.components.HomePage.community.content",
-+              defaultMessage: "Discuss with team members, contributors and developers on different channels"
-+            }) })
-+          ] }),
 +          /* @__PURE__ */ jsx(Link, { href: "https://feedback.strapi.io/", isExternal: true, endIcon: /* @__PURE__ */ jsx(ExternalLink, {}), children: formatMessage({
 +            id: "app.components.HomePage.roadmap",
 +            defaultMessage: "See our road map"
@@ -1011,16 +889,6 @@ index 1345c66..6840c48 100644
 -        ]
 -    });
 -};
--/* -------------------------------------------------------------------------------------------------
-- * HomePage
-- * -----------------------------------------------------------------------------------------------*/ const HomePage = ()=>{
--    const Page = useEnterprise(HomePageCE, // eslint-disable-next-line import/no-cycle
--    async ()=>(await import('./HomePage-C2Sue0eX.mjs')).HomePageEE);
--    // block rendering until the EE component is fully loaded
--    if (!Page) {
--        return null;
--    }
--    return /*#__PURE__*/ jsx(Page, {});
 +  path:nth-child(2) {
 +    fill: #000 !important;
 +  }
@@ -1110,89 +978,16 @@ index 1345c66..6840c48 100644
 +    alt: "career"
 +  }
 +];
-+const HomePage = () => {
-+  const Page2 = useEnterprise(
-+    HomePageCE,
-+    // eslint-disable-next-line import/no-cycle
-+    async () => (await import('./HomePage-C2Sue0eX.mjs')).HomePageEE
-+  );
-+  if (!Page2) {
-+    return null;
-+  }
-+  return /* @__PURE__ */ jsx(Page2, {});
- };
- 
- export { HomePage, HomePageCE };
-diff --git a/node_modules/@strapi/admin/dist/admin/chunks/HomePage-CFTx_SgI.mjs.map b/node_modules/@strapi/admin/dist/admin/chunks/HomePage-CFTx_SgI.mjs.map
-index 4f54ae2..60896a7 100644
---- a/node_modules/@strapi/admin/dist/admin/chunks/HomePage-CFTx_SgI.mjs.map
-+++ b/node_modules/@strapi/admin/dist/admin/chunks/HomePage-CFTx_SgI.mjs.map
-@@ -1 +1 @@
--{"version":3,"file":"HomePage-CFTx_SgI.mjs","sources":["../../../admin/src/services/homepage.ts","../../../admin/src/pages/Home/components/Widget.tsx","../../../admin/src/pages/Home/components/ContentManagerWidgets.tsx","../../../admin/src/components/GuidedTour/Homepage.tsx","../../../admin/src/pages/Home/components/GuidedTour.tsx","../../../admin/src/pages/Home/HomePage.tsx"],"sourcesContent":["import * as Homepage from '../../../shared/contracts/homepage';\n\nimport { adminApi } from './api';\n\nconst homepageService = adminApi\n  .enhanceEndpoints({\n    // TODO: remove when the CM widgets are moved to the CM package, the type already exists there\n    addTagTypes: ['RecentDocumentList'],\n  })\n  .injectEndpoints({\n    endpoints: (builder) => ({\n      getRecentDocuments: builder.query<\n        Homepage.GetRecentDocuments.Response['data'],\n        Homepage.GetRecentDocuments.Request['query']\n      >({\n        query: (params) => `/admin/homepage/recent-documents?action=${params.action}`,\n        transformResponse: (response: Homepage.GetRecentDocuments.Response) => response.data,\n        providesTags: (res, _err, { action }) => [\n          { type: 'RecentDocumentList' as const, id: action },\n        ],\n      }),\n    }),\n  });\n\nconst { useGetRecentDocumentsQuery } = homepageService;\n\nexport { useGetRecentDocumentsQuery };\n","import * as React from 'react';\n\nimport { Box, Flex, type FlexProps, Loader, Typography } from '@strapi/design-system';\nimport { PuzzlePiece, WarningCircle } from '@strapi/icons';\nimport { EmptyDocuments } from '@strapi/icons/symbols';\nimport { type MessageDescriptor, useIntl } from 'react-intl';\n\ninterface RootProps {\n  title: MessageDescriptor;\n  icon?: typeof import('@strapi/icons').PuzzlePiece;\n  children: React.ReactNode;\n}\n\nconst Root = ({ title, icon = PuzzlePiece, children }: RootProps) => {\n  const { formatMessage } = useIntl();\n  const id = React.useId();\n  const Icon = icon;\n\n  return (\n    <Flex\n      width=\"100%\"\n      hasRadius\n      direction=\"column\"\n      alignItems=\"flex-start\"\n      background=\"neutral0\"\n      borderColor=\"neutral150\"\n      shadow=\"tableShadow\"\n      tag=\"section\"\n      gap={4}\n      padding={6}\n      aria-labelledby={id}\n    >\n      <Flex direction=\"row\" alignItems=\"center\" gap={2} tag=\"header\">\n        <Icon fill=\"neutral500\" aria-hidden />\n        <Typography textColor=\"neutral500\" variant=\"sigma\" tag=\"h2\" id={id}>\n          {formatMessage(title)}\n        </Typography>\n      </Flex>\n      <Box width=\"100%\" height=\"261px\" overflow=\"auto\" tag=\"main\">\n        {children}\n      </Box>\n    </Flex>\n  );\n};\n\ninterface LoadingProps {\n  children?: string;\n}\n\nconst Loading = ({ children }: LoadingProps) => {\n  const { formatMessage } = useIntl();\n\n  return (\n    <Flex height=\"100%\" justifyContent=\"center\" alignItems=\"center\">\n      <Loader>\n        {children ??\n          formatMessage({\n            id: 'HomePage.widget.loading',\n            defaultMessage: 'Loading widget content',\n          })}\n      </Loader>\n    </Flex>\n  );\n};\n\ninterface ErrorProps {\n  children?: string;\n}\n\nconst Error = ({ children }: ErrorProps) => {\n  const { formatMessage } = useIntl();\n\n  return (\n    <Flex height=\"100%\" direction=\"column\" justifyContent=\"center\" alignItems=\"center\" gap={2}>\n      <WarningCircle width=\"3.2rem\" height=\"3.2rem\" fill=\"danger600\" />\n      <Typography variant=\"delta\">\n        {formatMessage({\n          id: 'global.error',\n          defaultMessage: 'Something went wrong',\n        })}\n      </Typography>\n      <Typography textColor=\"neutral600\">\n        {children ??\n          formatMessage({\n            id: 'HomePage.widget.error',\n            defaultMessage: \"Couldn't load widget content.\",\n          })}\n      </Typography>\n    </Flex>\n  );\n};\n\ninterface NoDataProps {\n  children?: string;\n}\n\nconst NoData = ({ children }: NoDataProps) => {\n  const { formatMessage } = useIntl();\n\n  return (\n    <Flex height=\"100%\" direction=\"column\" justifyContent=\"center\" alignItems=\"center\" gap={6}>\n      <EmptyDocuments width=\"16rem\" height=\"8.8rem\" />\n      <Typography textColor=\"neutral600\">\n        {children ??\n          formatMessage({\n            id: 'HomePage.widget.no-data',\n            defaultMessage: 'No content found.',\n          })}\n      </Typography>\n    </Flex>\n  );\n};\n\nconst Widget = {\n  Root,\n  Loading,\n  Error,\n  NoData,\n};\n\nexport { Widget };\n","import { Box, IconButton, Status, Table, Tbody, Td, Tr, Typography } from '@strapi/design-system';\nimport { CheckCircle, Pencil } from '@strapi/icons';\nimport { useIntl } from 'react-intl';\nimport { Link, useNavigate } from 'react-router-dom';\nimport { styled } from 'styled-components';\n\nimport { RelativeTime } from '../../../components/RelativeTime';\nimport { useTracking } from '../../../features/Tracking';\nimport { useGetRecentDocumentsQuery } from '../../../services/homepage';\nimport { capitalise } from '../../../utils/strings';\n\nimport { Widget } from './Widget';\n\nimport type { RecentDocument } from '../../../../../shared/contracts/homepage';\n\nconst CellTypography = styled(Typography).attrs({ maxWidth: '14.4rem', display: 'block' })`\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n`;\n\ninterface DocumentStatusProps {\n  status: RecentDocument['status'];\n}\n\nconst DocumentStatus = ({ status = 'draft' }: DocumentStatusProps) => {\n  const statusVariant =\n    status === 'draft' ? 'secondary' : status === 'published' ? 'success' : 'alternative';\n\n  const { formatMessage } = useIntl();\n\n  return (\n    <Status variant={statusVariant} size=\"XS\">\n      <Typography tag=\"span\" variant=\"omega\" fontWeight=\"bold\">\n        {formatMessage({\n          id: `content-manager.containers.List.${status}`,\n          defaultMessage: capitalise(status),\n        })}\n      </Typography>\n    </Status>\n  );\n};\n\nconst RecentDocumentsTable = ({ documents }: { documents: RecentDocument[] }) => {\n  const { formatMessage } = useIntl();\n  const { trackUsage } = useTracking();\n  const navigate = useNavigate();\n\n  const getEditViewLink = (document: RecentDocument): string => {\n    // TODO: import the constants for this once the code is moved to the CM package\n    const isSingleType = document.kind === 'singleType';\n    const kindPath = isSingleType ? 'single-types' : 'collection-types';\n    const queryParams = document.locale ? `?plugins[i18n][locale]=${document.locale}` : '';\n\n    return `/content-manager/${kindPath}/${document.contentTypeUid}${isSingleType ? '' : '/' + document.documentId}${queryParams}`;\n  };\n\n  const handleRowClick = (document: RecentDocument) => () => {\n    trackUsage('willEditEntryFromHome');\n    const link = getEditViewLink(document);\n    navigate(link);\n  };\n\n  return (\n    <Table colCount={5} rowCount={documents?.length ?? 0}>\n      <Tbody>\n        {documents?.map((document) => (\n          <Tr onClick={handleRowClick(document)} cursor=\"pointer\" key={document.documentId}>\n            <Td>\n              <CellTypography title={document.title} variant=\"omega\" textColor=\"neutral800\">\n                {document.title}\n              </CellTypography>\n            </Td>\n            <Td>\n              <CellTypography variant=\"omega\" textColor=\"neutral600\">\n                {document.kind === 'singleType'\n                  ? formatMessage({\n                      id: 'content-manager.widget.last-edited.single-type',\n                      defaultMessage: 'Single-Type',\n                    })\n                  : formatMessage({\n                      id: document.contentTypeDisplayName,\n                      defaultMessage: document.contentTypeDisplayName,\n                    })}\n              </CellTypography>\n            </Td>\n            <Td>\n              <Box display=\"inline-block\">\n                {document.status ? (\n                  <DocumentStatus status={document.status} />\n                ) : (\n                  <Typography textColor=\"neutral600\" aria-hidden>\n                    -\n                  </Typography>\n                )}\n              </Box>\n            </Td>\n            <Td>\n              <Typography textColor=\"neutral600\">\n                <RelativeTime timestamp={new Date(document.updatedAt)} />\n              </Typography>\n            </Td>\n            <Td onClick={(e) => e.stopPropagation()}>\n              <Box display=\"inline-block\">\n                <IconButton\n                  tag={Link}\n                  to={getEditViewLink(document)}\n                  onClick={() => trackUsage('willEditEntryFromHome')}\n                  label={formatMessage({\n                    id: 'content-manager.actions.edit.label',\n                    defaultMessage: 'Edit',\n                  })}\n                  variant=\"ghost\"\n                >\n                  <Pencil />\n                </IconButton>\n              </Box>\n            </Td>\n          </Tr>\n        ))}\n      </Tbody>\n    </Table>\n  );\n};\n\n/* -------------------------------------------------------------------------------------------------\n * LastEditedWidget\n * -----------------------------------------------------------------------------------------------*/\n\nconst LastEditedWidgetContent = () => {\n  const { formatMessage } = useIntl();\n  const { data, isLoading, error } = useGetRecentDocumentsQuery({ action: 'update' });\n\n  if (isLoading) {\n    return <Widget.Loading />;\n  }\n\n  if (error || !data) {\n    return <Widget.Error />;\n  }\n\n  if (data.length === 0) {\n    return (\n      <Widget.NoData>\n        {formatMessage({\n          id: 'content-manager.widget.last-edited.no-data',\n          defaultMessage: 'No edited entries',\n        })}\n      </Widget.NoData>\n    );\n  }\n\n  return <RecentDocumentsTable documents={data} />;\n};\n\nconst LastEditedWidget = () => {\n  return (\n    <Widget.Root\n      title={{\n        id: 'content-manager.widget.last-edited.title',\n        defaultMessage: 'Last edited entries',\n      }}\n      icon={Pencil}\n    >\n      <LastEditedWidgetContent />\n    </Widget.Root>\n  );\n};\n\n/* -------------------------------------------------------------------------------------------------\n * LastPublishedWidget\n * -----------------------------------------------------------------------------------------------*/\n\nconst LastPublishedWidgetContent = () => {\n  const { formatMessage } = useIntl();\n  const { data, isLoading, error } = useGetRecentDocumentsQuery({ action: 'publish' });\n\n  if (isLoading) {\n    return <Widget.Loading />;\n  }\n\n  if (error || !data) {\n    return <Widget.Error />;\n  }\n\n  if (data.length === 0) {\n    return (\n      <Widget.NoData>\n        {formatMessage({\n          id: 'content-manager.widget.last-published.no-data',\n          defaultMessage: 'No published entries',\n        })}\n      </Widget.NoData>\n    );\n  }\n\n  return <RecentDocumentsTable documents={data} />;\n};\n\nconst LastPublishedWidget = () => {\n  return (\n    <Widget.Root\n      title={{\n        id: 'content-manager.widget.last-published.title',\n        defaultMessage: 'Last published entries',\n      }}\n      icon={CheckCircle}\n    >\n      <LastPublishedWidgetContent />\n    </Widget.Root>\n  );\n};\n\nexport { LastEditedWidget, LastPublishedWidget };\n","import { Box, Button, Flex, Typography, LinkButton } from '@strapi/design-system';\nimport { ArrowRight } from '@strapi/icons';\nimport { useIntl } from 'react-intl';\nimport { NavLink } from 'react-router-dom';\n\nimport { useTracking } from '../../features/Tracking';\n\nimport { LAYOUT_DATA, States, STATES } from './constants';\nimport { Number, VerticalDivider } from './Ornaments';\nimport { GuidedTourContextValue, useGuidedTour } from './Provider';\n\ntype SectionName = keyof GuidedTourContextValue['guidedTourState'];\n\nconst GuidedTourHomepage = () => {\n  const guidedTourState = useGuidedTour('GuidedTourHomepage', (state) => state.guidedTourState);\n  const setSkipped = useGuidedTour('GuidedTourHomepage', (state) => state.setSkipped);\n  const { formatMessage } = useIntl();\n  const { trackUsage } = useTracking();\n\n  const sections = Object.entries(LAYOUT_DATA).map(([key, val]) => ({\n    key: key,\n    title: val.home.title,\n    content: (\n      <LinkButton\n        onClick={() => trackUsage(val.home.trackingEvent)}\n        tag={NavLink}\n        to={val.home.cta.target}\n        endIcon={<ArrowRight />}\n      >\n        {formatMessage(val.home.cta.title)}\n      </LinkButton>\n    ),\n    isDone: Object.values(guidedTourState[key as SectionName]).every((value) => value === true),\n  }));\n\n  const activeSectionIndex = sections.findIndex((section) => !section.isDone);\n\n  const handleSkip = () => {\n    setSkipped(true);\n    trackUsage('didSkipGuidedtour');\n  };\n\n  return (\n    <Box\n      hasRadius\n      shadow=\"tableShadow\"\n      paddingTop={7}\n      paddingRight={4}\n      paddingLeft={7}\n      paddingBottom={4}\n      background=\"neutral0\"\n    >\n      <Flex direction=\"column\" alignItems=\"stretch\" gap={6}>\n        <Typography variant=\"beta\" tag=\"h2\">\n          {formatMessage({\n            id: 'app.components.GuidedTour.title',\n            defaultMessage: '3 steps to get started',\n          })}\n        </Typography>\n        <Box>\n          {sections.map((section, index) => {\n            const state = getState(activeSectionIndex, index);\n\n            return (\n              <Box key={section.key}>\n                <Flex>\n                  <Box minWidth={`3rem`} marginRight={5}>\n                    <Number state={state}>{index + 1}</Number>\n                  </Box>\n                  <Typography variant=\"delta\" tag=\"h3\">\n                    {formatMessage(section.title)}\n                  </Typography>\n                </Flex>\n                <Flex alignItems=\"flex-start\">\n                  <Flex\n                    justifyContent=\"center\"\n                    minWidth={`3rem`}\n                    marginBottom={3}\n                    marginTop={3}\n                    marginRight={5}\n                  >\n                    {index === sections.length - 1 ? null : <VerticalDivider state={state} />}\n                  </Flex>\n                  <Box marginTop={2}>{state === STATES.IS_ACTIVE ? section.content : null}</Box>\n                </Flex>\n              </Box>\n            );\n          })}\n        </Box>\n      </Flex>\n      <Flex justifyContent=\"flex-end\">\n        <Button variant=\"tertiary\" onClick={handleSkip}>\n          {formatMessage({ id: 'app.components.GuidedTour.skip', defaultMessage: 'Skip the tour' })}\n        </Button>\n      </Flex>\n    </Box>\n  );\n};\n\nconst getState = (activeSectionIndex: number, index: number): States => {\n  if (activeSectionIndex === -1) {\n    return STATES.IS_DONE;\n  }\n  if (index < activeSectionIndex) {\n    return STATES.IS_DONE;\n  }\n  if (index > activeSectionIndex) {\n    return STATES.IS_NOT_DONE;\n  }\n  return STATES.IS_ACTIVE;\n};\n\nexport { GuidedTourHomepage };\n","import { GuidedTourHomepage } from '../../../components/GuidedTour/Homepage';\nimport { useGuidedTour } from '../../../components/GuidedTour/Provider';\n\nexport const GuidedTour = () => {\n  const guidedTourState = useGuidedTour('HomePage', (state) => state.guidedTourState);\n  const isGuidedTourVisible = useGuidedTour('HomePage', (state) => state.isGuidedTourVisible);\n  const isSkipped = useGuidedTour('HomePage', (state) => state.isSkipped);\n  const showGuidedTour =\n    !Object.values(guidedTourState).every((section) =>\n      Object.values(section).every((step) => step)\n    ) &&\n    isGuidedTourVisible &&\n    !isSkipped;\n\n  if (!showGuidedTour) {\n    return null;\n  }\n\n  return <GuidedTourHomepage />;\n};\n","import * as React from 'react';\n\nimport { Flex, Grid, Main } from '@strapi/design-system';\nimport { useIntl } from 'react-intl';\n\nimport { Layouts } from '../../components/Layouts/Layout';\nimport { Page } from '../../components/PageHelpers';\nimport { useEnterprise } from '../../ee';\nimport { useAuth } from '../../features/Auth';\n\nimport { LastEditedWidget, LastPublishedWidget } from './components/ContentManagerWidgets';\nimport { GuidedTour } from './components/GuidedTour';\n\n/* -------------------------------------------------------------------------------------------------\n * HomePageCE\n * -----------------------------------------------------------------------------------------------*/\n\nconst HomePageCE = () => {\n  const { formatMessage } = useIntl();\n  const user = useAuth('HomePageCE', (state) => state.user);\n  const displayName = user?.firstname ?? user?.username ?? user?.email;\n\n  return (\n    <Main>\n      <Page.Title>\n        {formatMessage({ id: 'HomePage.head.title', defaultMessage: 'Homepage' })}\n      </Page.Title>\n      <Layouts.Header\n        title={formatMessage(\n          { id: 'HomePage.header.title', defaultMessage: 'Hello {name}' },\n          { name: displayName }\n        )}\n        subtitle={formatMessage({\n          id: 'HomePage.header.subtitle',\n          defaultMessage: 'Welcome to your administration panel',\n        })}\n      />\n      <Layouts.Content>\n        <Flex direction=\"column\" alignItems=\"stretch\" gap={8} paddingBottom={10}>\n          <GuidedTour />\n          <Grid.Root gap={5}>\n            <Grid.Item col={6} s={12}>\n              <LastEditedWidget />\n            </Grid.Item>\n            <Grid.Item col={6} s={12}>\n              <LastPublishedWidget />\n            </Grid.Item>\n          </Grid.Root>\n        </Flex>\n      </Layouts.Content>\n    </Main>\n  );\n};\n\n/* -------------------------------------------------------------------------------------------------\n * HomePage\n * -----------------------------------------------------------------------------------------------*/\n\nconst HomePage = () => {\n  const Page = useEnterprise(\n    HomePageCE,\n    // eslint-disable-next-line import/no-cycle\n    async () => (await import('../../../../ee/admin/src/pages/HomePage')).HomePageEE\n  );\n\n  // block rendering until the EE component is fully loaded\n  if (!Page) {\n    return null;\n  }\n\n  return <Page />;\n};\n\nexport { HomePage, HomePageCE };\n"],"names":["homepageService","adminApi","enhanceEndpoints","addTagTypes","injectEndpoints","endpoints","builder","getRecentDocuments","query","params","action","transformResponse","response","data","providesTags","res","_err","type","id","useGetRecentDocumentsQuery","Root","title","icon","PuzzlePiece","children","formatMessage","useIntl","React","useId","Icon","_jsxs","Flex","width","hasRadius","direction","alignItems","background","borderColor","shadow","tag","gap","padding","aria-labelledby","_jsx","fill","aria-hidden","Typography","textColor","variant","Box","height","overflow","Loading","justifyContent","Loader","defaultMessage","Error","WarningCircle","NoData","EmptyDocuments","Widget","CellTypography","styled","attrs","maxWidth","display","DocumentStatus","status","statusVariant","Status","size","fontWeight","capitalise","RecentDocumentsTable","documents","trackUsage","useTracking","navigate","useNavigate","getEditViewLink","document","isSingleType","kind","kindPath","queryParams","locale","contentTypeUid","documentId","handleRowClick","link","Table","colCount","rowCount","length","Tbody","map","Tr","onClick","cursor","Td","contentTypeDisplayName","RelativeTime","timestamp","Date","updatedAt","e","stopPropagation","IconButton","Link","to","label","Pencil","LastEditedWidgetContent","isLoading","error","LastEditedWidget","LastPublishedWidgetContent","LastPublishedWidget","CheckCircle","GuidedTourHomepage","guidedTourState","useGuidedTour","state","setSkipped","sections","Object","entries","LAYOUT_DATA","key","val","home","content","LinkButton","trackingEvent","NavLink","cta","target","endIcon","ArrowRight","isDone","values","every","value","activeSectionIndex","findIndex","section","handleSkip","paddingTop","paddingRight","paddingLeft","paddingBottom","index","getState","minWidth","marginRight","Number","marginBottom","marginTop","VerticalDivider","STATES","IS_ACTIVE","Button","IS_DONE","IS_NOT_DONE","GuidedTour","isGuidedTourVisible","isSkipped","showGuidedTour","step","HomePageCE","user","useAuth","displayName","firstname","username","email","Main","Page","Title","Layouts","Header","name","subtitle","Content","Grid","Item","col","s","HomePage","useEnterprise","HomePageEE"],"mappings":"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"}
-\ No newline at end of file
-+{"version":3,"file":"HomePage-CFTx_SgI.mjs","sources":["../../../admin/src/services/homepage.ts","../../../admin/src/pages/Home/components/Widget.tsx","../../../admin/src/pages/Home/components/ContentManagerWidgets.tsx","../../../admin/src/components/GuidedTour/Homepage.tsx","../../../admin/src/pages/Home/components/GuidedTour.tsx","../../../admin/src/pages/Home/HomePage.tsx"],"sourcesContent":["import * as Homepage from '../../../shared/contracts/homepage';\n\nimport { adminApi } from './api';\n\nconst homepageService = adminApi\n  .enhanceEndpoints({\n    // TODO: remove when the CM widgets are moved to the CM package, the type already exists there\n    addTagTypes: ['RecentDocumentList'],\n  })\n  .injectEndpoints({\n    endpoints: (builder) => ({\n      getRecentDocuments: builder.query<\n        Homepage.GetRecentDocuments.Response['data'],\n        Homepage.GetRecentDocuments.Request['query']\n      >({\n        query: (params) => `/admin/homepage/recent-documents?action=${params.action}`,\n        transformResponse: (response: Homepage.GetRecentDocuments.Response) => response.data,\n        providesTags: (res, _err, { action }) => [\n          { type: 'RecentDocumentList' as const, id: action },\n        ],\n      }),\n    }),\n  });\n\nconst { useGetRecentDocumentsQuery } = homepageService;\n\nexport { useGetRecentDocumentsQuery };\n","import * as React from 'react';\n\nimport { Box, Flex, type FlexProps, Loader, Typography } from '@strapi/design-system';\nimport { PuzzlePiece, WarningCircle } from '@strapi/icons';\nimport { EmptyDocuments } from '@strapi/icons/symbols';\nimport { type MessageDescriptor, useIntl } from 'react-intl';\n\ninterface RootProps {\n  title: MessageDescriptor;\n  icon?: typeof import('@strapi/icons').PuzzlePiece;\n  children: React.ReactNode;\n}\n\nconst Root = ({ title, icon = PuzzlePiece, children }: RootProps) => {\n  const { formatMessage } = useIntl();\n  const id = React.useId();\n  const Icon = icon;\n\n  return (\n    <Flex\n      width=\"100%\"\n      hasRadius\n      direction=\"column\"\n      alignItems=\"flex-start\"\n      background=\"neutral0\"\n      borderColor=\"neutral150\"\n      shadow=\"tableShadow\"\n      tag=\"section\"\n      gap={4}\n      padding={6}\n      aria-labelledby={id}\n    >\n      <Flex direction=\"row\" alignItems=\"center\" gap={2} tag=\"header\">\n        <Icon fill=\"neutral500\" aria-hidden />\n        <Typography textColor=\"neutral500\" variant=\"sigma\" tag=\"h2\" id={id}>\n          {formatMessage(title)}\n        </Typography>\n      </Flex>\n      <Box width=\"100%\" height=\"261px\" overflow=\"auto\" tag=\"main\">\n        {children}\n      </Box>\n    </Flex>\n  );\n};\n\ninterface LoadingProps {\n  children?: string;\n}\n\nconst Loading = ({ children }: LoadingProps) => {\n  const { formatMessage } = useIntl();\n\n  return (\n    <Flex height=\"100%\" justifyContent=\"center\" alignItems=\"center\">\n      <Loader>\n        {children ??\n          formatMessage({\n            id: 'HomePage.widget.loading',\n            defaultMessage: 'Loading widget content',\n          })}\n      </Loader>\n    </Flex>\n  );\n};\n\ninterface ErrorProps {\n  children?: string;\n}\n\nconst Error = ({ children }: ErrorProps) => {\n  const { formatMessage } = useIntl();\n\n  return (\n    <Flex height=\"100%\" direction=\"column\" justifyContent=\"center\" alignItems=\"center\" gap={2}>\n      <WarningCircle width=\"3.2rem\" height=\"3.2rem\" fill=\"danger600\" />\n      <Typography variant=\"delta\">\n        {formatMessage({\n          id: 'global.error',\n          defaultMessage: 'Something went wrong',\n        })}\n      </Typography>\n      <Typography textColor=\"neutral600\">\n        {children ??\n          formatMessage({\n            id: 'HomePage.widget.error',\n            defaultMessage: \"Couldn't load widget content.\",\n          })}\n      </Typography>\n    </Flex>\n  );\n};\n\ninterface NoDataProps {\n  children?: string;\n}\n\nconst NoData = ({ children }: NoDataProps) => {\n  const { formatMessage } = useIntl();\n\n  return (\n    <Flex height=\"100%\" direction=\"column\" justifyContent=\"center\" alignItems=\"center\" gap={6}>\n      <EmptyDocuments width=\"16rem\" height=\"8.8rem\" />\n      <Typography textColor=\"neutral600\">\n        {children ??\n          formatMessage({\n            id: 'HomePage.widget.no-data',\n            defaultMessage: 'No content found.',\n          })}\n      </Typography>\n    </Flex>\n  );\n};\n\nconst Widget = {\n  Root,\n  Loading,\n  Error,\n  NoData,\n};\n\nexport { Widget };\n","import { Box, IconButton, Status, Table, Tbody, Td, Tr, Typography } from '@strapi/design-system';\nimport { CheckCircle, Pencil } from '@strapi/icons';\nimport { useIntl } from 'react-intl';\nimport { Link, useNavigate } from 'react-router-dom';\nimport { styled } from 'styled-components';\n\nimport { RelativeTime } from '../../../components/RelativeTime';\nimport { useTracking } from '../../../features/Tracking';\nimport { useGetRecentDocumentsQuery } from '../../../services/homepage';\nimport { capitalise } from '../../../utils/strings';\n\nimport { Widget } from './Widget';\n\nimport type { RecentDocument } from '../../../../../shared/contracts/homepage';\n\nconst CellTypography = styled(Typography).attrs({ maxWidth: '14.4rem', display: 'block' })`\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n`;\n\ninterface DocumentStatusProps {\n  status: RecentDocument['status'];\n}\n\nconst DocumentStatus = ({ status = 'draft' }: DocumentStatusProps) => {\n  const statusVariant =\n    status === 'draft' ? 'secondary' : status === 'published' ? 'success' : 'alternative';\n\n  const { formatMessage } = useIntl();\n\n  return (\n    <Status variant={statusVariant} size=\"XS\">\n      <Typography tag=\"span\" variant=\"omega\" fontWeight=\"bold\">\n        {formatMessage({\n          id: `content-manager.containers.List.${status}`,\n          defaultMessage: capitalise(status),\n        })}\n      </Typography>\n    </Status>\n  );\n};\n\nconst RecentDocumentsTable = ({ documents }: { documents: RecentDocument[] }) => {\n  const { formatMessage } = useIntl();\n  const { trackUsage } = useTracking();\n  const navigate = useNavigate();\n\n  const getEditViewLink = (document: RecentDocument): string => {\n    // TODO: import the constants for this once the code is moved to the CM package\n    const isSingleType = document.kind === 'singleType';\n    const kindPath = isSingleType ? 'single-types' : 'collection-types';\n    const queryParams = document.locale ? `?plugins[i18n][locale]=${document.locale}` : '';\n\n    return `/content-manager/${kindPath}/${document.contentTypeUid}${isSingleType ? '' : '/' + document.documentId}${queryParams}`;\n  };\n\n  const handleRowClick = (document: RecentDocument) => () => {\n    trackUsage('willEditEntryFromHome');\n    const link = getEditViewLink(document);\n    navigate(link);\n  };\n\n  return (\n    <Table colCount={5} rowCount={documents?.length ?? 0}>\n      <Tbody>\n        {documents?.map((document) => (\n          <Tr onClick={handleRowClick(document)} cursor=\"pointer\" key={document.documentId}>\n            <Td>\n              <CellTypography title={document.title} variant=\"omega\" textColor=\"neutral800\">\n                {document.title}\n              </CellTypography>\n            </Td>\n            <Td>\n              <CellTypography variant=\"omega\" textColor=\"neutral600\">\n                {document.kind === 'singleType'\n                  ? formatMessage({\n                      id: 'content-manager.widget.last-edited.single-type',\n                      defaultMessage: 'Single-Type',\n                    })\n                  : formatMessage({\n                      id: document.contentTypeDisplayName,\n                      defaultMessage: document.contentTypeDisplayName,\n                    })}\n              </CellTypography>\n            </Td>\n            <Td>\n              <Box display=\"inline-block\">\n                {document.status ? (\n                  <DocumentStatus status={document.status} />\n                ) : (\n                  <Typography textColor=\"neutral600\" aria-hidden>\n                    -\n                  </Typography>\n                )}\n              </Box>\n            </Td>\n            <Td>\n              <Typography textColor=\"neutral600\">\n                <RelativeTime timestamp={new Date(document.updatedAt)} />\n              </Typography>\n            </Td>\n            <Td onClick={(e) => e.stopPropagation()}>\n              <Box display=\"inline-block\">\n                <IconButton\n                  tag={Link}\n                  to={getEditViewLink(document)}\n                  onClick={() => trackUsage('willEditEntryFromHome')}\n                  label={formatMessage({\n                    id: 'content-manager.actions.edit.label',\n                    defaultMessage: 'Edit',\n                  })}\n                  variant=\"ghost\"\n                >\n                  <Pencil />\n                </IconButton>\n              </Box>\n            </Td>\n          </Tr>\n        ))}\n      </Tbody>\n    </Table>\n  );\n};\n\n/* -------------------------------------------------------------------------------------------------\n * LastEditedWidget\n * -----------------------------------------------------------------------------------------------*/\n\nconst LastEditedWidgetContent = () => {\n  const { formatMessage } = useIntl();\n  const { data, isLoading, error } = useGetRecentDocumentsQuery({ action: 'update' });\n\n  if (isLoading) {\n    return <Widget.Loading />;\n  }\n\n  if (error || !data) {\n    return <Widget.Error />;\n  }\n\n  if (data.length === 0) {\n    return (\n      <Widget.NoData>\n        {formatMessage({\n          id: 'content-manager.widget.last-edited.no-data',\n          defaultMessage: 'No edited entries',\n        })}\n      </Widget.NoData>\n    );\n  }\n\n  return <RecentDocumentsTable documents={data} />;\n};\n\nconst LastEditedWidget = () => {\n  return (\n    <Widget.Root\n      title={{\n        id: 'content-manager.widget.last-edited.title',\n        defaultMessage: 'Last edited entries',\n      }}\n      icon={Pencil}\n    >\n      <LastEditedWidgetContent />\n    </Widget.Root>\n  );\n};\n\n/* -------------------------------------------------------------------------------------------------\n * LastPublishedWidget\n * -----------------------------------------------------------------------------------------------*/\n\nconst LastPublishedWidgetContent = () => {\n  const { formatMessage } = useIntl();\n  const { data, isLoading, error } = useGetRecentDocumentsQuery({ action: 'publish' });\n\n  if (isLoading) {\n    return <Widget.Loading />;\n  }\n\n  if (error || !data) {\n    return <Widget.Error />;\n  }\n\n  if (data.length === 0) {\n    return (\n      <Widget.NoData>\n        {formatMessage({\n          id: 'content-manager.widget.last-published.no-data',\n          defaultMessage: 'No published entries',\n        })}\n      </Widget.NoData>\n    );\n  }\n\n  return <RecentDocumentsTable documents={data} />;\n};\n\nconst LastPublishedWidget = () => {\n  return (\n    <Widget.Root\n      title={{\n        id: 'content-manager.widget.last-published.title',\n        defaultMessage: 'Last published entries',\n      }}\n      icon={CheckCircle}\n    >\n      <LastPublishedWidgetContent />\n    </Widget.Root>\n  );\n};\n\nexport { LastEditedWidget, LastPublishedWidget };\n","import { Box, Button, Flex, Typography, LinkButton } from '@strapi/design-system';\nimport { ArrowRight } from '@strapi/icons';\nimport { useIntl } from 'react-intl';\nimport { NavLink } from 'react-router-dom';\n\nimport { useTracking } from '../../features/Tracking';\n\nimport { LAYOUT_DATA, States, STATES } from './constants';\nimport { Number, VerticalDivider } from './Ornaments';\nimport { GuidedTourContextValue, useGuidedTour } from './Provider';\n\ntype SectionName = keyof GuidedTourContextValue['guidedTourState'];\n\nconst GuidedTourHomepage = () => {\n  const guidedTourState = useGuidedTour('GuidedTourHomepage', (state) => state.guidedTourState);\n  const setSkipped = useGuidedTour('GuidedTourHomepage', (state) => state.setSkipped);\n  const { formatMessage } = useIntl();\n  const { trackUsage } = useTracking();\n\n  const sections = Object.entries(LAYOUT_DATA).map(([key, val]) => ({\n    key: key,\n    title: val.home.title,\n    content: (\n      <LinkButton\n        onClick={() => trackUsage(val.home.trackingEvent)}\n        tag={NavLink}\n        to={val.home.cta.target}\n        endIcon={<ArrowRight />}\n      >\n        {formatMessage(val.home.cta.title)}\n      </LinkButton>\n    ),\n    isDone: Object.values(guidedTourState[key as SectionName]).every((value) => value === true),\n  }));\n\n  const activeSectionIndex = sections.findIndex((section) => !section.isDone);\n\n  const handleSkip = () => {\n    setSkipped(true);\n    trackUsage('didSkipGuidedtour');\n  };\n\n  return (\n    <Box\n      hasRadius\n      shadow=\"tableShadow\"\n      paddingTop={7}\n      paddingRight={4}\n      paddingLeft={7}\n      paddingBottom={4}\n      background=\"neutral0\"\n    >\n      <Flex direction=\"column\" alignItems=\"stretch\" gap={6}>\n        <Typography variant=\"beta\" tag=\"h2\">\n          {formatMessage({\n            id: 'app.components.GuidedTour.title',\n            defaultMessage: '3 steps to get started',\n          })}\n        </Typography>\n        <Box>\n          {sections.map((section, index) => {\n            const state = getState(activeSectionIndex, index);\n\n            return (\n              <Box key={section.key}>\n                <Flex>\n                  <Box minWidth={`3rem`} marginRight={5}>\n                    <Number state={state}>{index + 1}</Number>\n                  </Box>\n                  <Typography variant=\"delta\" tag=\"h3\">\n                    {formatMessage(section.title)}\n                  </Typography>\n                </Flex>\n                <Flex alignItems=\"flex-start\">\n                  <Flex\n                    justifyContent=\"center\"\n                    minWidth={`3rem`}\n                    marginBottom={3}\n                    marginTop={3}\n                    marginRight={5}\n                  >\n                    {index === sections.length - 1 ? null : <VerticalDivider state={state} />}\n                  </Flex>\n                  <Box marginTop={2}>{state === STATES.IS_ACTIVE ? section.content : null}</Box>\n                </Flex>\n              </Box>\n            );\n          })}\n        </Box>\n      </Flex>\n      <Flex justifyContent=\"flex-end\">\n        <Button variant=\"tertiary\" onClick={handleSkip}>\n          {formatMessage({ id: 'app.components.GuidedTour.skip', defaultMessage: 'Skip the tour' })}\n        </Button>\n      </Flex>\n    </Box>\n  );\n};\n\nconst getState = (activeSectionIndex: number, index: number): States => {\n  if (activeSectionIndex === -1) {\n    return STATES.IS_DONE;\n  }\n  if (index < activeSectionIndex) {\n    return STATES.IS_DONE;\n  }\n  if (index > activeSectionIndex) {\n    return STATES.IS_NOT_DONE;\n  }\n  return STATES.IS_ACTIVE;\n};\n\nexport { GuidedTourHomepage };\n","import { GuidedTourHomepage } from '../../../components/GuidedTour/Homepage';\nimport { useGuidedTour } from '../../../components/GuidedTour/Provider';\n\nexport const GuidedTour = () => {\n  const guidedTourState = useGuidedTour('HomePage', (state) => state.guidedTourState);\n  const isGuidedTourVisible = useGuidedTour('HomePage', (state) => state.isGuidedTourVisible);\n  const isSkipped = useGuidedTour('HomePage', (state) => state.isSkipped);\n  const showGuidedTour =\n    !Object.values(guidedTourState).every((section) =>\n      Object.values(section).every((step) => step)\n    ) &&\n    isGuidedTourVisible &&\n    !isSkipped;\n\n  if (!showGuidedTour) {\n    return null;\n  }\n\n  return <GuidedTourHomepage />;\n};\n","import * as React from 'react';\n\nimport { Flex, Grid, Main } from '@strapi/design-system';\nimport { useIntl } from 'react-intl';\n\nimport { Layouts } from '../../components/Layouts/Layout';\nimport { Page } from '../../components/PageHelpers';\nimport { useEnterprise } from '../../ee';\nimport { useAuth } from '../../features/Auth';\n\nimport { LastEditedWidget, LastPublishedWidget } from './components/ContentManagerWidgets';\nimport { GuidedTour } from './components/GuidedTour';\n\n/* -------------------------------------------------------------------------------------------------\n * HomePageCE\n * -----------------------------------------------------------------------------------------------*/\n\nconst HomePageCE = () => {\n  const { formatMessage } = useIntl();\n  const user = useAuth('HomePageCE', (state) => state.user);\n  const displayName = user?.firstname ?? user?.username ?? user?.email;\n\n  return (\n    <Main>\n      <Page.Title>\n        {formatMessage({ id: 'HomePage.head.title', defaultMessage: 'Homepage' })}\n      </Page.Title>\n      <Layouts.Header\n        title={formatMessage(\n          { id: 'HomePage.header.title', defaultMessage: 'Hello {name}' },\n          { name: displayName }\n        )}\n        subtitle={formatMessage({\n          id: 'HomePage.header.subtitle',\n          defaultMessage: 'Welcome to Copyright Knowledge administration panel!',\n        })}\n      />\n      <Layouts.Content>\n        <Flex direction=\"column\" alignItems=\"stretch\" gap={8} paddingBottom={10}>\n          <GuidedTour />\n          <Grid.Root gap={5}>\n            <Grid.Item col={6} s={12}>\n              <LastEditedWidget />\n            </Grid.Item>\n            <Grid.Item col={6} s={12}>\n              <LastPublishedWidget />\n            </Grid.Item>\n          </Grid.Root>\n        </Flex>\n      </Layouts.Content>\n    </Main>\n  );\n};\n\n/* -------------------------------------------------------------------------------------------------\n * HomePage\n * -----------------------------------------------------------------------------------------------*/\n\nconst HomePage = () => {\n  const Page = useEnterprise(\n    HomePageCE,\n    // eslint-disable-next-line import/no-cycle\n    async () => (await import('../../../../ee/admin/src/pages/HomePage')).HomePageEE\n  );\n\n  // block rendering until the EE component is fully loaded\n  if (!Page) {\n    return null;\n  }\n\n  return <Page />;\n};\n\nexport { HomePage, HomePageCE };\n"],"names":["homepageService","adminApi","enhanceEndpoints","addTagTypes","injectEndpoints","endpoints","builder","getRecentDocuments","query","params","action","transformResponse","response","data","providesTags","res","_err","type","id","useGetRecentDocumentsQuery","Root","title","icon","PuzzlePiece","children","formatMessage","useIntl","React","useId","Icon","_jsxs","Flex","width","hasRadius","direction","alignItems","background","borderColor","shadow","tag","gap","padding","aria-labelledby","_jsx","fill","aria-hidden","Typography","textColor","variant","Box","height","overflow","Loading","justifyContent","Loader","defaultMessage","Error","WarningCircle","NoData","EmptyDocuments","Widget","CellTypography","styled","attrs","maxWidth","display","DocumentStatus","status","statusVariant","Status","size","fontWeight","capitalise","RecentDocumentsTable","documents","trackUsage","useTracking","navigate","useNavigate","getEditViewLink","document","isSingleType","kind","kindPath","queryParams","locale","contentTypeUid","documentId","handleRowClick","link","Table","colCount","rowCount","length","Tbody","map","Tr","onClick","cursor","Td","contentTypeDisplayName","RelativeTime","timestamp","Date","updatedAt","e","stopPropagation","IconButton","Link","to","label","Pencil","LastEditedWidgetContent","isLoading","error","LastEditedWidget","LastPublishedWidgetContent","LastPublishedWidget","CheckCircle","GuidedTourHomepage","guidedTourState","useGuidedTour","state","setSkipped","sections","Object","entries","LAYOUT_DATA","key","val","home","content","LinkButton","trackingEvent","NavLink","cta","target","endIcon","ArrowRight","isDone","values","every","value","activeSectionIndex","findIndex","section","handleSkip","paddingTop","paddingRight","paddingLeft","paddingBottom","index","getState","minWidth","marginRight","Number","marginBottom","marginTop","VerticalDivider","STATES","IS_ACTIVE","Button","IS_DONE","IS_NOT_DONE","GuidedTour","isGuidedTourVisible","isSkipped","showGuidedTour","step","HomePageCE","user","useAuth","displayName","firstname","username","email","Main","Page","Title","Layouts","Header","name","subtitle","Content","Grid","Item","col","s","HomePage","useEnterprise","HomePageEE"],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAIA,MAAMA,eAAAA,GAAkBC,QACrBC,CAAAA,gBAAgB,CAAC;;IAEhBC,WAAa,EAAA;AAAC,QAAA;AAAqB;AACrC,CAAA,CAAA,CACCC,eAAe,CAAC;IACfC,SAAW,EAAA,CAACC,WAAa;YACvBC,kBAAoBD,EAAAA,OAAAA,CAAQE,KAAK,CAG/B;gBACAA,KAAO,EAAA,CAACC,SAAW,CAAC,wCAAwC,EAAEA,MAAOC,CAAAA,MAAM,CAAC,CAAC;gBAC7EC,iBAAmB,EAAA,CAACC,QAAmDA,GAAAA,QAAAA,CAASC,IAAI;AACpFC,gBAAAA,YAAAA,EAAc,CAACC,GAAKC,EAAAA,IAAAA,EAAM,EAAEN,MAAM,EAAE,GAAK;AACvC,wBAAA;4BAAEO,IAAM,EAAA,oBAAA;4BAA+BC,EAAIR,EAAAA;AAAO;AACnD;AACH,aAAA;SACF;AACF,CAAA,CAAA;AAEF,MAAM,EAAES,0BAA0B,EAAE,GAAGnB,eAAAA;;ACXvC,MAAMoB,IAAAA,GAAO,CAAC,EAAEC,KAAK,EAAEC,IAAOC,GAAAA,WAAW,EAAEC,QAAQ,EAAa,GAAA;IAC9D,MAAM,EAAEC,aAAa,EAAE,GAAGC,OAAAA,EAAAA;IAC1B,MAAMR,EAAAA,GAAKS,MAAMC,KAAK,EAAA;AACtB,IAAA,MAAMC,IAAOP,GAAAA,IAAAA;AAEb,IAAA,qBACEQ,IAACC,CAAAA,IAAAA,EAAAA;QACCC,KAAM,EAAA,MAAA;QACNC,SAAS,EAAA,IAAA;QACTC,SAAU,EAAA,QAAA;QACVC,UAAW,EAAA,YAAA;QACXC,UAAW,EAAA,UAAA;QACXC,WAAY,EAAA,YAAA;QACZC,MAAO,EAAA,aAAA;QACPC,GAAI,EAAA,SAAA;QACJC,GAAK,EAAA,CAAA;QACLC,OAAS,EAAA,CAAA;QACTC,iBAAiBxB,EAAAA,EAAAA;;0BAEjBY,IAACC,CAAAA,IAAAA,EAAAA;gBAAKG,SAAU,EAAA,KAAA;gBAAMC,UAAW,EAAA,QAAA;gBAASK,GAAK,EAAA,CAAA;gBAAGD,GAAI,EAAA,QAAA;;kCACpDI,GAACd,CAAAA,IAAAA,EAAAA;wBAAKe,IAAK,EAAA,YAAA;wBAAaC,aAAW,EAAA;;kCACnCF,GAACG,CAAAA,UAAAA,EAAAA;wBAAWC,SAAU,EAAA,YAAA;wBAAaC,OAAQ,EAAA,OAAA;wBAAQT,GAAI,EAAA,IAAA;wBAAKrB,EAAIA,EAAAA,EAAAA;kCAC7DO,aAAcJ,CAAAA,KAAAA;;;;0BAGnBsB,GAACM,CAAAA,GAAAA,EAAAA;gBAAIjB,KAAM,EAAA,MAAA;gBAAOkB,MAAO,EAAA,OAAA;gBAAQC,QAAS,EAAA,MAAA;gBAAOZ,GAAI,EAAA,MAAA;AAClDf,gBAAAA,QAAAA,EAAAA;;;;AAIT,CAAA;AAMA,MAAM4B,OAAU,GAAA,CAAC,EAAE5B,QAAQ,EAAgB,GAAA;IACzC,MAAM,EAAEC,aAAa,EAAE,GAAGC,OAAAA,EAAAA;AAE1B,IAAA,qBACEiB,GAACZ,CAAAA,IAAAA,EAAAA;QAAKmB,MAAO,EAAA,MAAA;QAAOG,cAAe,EAAA,QAAA;QAASlB,UAAW,EAAA,QAAA;AACrD,QAAA,QAAA,gBAAAQ,GAACW,CAAAA,MAAAA,EAAAA;AACE9B,YAAAA,QAAAA,EAAAA,QAAAA,IACCC,aAAc,CAAA;gBACZP,EAAI,EAAA,yBAAA;gBACJqC,cAAgB,EAAA;AAClB,aAAA;;;AAIV,CAAA;AAMA,MAAMC,KAAQ,GAAA,CAAC,EAAEhC,QAAQ,EAAc,GAAA;IACrC,MAAM,EAAEC,aAAa,EAAE,GAAGC,OAAAA,EAAAA;AAE1B,IAAA,qBACEI,IAACC,CAAAA,IAAAA,EAAAA;QAAKmB,MAAO,EAAA,MAAA;QAAOhB,SAAU,EAAA,QAAA;QAASmB,cAAe,EAAA,QAAA;QAASlB,UAAW,EAAA,QAAA;QAASK,GAAK,EAAA,CAAA;;0BACtFG,GAACc,CAAAA,aAAAA,EAAAA;gBAAczB,KAAM,EAAA,QAAA;gBAASkB,MAAO,EAAA,QAAA;gBAASN,IAAK,EAAA;;0BACnDD,GAACG,CAAAA,UAAAA,EAAAA;gBAAWE,OAAQ,EAAA,OAAA;0BACjBvB,aAAc,CAAA;oBACbP,EAAI,EAAA,cAAA;oBACJqC,cAAgB,EAAA;AAClB,iBAAA;;0BAEFZ,GAACG,CAAAA,UAAAA,EAAAA;gBAAWC,SAAU,EAAA,YAAA;AACnBvB,gBAAAA,QAAAA,EAAAA,QAAAA,IACCC,aAAc,CAAA;oBACZP,EAAI,EAAA,uBAAA;oBACJqC,cAAgB,EAAA;AAClB,iBAAA;;;;AAIV,CAAA;AAMA,MAAMG,MAAS,GAAA,CAAC,EAAElC,QAAQ,EAAe,GAAA;IACvC,MAAM,EAAEC,aAAa,EAAE,GAAGC,OAAAA,EAAAA;AAE1B,IAAA,qBACEI,IAACC,CAAAA,IAAAA,EAAAA;QAAKmB,MAAO,EAAA,MAAA;QAAOhB,SAAU,EAAA,QAAA;QAASmB,cAAe,EAAA,QAAA;QAASlB,UAAW,EAAA,QAAA;QAASK,GAAK,EAAA,CAAA;;0BACtFG,GAACgB,CAAAA,cAAAA,EAAAA;gBAAe3B,KAAM,EAAA,OAAA;gBAAQkB,MAAO,EAAA;;0BACrCP,GAACG,CAAAA,UAAAA,EAAAA;gBAAWC,SAAU,EAAA,YAAA;AACnBvB,gBAAAA,QAAAA,EAAAA,QAAAA,IACCC,aAAc,CAAA;oBACZP,EAAI,EAAA,yBAAA;oBACJqC,cAAgB,EAAA;AAClB,iBAAA;;;;AAIV,CAAA;AAEA,MAAMK,MAAS,GAAA;AACbxC,IAAAA,IAAAA;AACAgC,IAAAA,OAAAA;AACAI,IAAAA,KAAAA;AACAE,IAAAA;AACF,CAAA;;ACvGA,MAAMG,cAAiBC,GAAAA,MAAAA,CAAOhB,UAAYiB,CAAAA,CAAAA,KAAK,CAAC;IAAEC,QAAU,EAAA,SAAA;IAAWC,OAAS,EAAA;AAAQ,CAAA,CAAE;;;;AAI1F,CAAC;AAMD,MAAMC,cAAiB,GAAA,CAAC,EAAEC,MAAAA,GAAS,OAAO,EAAuB,GAAA;AAC/D,IAAA,MAAMC,gBACJD,MAAW,KAAA,OAAA,GAAU,WAAcA,GAAAA,MAAAA,KAAW,cAAc,SAAY,GAAA,aAAA;IAE1E,MAAM,EAAE1C,aAAa,EAAE,GAAGC,OAAAA,EAAAA;AAE1B,IAAA,qBACEiB,GAAC0B,CAAAA,MAAAA,EAAAA;QAAOrB,OAASoB,EAAAA,aAAAA;QAAeE,IAAK,EAAA,IAAA;AACnC,QAAA,QAAA,gBAAA3B,GAACG,CAAAA,UAAAA,EAAAA;YAAWP,GAAI,EAAA,MAAA;YAAOS,OAAQ,EAAA,OAAA;YAAQuB,UAAW,EAAA,MAAA;sBAC/C9C,aAAc,CAAA;AACbP,gBAAAA,EAAAA,EAAI,CAAC,gCAAgC,EAAEiD,MAAAA,CAAO,CAAC;AAC/CZ,gBAAAA,cAAAA,EAAgBiB,UAAWL,CAAAA,MAAAA;AAC7B,aAAA;;;AAIR,CAAA;AAEA,MAAMM,oBAAuB,GAAA,CAAC,EAAEC,SAAS,EAAmC,GAAA;IAC1E,MAAM,EAAEjD,aAAa,EAAE,GAAGC,OAAAA,EAAAA;IAC1B,MAAM,EAAEiD,UAAU,EAAE,GAAGC,WAAAA,EAAAA;AACvB,IAAA,MAAMC,QAAWC,GAAAA,WAAAA,EAAAA;AAEjB,IAAA,MAAMC,kBAAkB,CAACC,QAAAA,GAAAA;;QAEvB,MAAMC,YAAAA,GAAeD,QAASE,CAAAA,IAAI,KAAK,YAAA;QACvC,MAAMC,QAAAA,GAAWF,eAAe,cAAiB,GAAA,kBAAA;QACjD,MAAMG,WAAAA,GAAcJ,QAASK,CAAAA,MAAM,GAAG,CAAC,uBAAuB,EAAEL,QAASK,CAAAA,MAAM,CAAC,CAAC,GAAG,EAAA;AAEpF,QAAA,OAAO,CAAC,iBAAiB,EAAEF,SAAS,CAAC,EAAEH,SAASM,cAAc,CAAC,EAAEL,YAAAA,GAAe,KAAK,GAAMD,GAAAA,QAAAA,CAASO,UAAU,CAAC,EAAEH,YAAY,CAAC;AAChI,KAAA;IAEA,MAAMI,cAAAA,GAAiB,CAACR,QAA6B,GAAA,IAAA;YACnDL,UAAW,CAAA,uBAAA,CAAA;AACX,YAAA,MAAMc,OAAOV,eAAgBC,CAAAA,QAAAA,CAAAA;YAC7BH,QAASY,CAAAA,IAAAA,CAAAA;AACX,SAAA;AAEA,IAAA,qBACE9C,GAAC+C,CAAAA,KAAAA,EAAAA;QAAMC,QAAU,EAAA,CAAA;AAAGC,QAAAA,QAAAA,EAAUlB,WAAWmB,MAAU,IAAA,CAAA;AACjD,QAAA,QAAA,gBAAAlD,GAACmD,CAAAA,KAAAA,EAAAA;sBACEpB,SAAWqB,EAAAA,GAAAA,CAAI,CAACf,QAAAA,iBACflD,IAACkE,CAAAA,EAAAA,EAAAA;AAAGC,oBAAAA,OAAAA,EAAST,cAAeR,CAAAA,QAAAA,CAAAA;oBAAWkB,MAAO,EAAA,SAAA;;sCAC5CvD,GAACwD,CAAAA,EAAAA,EAAAA;AACC,4BAAA,QAAA,gBAAAxD,GAACkB,CAAAA,cAAAA,EAAAA;AAAexC,gCAAAA,KAAAA,EAAO2D,SAAS3D,KAAK;gCAAE2B,OAAQ,EAAA,OAAA;gCAAQD,SAAU,EAAA,YAAA;AAC9DiC,gCAAAA,QAAAA,EAAAA,QAAAA,CAAS3D;;;sCAGdsB,GAACwD,CAAAA,EAAAA,EAAAA;AACC,4BAAA,QAAA,gBAAAxD,GAACkB,CAAAA,cAAAA,EAAAA;gCAAeb,OAAQ,EAAA,OAAA;gCAAQD,SAAU,EAAA,YAAA;0CACvCiC,QAASE,CAAAA,IAAI,KAAK,YAAA,GACfzD,aAAc,CAAA;oCACZP,EAAI,EAAA,gDAAA;oCACJqC,cAAgB,EAAA;AAClB,iCAAA,CAAA,GACA9B,aAAc,CAAA;AACZP,oCAAAA,EAAAA,EAAI8D,SAASoB,sBAAsB;AACnC7C,oCAAAA,cAAAA,EAAgByB,SAASoB;AAC3B,iCAAA;;;sCAGRzD,GAACwD,CAAAA,EAAAA,EAAAA;AACC,4BAAA,QAAA,gBAAAxD,GAACM,CAAAA,GAAAA,EAAAA;gCAAIgB,OAAQ,EAAA,cAAA;0CACVe,QAASb,CAAAA,MAAM,iBACdxB,GAACuB,CAAAA,cAAAA,EAAAA;AAAeC,oCAAAA,MAAAA,EAAQa,SAASb;mDAEjCxB,GAACG,CAAAA,UAAAA,EAAAA;oCAAWC,SAAU,EAAA,YAAA;oCAAaF,aAAW,EAAA,IAAA;AAAC,oCAAA,QAAA,EAAA;;;;sCAMrDF,GAACwD,CAAAA,EAAAA,EAAAA;AACC,4BAAA,QAAA,gBAAAxD,GAACG,CAAAA,UAAAA,EAAAA;gCAAWC,SAAU,EAAA,YAAA;AACpB,gCAAA,QAAA,gBAAAJ,GAAC0D,CAAAA,YAAAA,EAAAA;oCAAaC,SAAW,EAAA,IAAIC,IAAKvB,CAAAA,QAAAA,CAASwB,SAAS;;;;sCAGxD7D,GAACwD,CAAAA,EAAAA,EAAAA;4BAAGF,OAAS,EAAA,CAACQ,CAAMA,GAAAA,CAAAA,CAAEC,eAAe,EAAA;AACnC,4BAAA,QAAA,gBAAA/D,GAACM,CAAAA,GAAAA,EAAAA;gCAAIgB,OAAQ,EAAA,cAAA;AACX,gCAAA,QAAA,gBAAAtB,GAACgE,CAAAA,UAAAA,EAAAA;oCACCpE,GAAKqE,EAAAA,IAAAA;AACLC,oCAAAA,EAAAA,EAAI9B,eAAgBC,CAAAA,QAAAA,CAAAA;AACpBiB,oCAAAA,OAAAA,EAAS,IAAMtB,UAAW,CAAA,uBAAA,CAAA;AAC1BmC,oCAAAA,KAAAA,EAAOrF,aAAc,CAAA;wCACnBP,EAAI,EAAA,oCAAA;wCACJqC,cAAgB,EAAA;AAClB,qCAAA,CAAA;oCACAP,OAAQ,EAAA,OAAA;AAER,oCAAA,QAAA,gBAAAL,GAACoE,CAAAA,MAAAA,EAAAA,EAAAA;;;;;AA/CoD/B,iBAAAA,EAAAA,QAAAA,CAASO,UAAU,CAAA;;;AAwD1F,CAAA;AAEA;;AAEkG,qGAElG,MAAMyB,uBAA0B,GAAA,IAAA;IAC9B,MAAM,EAAEvF,aAAa,EAAE,GAAGC,OAAAA,EAAAA;IAC1B,MAAM,EAAEb,IAAI,EAAEoG,SAAS,EAAEC,KAAK,EAAE,GAAG/F,0BAA2B,CAAA;QAAET,MAAQ,EAAA;AAAS,KAAA,CAAA;AAEjF,IAAA,IAAIuG,SAAW,EAAA;QACb,qBAAOtE,GAAA,CAACiB,OAAOR,OAAO,EAAA,EAAA,CAAA;AACxB;IAEA,IAAI8D,KAAAA,IAAS,CAACrG,IAAM,EAAA;QAClB,qBAAO8B,GAAA,CAACiB,OAAOJ,KAAK,EAAA,EAAA,CAAA;AACtB;IAEA,IAAI3C,IAAAA,CAAKgF,MAAM,KAAK,CAAG,EAAA;QACrB,qBACElD,GAAA,CAACiB,OAAOF,MAAM,EAAA;sBACXjC,aAAc,CAAA;gBACbP,EAAI,EAAA,4CAAA;gBACJqC,cAAgB,EAAA;AAClB,aAAA;;AAGN;AAEA,IAAA,qBAAOZ,GAAC8B,CAAAA,oBAAAA,EAAAA;QAAqBC,SAAW7D,EAAAA;;AAC1C,CAAA;AAEA,MAAMsG,gBAAmB,GAAA,IAAA;IACvB,qBACExE,GAAA,CAACiB,OAAOxC,IAAI,EAAA;QACVC,KAAO,EAAA;YACLH,EAAI,EAAA,0CAAA;YACJqC,cAAgB,EAAA;AAClB,SAAA;QACAjC,IAAMyF,EAAAA,MAAAA;AAEN,QAAA,QAAA,gBAAApE,GAACqE,CAAAA,uBAAAA,EAAAA,EAAAA;;AAGP,CAAA;AAEA;;AAEkG,qGAElG,MAAMI,0BAA6B,GAAA,IAAA;IACjC,MAAM,EAAE3F,aAAa,EAAE,GAAGC,OAAAA,EAAAA;IAC1B,MAAM,EAAEb,IAAI,EAAEoG,SAAS,EAAEC,KAAK,EAAE,GAAG/F,0BAA2B,CAAA;QAAET,MAAQ,EAAA;AAAU,KAAA,CAAA;AAElF,IAAA,IAAIuG,SAAW,EAAA;QACb,qBAAOtE,GAAA,CAACiB,OAAOR,OAAO,EAAA,EAAA,CAAA;AACxB;IAEA,IAAI8D,KAAAA,IAAS,CAACrG,IAAM,EAAA;QAClB,qBAAO8B,GAAA,CAACiB,OAAOJ,KAAK,EAAA,EAAA,CAAA;AACtB;IAEA,IAAI3C,IAAAA,CAAKgF,MAAM,KAAK,CAAG,EAAA;QACrB,qBACElD,GAAA,CAACiB,OAAOF,MAAM,EAAA;sBACXjC,aAAc,CAAA;gBACbP,EAAI,EAAA,+CAAA;gBACJqC,cAAgB,EAAA;AAClB,aAAA;;AAGN;AAEA,IAAA,qBAAOZ,GAAC8B,CAAAA,oBAAAA,EAAAA;QAAqBC,SAAW7D,EAAAA;;AAC1C,CAAA;AAEA,MAAMwG,mBAAsB,GAAA,IAAA;IAC1B,qBACE1E,GAAA,CAACiB,OAAOxC,IAAI,EAAA;QACVC,KAAO,EAAA;YACLH,EAAI,EAAA,6CAAA;YACJqC,cAAgB,EAAA;AAClB,SAAA;QACAjC,IAAMgG,EAAAA,WAAAA;AAEN,QAAA,QAAA,gBAAA3E,GAACyE,CAAAA,0BAAAA,EAAAA,EAAAA;;AAGP,CAAA;;ACtMA,MAAMG,kBAAqB,GAAA,IAAA;AACzB,IAAA,MAAMC,kBAAkBC,aAAc,CAAA,oBAAA,EAAsB,CAACC,KAAAA,GAAUA,MAAMF,eAAe,CAAA;AAC5F,IAAA,MAAMG,aAAaF,aAAc,CAAA,oBAAA,EAAsB,CAACC,KAAAA,GAAUA,MAAMC,UAAU,CAAA;IAClF,MAAM,EAAElG,aAAa,EAAE,GAAGC,OAAAA,EAAAA;IAC1B,MAAM,EAAEiD,UAAU,EAAE,GAAGC,WAAAA,EAAAA;AAEvB,IAAA,MAAMgD,QAAWC,GAAAA,MAAAA,CAAOC,OAAO,CAACC,WAAahC,CAAAA,CAAAA,GAAG,CAAC,CAAC,CAACiC,GAAAA,EAAKC,GAAI,CAAA,IAAM;YAChED,GAAKA,EAAAA,GAAAA;YACL3G,KAAO4G,EAAAA,GAAAA,CAAIC,IAAI,CAAC7G,KAAK;AACrB8G,YAAAA,OAAAA,gBACExF,GAACyF,CAAAA,UAAAA,EAAAA;AACCnC,gBAAAA,OAAAA,EAAS,IAAMtB,UAAAA,CAAWsD,GAAIC,CAAAA,IAAI,CAACG,aAAa,CAAA;gBAChD9F,GAAK+F,EAAAA,OAAAA;AACLzB,gBAAAA,EAAAA,EAAIoB,GAAIC,CAAAA,IAAI,CAACK,GAAG,CAACC,MAAM;AACvBC,gBAAAA,OAAAA,gBAAS9F,GAAC+F,CAAAA,UAAAA,EAAAA,EAAAA,CAAAA;AAETjH,gBAAAA,QAAAA,EAAAA,aAAAA,CAAcwG,GAAIC,CAAAA,IAAI,CAACK,GAAG,CAAClH,KAAK;;YAGrCsH,MAAQd,EAAAA,MAAAA,CAAOe,MAAM,CAACpB,eAAe,CAACQ,GAAmB,CAAA,CAAA,CAAEa,KAAK,CAAC,CAACC,KAAAA,GAAUA,KAAU,KAAA,IAAA;SACxF,CAAA,CAAA;IAEA,MAAMC,kBAAAA,GAAqBnB,SAASoB,SAAS,CAAC,CAACC,OAAY,GAAA,CAACA,QAAQN,MAAM,CAAA;AAE1E,IAAA,MAAMO,UAAa,GAAA,IAAA;QACjBvB,UAAW,CAAA,IAAA,CAAA;QACXhD,UAAW,CAAA,mBAAA,CAAA;AACb,KAAA;AAEA,IAAA,qBACE7C,IAACmB,CAAAA,GAAAA,EAAAA;QACChB,SAAS,EAAA,IAAA;QACTK,MAAO,EAAA,aAAA;QACP6G,UAAY,EAAA,CAAA;QACZC,YAAc,EAAA,CAAA;QACdC,WAAa,EAAA,CAAA;QACbC,aAAe,EAAA,CAAA;QACflH,UAAW,EAAA,UAAA;;0BAEXN,IAACC,CAAAA,IAAAA,EAAAA;gBAAKG,SAAU,EAAA,QAAA;gBAASC,UAAW,EAAA,SAAA;gBAAUK,GAAK,EAAA,CAAA;;kCACjDG,GAACG,CAAAA,UAAAA,EAAAA;wBAAWE,OAAQ,EAAA,MAAA;wBAAOT,GAAI,EAAA,IAAA;kCAC5Bd,aAAc,CAAA;4BACbP,EAAI,EAAA,iCAAA;4BACJqC,cAAgB,EAAA;AAClB,yBAAA;;kCAEFZ,GAACM,CAAAA,GAAAA,EAAAA;kCACE2E,QAAS7B,CAAAA,GAAG,CAAC,CAACkD,OAASM,EAAAA,KAAAA,GAAAA;4BACtB,MAAM7B,KAAAA,GAAQ8B,SAAST,kBAAoBQ,EAAAA,KAAAA,CAAAA;AAE3C,4BAAA,qBACEzH,IAACmB,CAAAA,GAAAA,EAAAA;;kDACCnB,IAACC,CAAAA,IAAAA,EAAAA;;0DACCY,GAACM,CAAAA,GAAAA,EAAAA;gDAAIwG,QAAU,EAAA,CAAC,IAAI,CAAC;gDAAEC,WAAa,EAAA,CAAA;AAClC,gDAAA,QAAA,gBAAA/G,GAACgH,CAAAA,MAAAA,EAAAA;oDAAOjC,KAAOA,EAAAA,KAAAA;8DAAQ6B,KAAQ,GAAA;;;0DAEjC5G,GAACG,CAAAA,UAAAA,EAAAA;gDAAWE,OAAQ,EAAA,OAAA;gDAAQT,GAAI,EAAA,IAAA;AAC7Bd,gDAAAA,QAAAA,EAAAA,aAAAA,CAAcwH,QAAQ5H,KAAK;;;;kDAGhCS,IAACC,CAAAA,IAAAA,EAAAA;wCAAKI,UAAW,EAAA,YAAA;;0DACfQ,GAACZ,CAAAA,IAAAA,EAAAA;gDACCsB,cAAe,EAAA,QAAA;gDACfoG,QAAU,EAAA,CAAC,IAAI,CAAC;gDAChBG,YAAc,EAAA,CAAA;gDACdC,SAAW,EAAA,CAAA;gDACXH,WAAa,EAAA,CAAA;AAEZH,gDAAAA,QAAAA,EAAAA,KAAAA,KAAU3B,QAAS/B,CAAAA,MAAM,GAAG,CAAA,GAAI,qBAAOlD,GAACmH,CAAAA,eAAAA,EAAAA;oDAAgBpC,KAAOA,EAAAA;;;0DAElE/E,GAACM,CAAAA,GAAAA,EAAAA;gDAAI4G,SAAW,EAAA,CAAA;AAAInC,gDAAAA,QAAAA,EAAAA,KAAAA,KAAUqC,MAAOC,CAAAA,SAAS,GAAGf,OAAAA,CAAQd,OAAO,GAAG;;;;;AAnB7Dc,6BAAAA,EAAAA,OAAAA,CAAQjB,GAAG,CAAA;AAuBzB,yBAAA;;;;0BAGJrF,GAACZ,CAAAA,IAAAA,EAAAA;gBAAKsB,cAAe,EAAA,UAAA;AACnB,gBAAA,QAAA,gBAAAV,GAACsH,CAAAA,MAAAA,EAAAA;oBAAOjH,OAAQ,EAAA,UAAA;oBAAWiD,OAASiD,EAAAA,UAAAA;8BACjCzH,aAAc,CAAA;wBAAEP,EAAI,EAAA,gCAAA;wBAAkCqC,cAAgB,EAAA;AAAgB,qBAAA;;;;;AAKjG,CAAA;AAEA,MAAMiG,QAAAA,GAAW,CAACT,kBAA4BQ,EAAAA,KAAAA,GAAAA;IAC5C,IAAIR,kBAAAA,KAAuB,CAAC,CAAG,EAAA;AAC7B,QAAA,OAAOgB,OAAOG,OAAO;AACvB;AACA,IAAA,IAAIX,QAAQR,kBAAoB,EAAA;AAC9B,QAAA,OAAOgB,OAAOG,OAAO;AACvB;AACA,IAAA,IAAIX,QAAQR,kBAAoB,EAAA;AAC9B,QAAA,OAAOgB,OAAOI,WAAW;AAC3B;AACA,IAAA,OAAOJ,OAAOC,SAAS;AACzB,CAAA;;AC3GO,MAAMI,UAAa,GAAA,IAAA;AACxB,IAAA,MAAM5C,kBAAkBC,aAAc,CAAA,UAAA,EAAY,CAACC,KAAAA,GAAUA,MAAMF,eAAe,CAAA;AAClF,IAAA,MAAM6C,sBAAsB5C,aAAc,CAAA,UAAA,EAAY,CAACC,KAAAA,GAAUA,MAAM2C,mBAAmB,CAAA;AAC1F,IAAA,MAAMC,YAAY7C,aAAc,CAAA,UAAA,EAAY,CAACC,KAAAA,GAAUA,MAAM4C,SAAS,CAAA;IACtE,MAAMC,cAAAA,GACJ,CAAC1C,MAAOe,CAAAA,MAAM,CAACpB,eAAiBqB,CAAAA,CAAAA,KAAK,CAAC,CAACI,OAAAA,GACrCpB,OAAOe,MAAM,CAACK,SAASJ,KAAK,CAAC,CAAC2B,IAASA,GAAAA,IAAAA,CAAAA,CAAAA,IAEzCH,uBACA,CAACC,SAAAA;AAEH,IAAA,IAAI,CAACC,cAAgB,EAAA;QACnB,OAAO,IAAA;AACT;AAEA,IAAA,qBAAO5H,GAAC4E,CAAAA,kBAAAA,EAAAA,EAAAA,CAAAA;AACV,CAAE;;ACNF;;AAEkG,2GAE5FkD,UAAa,GAAA,IAAA;IACjB,MAAM,EAAEhJ,aAAa,EAAE,GAAGC,OAAAA,EAAAA;AAC1B,IAAA,MAAMgJ,OAAOC,OAAQ,CAAA,YAAA,EAAc,CAACjD,KAAAA,GAAUA,MAAMgD,IAAI,CAAA;AACxD,IAAA,MAAME,WAAcF,GAAAA,IAAAA,EAAMG,SAAaH,IAAAA,IAAAA,EAAMI,YAAYJ,IAAMK,EAAAA,KAAAA;AAE/D,IAAA,qBACEjJ,IAACkJ,CAAAA,IAAAA,EAAAA;;AACC,0BAAArI,GAAA,CAACsI,KAAKC,KAAK,EAAA;0BACRzJ,aAAc,CAAA;oBAAEP,EAAI,EAAA,qBAAA;oBAAuBqC,cAAgB,EAAA;AAAW,iBAAA;;AAEzE,0BAAAZ,GAAA,CAACwI,QAAQC,MAAM,EAAA;AACb/J,gBAAAA,KAAAA,EAAOI,aACL,CAAA;oBAAEP,EAAI,EAAA,uBAAA;oBAAyBqC,cAAgB,EAAA;iBAC/C,EAAA;oBAAE8H,IAAMT,EAAAA;AAAY,iBAAA,CAAA;AAEtBU,gBAAAA,QAAAA,EAAU7J,aAAc,CAAA;oBACtBP,EAAI,EAAA,0BAAA;oBACJqC,cAAgB,EAAA;AAClB,iBAAA;;AAEF,0BAAAZ,GAAA,CAACwI,QAAQI,OAAO,EAAA;AACd,gBAAA,QAAA,gBAAAzJ,IAACC,CAAAA,IAAAA,EAAAA;oBAAKG,SAAU,EAAA,QAAA;oBAASC,UAAW,EAAA,SAAA;oBAAUK,GAAK,EAAA,CAAA;oBAAG8G,aAAe,EAAA,EAAA;;sCACnE3G,GAACyH,CAAAA,UAAAA,EAAAA,EAAAA,CAAAA;AACD,sCAAAtI,IAAA,CAAC0J,KAAKpK,IAAI,EAAA;4BAACoB,GAAK,EAAA,CAAA;;AACd,8CAAAG,GAAA,CAAC6I,KAAKC,IAAI,EAAA;oCAACC,GAAK,EAAA,CAAA;oCAAGC,CAAG,EAAA,EAAA;AACpB,oCAAA,QAAA,gBAAAhJ,GAACwE,CAAAA,gBAAAA,EAAAA,EAAAA;;AAEH,8CAAAxE,GAAA,CAAC6I,KAAKC,IAAI,EAAA;oCAACC,GAAK,EAAA,CAAA;oCAAGC,CAAG,EAAA,EAAA;AACpB,oCAAA,QAAA,gBAAAhJ,GAAC0E,CAAAA,mBAAAA,EAAAA,EAAAA;;;;;;;;;AAOf;AAEA;;AAEkG,2GAE5FuE,QAAW,GAAA,IAAA;IACf,MAAMX,IAAAA,GAAOY,aACXpB,CAAAA,UAAAA;AAEA,IAAA,UAAY,CAAC,MAAM,OAAO,yBAAA,CAAyC,EAAGqB,UAAU,CAAA;;AAIlF,IAAA,IAAI,CAACb,IAAM,EAAA;QACT,OAAO,IAAA;AACT;AAEA,IAAA,qBAAOtI,GAACsI,CAAAA,IAAAA,EAAAA,EAAAA,CAAAA;AACV;;;;"}
+ /* -------------------------------------------------------------------------------------------------
+  * HomePage
+  * -----------------------------------------------------------------------------------------------*/ const HomePage = ()=>{
 diff --git a/node_modules/@strapi/admin/dist/admin/chunks/HomePage-Df0YSqNE.js b/node_modules/@strapi/admin/dist/admin/chunks/HomePage-Df0YSqNE.js
-index d71e7ce..9e2271b 100644
+index d71e7ce..9b973fb 100644
 --- a/node_modules/@strapi/admin/dist/admin/chunks/HomePage-Df0YSqNE.js
 +++ b/node_modules/@strapi/admin/dist/admin/chunks/HomePage-Df0YSqNE.js
-@@ -1,589 +1,602 @@
- 'use strict';
- 
--var jsxRuntime = require('react/jsx-runtime');
--var React = require('react');
--var designSystem = require('@strapi/design-system');
--var reactIntl = require('react-intl');
-+Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-+
-+const jsxRuntime = require('react/jsx-runtime');
-+const designSystem = require('@strapi/design-system');
-+const icons = require('@strapi/icons');
-+const symbols = require('@strapi/icons/symbols');
-+const reactIntl = require('react-intl');
-+const reactRouterDom = require('react-router-dom');
-+const styledComponents = require('styled-components');
-+const React = require('react');
-+
- var index = require('./index-D7OmC33R.js');
- var Theme = require('./Theme-CFGbtvHi.js');
- var admin = require('./admin-udBiOv2o.js');
--var useEnterprise = require('./useEnterprise-IHd3AKd2.js');
--var icons = require('@strapi/icons');
--var reactRouterDom = require('react-router-dom');
--var styledComponents = require('styled-components');
--var RelativeTime = require('./RelativeTime-ChFKZs4z.js');
--var symbols = require('@strapi/icons/symbols');
- var Ornaments = require('./Ornaments-CvdERnok.js');
--require('react-dom/client');
--require('invariant');
--require('lodash/isFunction');
--require('lodash/merge');
--require('lodash/pick');
--require('immer');
--require('react-redux');
--require('react-query');
--require('lodash/camelCase');
--require('yup');
--require('fractional-indexing');
--require('lodash/isEqual');
--require('lodash/omit');
--require('formik');
--require('@reduxjs/toolkit');
--require('lodash/throttle');
--require('qs');
--require('@radix-ui/react-context');
--require('lodash/clone');
--require('lodash/toPath');
--require('axios');
--require('lodash/get');
--require('lodash/set');
--require('use-context-selector');
--require('lodash/defaultsDeep');
--require('lodash/trimEnd');
--require('@reduxjs/toolkit/query/react');
--require('lodash/fp/pipe');
--require('date-fns');
-+var useEnterprise = require('./useEnterprise-IHd3AKd2.js');
+@@ -44,534 +44,557 @@ require('@reduxjs/toolkit/query/react');
+ require('lodash/fp/pipe');
+ require('date-fns');
  
 -function _interopNamespaceDefault(e) {
 -  var n = Object.create(null);
@@ -1240,8 +1035,7 @@ index d71e7ce..9e2271b 100644
 -        })
 -});
 -const { useGetRecentDocumentsQuery } = homepageService;
-+const React__namespace = /*#__PURE__*/_interopNamespace(React);
- 
+-
 -const Root = ({ title, icon = icons.PuzzlePiece, children })=>{
 -    const { formatMessage } = reactIntl.useIntl();
 -    const id = React__namespace.useId();
@@ -1362,7 +1156,8 @@ index d71e7ce..9e2271b 100644
 -    Error,
 -    NoData
 -};
--
++const React__namespace = /*#__PURE__*/_interopNamespace(React);
+ 
 -const CellTypography = styledComponents.styled(designSystem.Typography).attrs({
 -    maxWidth: '14.4rem',
 -    display: 'block'
@@ -1707,25 +1502,18 @@ index d71e7ce..9e2271b 100644
 +        /* @__PURE__ */ jsxRuntime.jsx(designSystem.Grid.Root, { children: /* @__PURE__ */ jsxRuntime.jsx(designSystem.Grid.Item, { col: 8, s: 12, direction: "column", alignItems: "stretch", children: /* @__PURE__ */ jsxRuntime.jsx("div", { children: /* @__PURE__ */ jsxRuntime.jsx(designSystem.Box, { paddingLeft: 6, paddingBottom: 10, children: /* @__PURE__ */ jsxRuntime.jsxs(designSystem.Flex, { direction: "column", alignItems: "flex-start", gap: 5, children: [
 +          /* @__PURE__ */ jsxRuntime.jsx(designSystem.Typography, { tag: "h1", variant: "alpha", children: hasAlreadyCreatedContentTypes ? formatMessage({
 +            id: "app.components.HomePage.welcome.again",
-+            defaultMessage: "Welcome on Copyright Knowledge 👋"
++            defaultMessage: "Welcome 👋"
 +          }) : formatMessage({
 +            id: "app.components.HomePage.welcome",
-+            defaultMessage: "Welcome on Copyright Knowledge 👋"
++            defaultMessage: "Welcome on board!"
 +          }) }),
 +          /* @__PURE__ */ jsxRuntime.jsx(WordWrap, { textColor: "neutral600", variant: "epsilon", children: hasAlreadyCreatedContentTypes ? formatMessage({
 +            id: "app.components.HomePage.welcomeBlock.content.again",
-+            defaultMessage: "We hope you are making progress on your project! Feel free to read the latest news about Strapi. We are giving our best to improve the product based on your feedback."
++            defaultMessage: "We hope 2 you are making progress on your project! Feel free to read the latest news about Strapi. We are giving our best to improve the product based on your feedback."
 +          }) : formatMessage({
 +            id: "app.components.HomePage.welcomeBlock.content",
 +            defaultMessage: "Congrats! You are logged as the first administrator. To discover the powerful features provided by Strapi, we recommend you to create your first Content type!"
 +          }) }),
-+          hasAlreadyCreatedContentTypes ? /* @__PURE__ */ jsxRuntime.jsx(designSystem.Link, { isExternal: true, href: "https://strapi.io/blog", children: formatMessage({
-+            id: "app.components.HomePage.button.blog",
-+            defaultMessage: "See more on the blog"
-+          }) }) : /* @__PURE__ */ jsxRuntime.jsx(designSystem.Button, { size: "L", onClick: handleClick, endIcon: /* @__PURE__ */ jsxRuntime.jsx(icons.ArrowRight, {}), children: formatMessage({
-+            id: "app.components.HomePage.create",
-+            defaultMessage: "Create your first Content type"
-+          }) })
 +        ] }) }) }) }) }),
 +        /* @__PURE__ */ jsxRuntime.jsxs(designSystem.Grid.Root, { gap: 6, children: [
 +          /* @__PURE__ */ jsxRuntime.jsx(designSystem.Grid.Item, { col: 8, s: 12, direction: "column", alignItems: "stretch", children: showGuidedTour ? /* @__PURE__ */ jsxRuntime.jsx(GuidedTourHomepage, {}) : /* @__PURE__ */ jsxRuntime.jsx(ContentBlocks, {}) }),
@@ -1832,6 +1620,10 @@ index d71e7ce..9e2271b 100644
 +            title: formatMessage({
 +              id: "global.documentation",
 +              defaultMessage: "Documentation"
++            }),
++            subtitle: formatMessage({
++              id: "app.components.BlockLink.documentation.content",
++              defaultMessage: "Discover the essential concepts, guides and instructions."
              }),
 -            isDone: Object.values(guidedTourState[key]).every((value)=>value === true)
 -        }));
@@ -1908,23 +1700,6 @@ index d71e7ce..9e2271b 100644
 -                        })
 -                    })
 -                ]
-+            subtitle: formatMessage({
-+              id: "app.components.BlockLink.documentation.content",
-+              defaultMessage: "Discover the essential concepts, guides and instructions."
-             }),
--            /*#__PURE__*/ jsxRuntime.jsx(designSystem.Flex, {
--                justifyContent: "flex-end",
--                children: /*#__PURE__*/ jsxRuntime.jsx(designSystem.Button, {
--                    variant: "tertiary",
--                    onClick: handleSkip,
--                    children: formatMessage({
--                        id: 'app.components.GuidedTour.skip',
--                        defaultMessage: 'Skip the tour'
--                    })
--                })
--            })
--        ]
--    });
 +            icon: /* @__PURE__ */ jsxRuntime.jsx(symbols.InformationSquare, {}),
 +            iconBackground: "primary100"
 +          }
@@ -1944,7 +1719,20 @@ index d71e7ce..9e2271b 100644
 +            title: formatMessage({
 +              id: "app.components.BlockLink.code",
 +              defaultMessage: "Code example"
-+            }),
+             }),
+-            /*#__PURE__*/ jsxRuntime.jsx(designSystem.Flex, {
+-                justifyContent: "flex-end",
+-                children: /*#__PURE__*/ jsxRuntime.jsx(designSystem.Button, {
+-                    variant: "tertiary",
+-                    onClick: handleSkip,
+-                    children: formatMessage({
+-                        id: 'app.components.GuidedTour.skip',
+-                        defaultMessage: 'Skip the tour'
+-                    })
+-                })
+-            })
+-        ]
+-    });
 +            subtitle: formatMessage({
 +              id: "app.components.BlockLink.code.content",
 +              defaultMessage: "Learn by using ready-made starters for your projects."
@@ -2052,16 +1840,6 @@ index d71e7ce..9e2271b 100644
 +      gap: 7,
 +      children: [
 +        /* @__PURE__ */ jsxRuntime.jsxs(designSystem.Flex, { direction: "column", alignItems: "stretch", gap: 5, children: [
-+          /* @__PURE__ */ jsxRuntime.jsxs(designSystem.Flex, { direction: "column", alignItems: "stretch", gap: 3, children: [
-+            /* @__PURE__ */ jsxRuntime.jsx(designSystem.Typography, { variant: "delta", tag: "h2", id: "join-the-community", children: formatMessage({
-+              id: "app.components.HomePage.community",
-+              defaultMessage: "Join the community"
-+            }) }),
-+            /* @__PURE__ */ jsxRuntime.jsx(designSystem.Typography, { textColor: "neutral600", children: formatMessage({
-+              id: "app.components.HomePage.community.content",
-+              defaultMessage: "Discuss with team members, contributors and developers on different channels"
-+            }) })
-+          ] }),
 +          /* @__PURE__ */ jsxRuntime.jsx(designSystem.Link, { href: "https://feedback.strapi.io/", isExternal: true, endIcon: /* @__PURE__ */ jsxRuntime.jsx(icons.ExternalLink, {}), children: formatMessage({
 +            id: "app.components.HomePage.roadmap",
 +            defaultMessage: "See our road map"
@@ -2175,16 +1953,6 @@ index d71e7ce..9e2271b 100644
 -        ]
 -    });
 -};
--/* -------------------------------------------------------------------------------------------------
-- * HomePage
-- * -----------------------------------------------------------------------------------------------*/ const HomePage = ()=>{
--    const Page = useEnterprise.useEnterprise(HomePageCE, // eslint-disable-next-line import/no-cycle
--    async ()=>(await Promise.resolve().then(function () { return require('./HomePage-ebJLhO6a.js'); })).HomePageEE);
--    // block rendering until the EE component is fully loaded
--    if (!Page) {
--        return null;
--    }
--    return /*#__PURE__*/ jsxRuntime.jsx(Page, {});
 +  path:nth-child(2) {
 +    fill: #000 !important;
 +  }
@@ -2274,286 +2042,66 @@ index d71e7ce..9e2271b 100644
 +    alt: "career"
 +  }
 +];
-+const HomePage = () => {
-+  const Page2 = useEnterprise.useEnterprise(
-+    HomePageCE,
-+    // eslint-disable-next-line import/no-cycle
-+    async () => (await Promise.resolve().then(() => require('./HomePage-ebJLhO6a.js'))).HomePageEE
-+  );
-+  if (!Page2) {
-+    return null;
-+  }
-+  return /* @__PURE__ */ jsxRuntime.jsx(Page2, {});
- };
- 
- exports.HomePage = HomePage;
- exports.HomePageCE = HomePageCE;
--//# sourceMappingURL=HomePage-Df0YSqNE.js.map
-+//# sourceMappingURL=HomePage-Dpuv_jq4.js.map
-diff --git a/node_modules/@strapi/admin/dist/admin/chunks/HomePage-Df0YSqNE.js.map b/node_modules/@strapi/admin/dist/admin/chunks/HomePage-Df0YSqNE.js.map
-index 400b91d..450ac63 100644
---- a/node_modules/@strapi/admin/dist/admin/chunks/HomePage-Df0YSqNE.js.map
-+++ b/node_modules/@strapi/admin/dist/admin/chunks/HomePage-Df0YSqNE.js.map
-@@ -1 +1 @@
--{"version":3,"file":"HomePage-Df0YSqNE.js","sources":["../../../admin/src/services/homepage.ts","../../../admin/src/pages/Home/components/Widget.tsx","../../../admin/src/pages/Home/components/ContentManagerWidgets.tsx","../../../admin/src/components/GuidedTour/Homepage.tsx","../../../admin/src/pages/Home/components/GuidedTour.tsx","../../../admin/src/pages/Home/HomePage.tsx"],"sourcesContent":["import * as Homepage from '../../../shared/contracts/homepage';\n\nimport { adminApi } from './api';\n\nconst homepageService = adminApi\n  .enhanceEndpoints({\n    // TODO: remove when the CM widgets are moved to the CM package, the type already exists there\n    addTagTypes: ['RecentDocumentList'],\n  })\n  .injectEndpoints({\n    endpoints: (builder) => ({\n      getRecentDocuments: builder.query<\n        Homepage.GetRecentDocuments.Response['data'],\n        Homepage.GetRecentDocuments.Request['query']\n      >({\n        query: (params) => `/admin/homepage/recent-documents?action=${params.action}`,\n        transformResponse: (response: Homepage.GetRecentDocuments.Response) => response.data,\n        providesTags: (res, _err, { action }) => [\n          { type: 'RecentDocumentList' as const, id: action },\n        ],\n      }),\n    }),\n  });\n\nconst { useGetRecentDocumentsQuery } = homepageService;\n\nexport { useGetRecentDocumentsQuery };\n","import * as React from 'react';\n\nimport { Box, Flex, type FlexProps, Loader, Typography } from '@strapi/design-system';\nimport { PuzzlePiece, WarningCircle } from '@strapi/icons';\nimport { EmptyDocuments } from '@strapi/icons/symbols';\nimport { type MessageDescriptor, useIntl } from 'react-intl';\n\ninterface RootProps {\n  title: MessageDescriptor;\n  icon?: typeof import('@strapi/icons').PuzzlePiece;\n  children: React.ReactNode;\n}\n\nconst Root = ({ title, icon = PuzzlePiece, children }: RootProps) => {\n  const { formatMessage } = useIntl();\n  const id = React.useId();\n  const Icon = icon;\n\n  return (\n    <Flex\n      width=\"100%\"\n      hasRadius\n      direction=\"column\"\n      alignItems=\"flex-start\"\n      background=\"neutral0\"\n      borderColor=\"neutral150\"\n      shadow=\"tableShadow\"\n      tag=\"section\"\n      gap={4}\n      padding={6}\n      aria-labelledby={id}\n    >\n      <Flex direction=\"row\" alignItems=\"center\" gap={2} tag=\"header\">\n        <Icon fill=\"neutral500\" aria-hidden />\n        <Typography textColor=\"neutral500\" variant=\"sigma\" tag=\"h2\" id={id}>\n          {formatMessage(title)}\n        </Typography>\n      </Flex>\n      <Box width=\"100%\" height=\"261px\" overflow=\"auto\" tag=\"main\">\n        {children}\n      </Box>\n    </Flex>\n  );\n};\n\ninterface LoadingProps {\n  children?: string;\n}\n\nconst Loading = ({ children }: LoadingProps) => {\n  const { formatMessage } = useIntl();\n\n  return (\n    <Flex height=\"100%\" justifyContent=\"center\" alignItems=\"center\">\n      <Loader>\n        {children ??\n          formatMessage({\n            id: 'HomePage.widget.loading',\n            defaultMessage: 'Loading widget content',\n          })}\n      </Loader>\n    </Flex>\n  );\n};\n\ninterface ErrorProps {\n  children?: string;\n}\n\nconst Error = ({ children }: ErrorProps) => {\n  const { formatMessage } = useIntl();\n\n  return (\n    <Flex height=\"100%\" direction=\"column\" justifyContent=\"center\" alignItems=\"center\" gap={2}>\n      <WarningCircle width=\"3.2rem\" height=\"3.2rem\" fill=\"danger600\" />\n      <Typography variant=\"delta\">\n        {formatMessage({\n          id: 'global.error',\n          defaultMessage: 'Something went wrong',\n        })}\n      </Typography>\n      <Typography textColor=\"neutral600\">\n        {children ??\n          formatMessage({\n            id: 'HomePage.widget.error',\n            defaultMessage: \"Couldn't load widget content.\",\n          })}\n      </Typography>\n    </Flex>\n  );\n};\n\ninterface NoDataProps {\n  children?: string;\n}\n\nconst NoData = ({ children }: NoDataProps) => {\n  const { formatMessage } = useIntl();\n\n  return (\n    <Flex height=\"100%\" direction=\"column\" justifyContent=\"center\" alignItems=\"center\" gap={6}>\n      <EmptyDocuments width=\"16rem\" height=\"8.8rem\" />\n      <Typography textColor=\"neutral600\">\n        {children ??\n          formatMessage({\n            id: 'HomePage.widget.no-data',\n            defaultMessage: 'No content found.',\n          })}\n      </Typography>\n    </Flex>\n  );\n};\n\nconst Widget = {\n  Root,\n  Loading,\n  Error,\n  NoData,\n};\n\nexport { Widget };\n","import { Box, IconButton, Status, Table, Tbody, Td, Tr, Typography } from '@strapi/design-system';\nimport { CheckCircle, Pencil } from '@strapi/icons';\nimport { useIntl } from 'react-intl';\nimport { Link, useNavigate } from 'react-router-dom';\nimport { styled } from 'styled-components';\n\nimport { RelativeTime } from '../../../components/RelativeTime';\nimport { useTracking } from '../../../features/Tracking';\nimport { useGetRecentDocumentsQuery } from '../../../services/homepage';\nimport { capitalise } from '../../../utils/strings';\n\nimport { Widget } from './Widget';\n\nimport type { RecentDocument } from '../../../../../shared/contracts/homepage';\n\nconst CellTypography = styled(Typography).attrs({ maxWidth: '14.4rem', display: 'block' })`\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n`;\n\ninterface DocumentStatusProps {\n  status: RecentDocument['status'];\n}\n\nconst DocumentStatus = ({ status = 'draft' }: DocumentStatusProps) => {\n  const statusVariant =\n    status === 'draft' ? 'secondary' : status === 'published' ? 'success' : 'alternative';\n\n  const { formatMessage } = useIntl();\n\n  return (\n    <Status variant={statusVariant} size=\"XS\">\n      <Typography tag=\"span\" variant=\"omega\" fontWeight=\"bold\">\n        {formatMessage({\n          id: `content-manager.containers.List.${status}`,\n          defaultMessage: capitalise(status),\n        })}\n      </Typography>\n    </Status>\n  );\n};\n\nconst RecentDocumentsTable = ({ documents }: { documents: RecentDocument[] }) => {\n  const { formatMessage } = useIntl();\n  const { trackUsage } = useTracking();\n  const navigate = useNavigate();\n\n  const getEditViewLink = (document: RecentDocument): string => {\n    // TODO: import the constants for this once the code is moved to the CM package\n    const isSingleType = document.kind === 'singleType';\n    const kindPath = isSingleType ? 'single-types' : 'collection-types';\n    const queryParams = document.locale ? `?plugins[i18n][locale]=${document.locale}` : '';\n\n    return `/content-manager/${kindPath}/${document.contentTypeUid}${isSingleType ? '' : '/' + document.documentId}${queryParams}`;\n  };\n\n  const handleRowClick = (document: RecentDocument) => () => {\n    trackUsage('willEditEntryFromHome');\n    const link = getEditViewLink(document);\n    navigate(link);\n  };\n\n  return (\n    <Table colCount={5} rowCount={documents?.length ?? 0}>\n      <Tbody>\n        {documents?.map((document) => (\n          <Tr onClick={handleRowClick(document)} cursor=\"pointer\" key={document.documentId}>\n            <Td>\n              <CellTypography title={document.title} variant=\"omega\" textColor=\"neutral800\">\n                {document.title}\n              </CellTypography>\n            </Td>\n            <Td>\n              <CellTypography variant=\"omega\" textColor=\"neutral600\">\n                {document.kind === 'singleType'\n                  ? formatMessage({\n                      id: 'content-manager.widget.last-edited.single-type',\n                      defaultMessage: 'Single-Type',\n                    })\n                  : formatMessage({\n                      id: document.contentTypeDisplayName,\n                      defaultMessage: document.contentTypeDisplayName,\n                    })}\n              </CellTypography>\n            </Td>\n            <Td>\n              <Box display=\"inline-block\">\n                {document.status ? (\n                  <DocumentStatus status={document.status} />\n                ) : (\n                  <Typography textColor=\"neutral600\" aria-hidden>\n                    -\n                  </Typography>\n                )}\n              </Box>\n            </Td>\n            <Td>\n              <Typography textColor=\"neutral600\">\n                <RelativeTime timestamp={new Date(document.updatedAt)} />\n              </Typography>\n            </Td>\n            <Td onClick={(e) => e.stopPropagation()}>\n              <Box display=\"inline-block\">\n                <IconButton\n                  tag={Link}\n                  to={getEditViewLink(document)}\n                  onClick={() => trackUsage('willEditEntryFromHome')}\n                  label={formatMessage({\n                    id: 'content-manager.actions.edit.label',\n                    defaultMessage: 'Edit',\n                  })}\n                  variant=\"ghost\"\n                >\n                  <Pencil />\n                </IconButton>\n              </Box>\n            </Td>\n          </Tr>\n        ))}\n      </Tbody>\n    </Table>\n  );\n};\n\n/* -------------------------------------------------------------------------------------------------\n * LastEditedWidget\n * -----------------------------------------------------------------------------------------------*/\n\nconst LastEditedWidgetContent = () => {\n  const { formatMessage } = useIntl();\n  const { data, isLoading, error } = useGetRecentDocumentsQuery({ action: 'update' });\n\n  if (isLoading) {\n    return <Widget.Loading />;\n  }\n\n  if (error || !data) {\n    return <Widget.Error />;\n  }\n\n  if (data.length === 0) {\n    return (\n      <Widget.NoData>\n        {formatMessage({\n          id: 'content-manager.widget.last-edited.no-data',\n          defaultMessage: 'No edited entries',\n        })}\n      </Widget.NoData>\n    );\n  }\n\n  return <RecentDocumentsTable documents={data} />;\n};\n\nconst LastEditedWidget = () => {\n  return (\n    <Widget.Root\n      title={{\n        id: 'content-manager.widget.last-edited.title',\n        defaultMessage: 'Last edited entries',\n      }}\n      icon={Pencil}\n    >\n      <LastEditedWidgetContent />\n    </Widget.Root>\n  );\n};\n\n/* -------------------------------------------------------------------------------------------------\n * LastPublishedWidget\n * -----------------------------------------------------------------------------------------------*/\n\nconst LastPublishedWidgetContent = () => {\n  const { formatMessage } = useIntl();\n  const { data, isLoading, error } = useGetRecentDocumentsQuery({ action: 'publish' });\n\n  if (isLoading) {\n    return <Widget.Loading />;\n  }\n\n  if (error || !data) {\n    return <Widget.Error />;\n  }\n\n  if (data.length === 0) {\n    return (\n      <Widget.NoData>\n        {formatMessage({\n          id: 'content-manager.widget.last-published.no-data',\n          defaultMessage: 'No published entries',\n        })}\n      </Widget.NoData>\n    );\n  }\n\n  return <RecentDocumentsTable documents={data} />;\n};\n\nconst LastPublishedWidget = () => {\n  return (\n    <Widget.Root\n      title={{\n        id: 'content-manager.widget.last-published.title',\n        defaultMessage: 'Last published entries',\n      }}\n      icon={CheckCircle}\n    >\n      <LastPublishedWidgetContent />\n    </Widget.Root>\n  );\n};\n\nexport { LastEditedWidget, LastPublishedWidget };\n","import { Box, Button, Flex, Typography, LinkButton } from '@strapi/design-system';\nimport { ArrowRight } from '@strapi/icons';\nimport { useIntl } from 'react-intl';\nimport { NavLink } from 'react-router-dom';\n\nimport { useTracking } from '../../features/Tracking';\n\nimport { LAYOUT_DATA, States, STATES } from './constants';\nimport { Number, VerticalDivider } from './Ornaments';\nimport { GuidedTourContextValue, useGuidedTour } from './Provider';\n\ntype SectionName = keyof GuidedTourContextValue['guidedTourState'];\n\nconst GuidedTourHomepage = () => {\n  const guidedTourState = useGuidedTour('GuidedTourHomepage', (state) => state.guidedTourState);\n  const setSkipped = useGuidedTour('GuidedTourHomepage', (state) => state.setSkipped);\n  const { formatMessage } = useIntl();\n  const { trackUsage } = useTracking();\n\n  const sections = Object.entries(LAYOUT_DATA).map(([key, val]) => ({\n    key: key,\n    title: val.home.title,\n    content: (\n      <LinkButton\n        onClick={() => trackUsage(val.home.trackingEvent)}\n        tag={NavLink}\n        to={val.home.cta.target}\n        endIcon={<ArrowRight />}\n      >\n        {formatMessage(val.home.cta.title)}\n      </LinkButton>\n    ),\n    isDone: Object.values(guidedTourState[key as SectionName]).every((value) => value === true),\n  }));\n\n  const activeSectionIndex = sections.findIndex((section) => !section.isDone);\n\n  const handleSkip = () => {\n    setSkipped(true);\n    trackUsage('didSkipGuidedtour');\n  };\n\n  return (\n    <Box\n      hasRadius\n      shadow=\"tableShadow\"\n      paddingTop={7}\n      paddingRight={4}\n      paddingLeft={7}\n      paddingBottom={4}\n      background=\"neutral0\"\n    >\n      <Flex direction=\"column\" alignItems=\"stretch\" gap={6}>\n        <Typography variant=\"beta\" tag=\"h2\">\n          {formatMessage({\n            id: 'app.components.GuidedTour.title',\n            defaultMessage: '3 steps to get started',\n          })}\n        </Typography>\n        <Box>\n          {sections.map((section, index) => {\n            const state = getState(activeSectionIndex, index);\n\n            return (\n              <Box key={section.key}>\n                <Flex>\n                  <Box minWidth={`3rem`} marginRight={5}>\n                    <Number state={state}>{index + 1}</Number>\n                  </Box>\n                  <Typography variant=\"delta\" tag=\"h3\">\n                    {formatMessage(section.title)}\n                  </Typography>\n                </Flex>\n                <Flex alignItems=\"flex-start\">\n                  <Flex\n                    justifyContent=\"center\"\n                    minWidth={`3rem`}\n                    marginBottom={3}\n                    marginTop={3}\n                    marginRight={5}\n                  >\n                    {index === sections.length - 1 ? null : <VerticalDivider state={state} />}\n                  </Flex>\n                  <Box marginTop={2}>{state === STATES.IS_ACTIVE ? section.content : null}</Box>\n                </Flex>\n              </Box>\n            );\n          })}\n        </Box>\n      </Flex>\n      <Flex justifyContent=\"flex-end\">\n        <Button variant=\"tertiary\" onClick={handleSkip}>\n          {formatMessage({ id: 'app.components.GuidedTour.skip', defaultMessage: 'Skip the tour' })}\n        </Button>\n      </Flex>\n    </Box>\n  );\n};\n\nconst getState = (activeSectionIndex: number, index: number): States => {\n  if (activeSectionIndex === -1) {\n    return STATES.IS_DONE;\n  }\n  if (index < activeSectionIndex) {\n    return STATES.IS_DONE;\n  }\n  if (index > activeSectionIndex) {\n    return STATES.IS_NOT_DONE;\n  }\n  return STATES.IS_ACTIVE;\n};\n\nexport { GuidedTourHomepage };\n","import { GuidedTourHomepage } from '../../../components/GuidedTour/Homepage';\nimport { useGuidedTour } from '../../../components/GuidedTour/Provider';\n\nexport const GuidedTour = () => {\n  const guidedTourState = useGuidedTour('HomePage', (state) => state.guidedTourState);\n  const isGuidedTourVisible = useGuidedTour('HomePage', (state) => state.isGuidedTourVisible);\n  const isSkipped = useGuidedTour('HomePage', (state) => state.isSkipped);\n  const showGuidedTour =\n    !Object.values(guidedTourState).every((section) =>\n      Object.values(section).every((step) => step)\n    ) &&\n    isGuidedTourVisible &&\n    !isSkipped;\n\n  if (!showGuidedTour) {\n    return null;\n  }\n\n  return <GuidedTourHomepage />;\n};\n","import * as React from 'react';\n\nimport { Flex, Grid, Main } from '@strapi/design-system';\nimport { useIntl } from 'react-intl';\n\nimport { Layouts } from '../../components/Layouts/Layout';\nimport { Page } from '../../components/PageHelpers';\nimport { useEnterprise } from '../../ee';\nimport { useAuth } from '../../features/Auth';\n\nimport { LastEditedWidget, LastPublishedWidget } from './components/ContentManagerWidgets';\nimport { GuidedTour } from './components/GuidedTour';\n\n/* -------------------------------------------------------------------------------------------------\n * HomePageCE\n * -----------------------------------------------------------------------------------------------*/\n\nconst HomePageCE = () => {\n  const { formatMessage } = useIntl();\n  const user = useAuth('HomePageCE', (state) => state.user);\n  const displayName = user?.firstname ?? user?.username ?? user?.email;\n\n  return (\n    <Main>\n      <Page.Title>\n        {formatMessage({ id: 'HomePage.head.title', defaultMessage: 'Homepage' })}\n      </Page.Title>\n      <Layouts.Header\n        title={formatMessage(\n          { id: 'HomePage.header.title', defaultMessage: 'Hello {name}' },\n          { name: displayName }\n        )}\n        subtitle={formatMessage({\n          id: 'HomePage.header.subtitle',\n          defaultMessage: 'Welcome to your administration panel',\n        })}\n      />\n      <Layouts.Content>\n        <Flex direction=\"column\" alignItems=\"stretch\" gap={8} paddingBottom={10}>\n          <GuidedTour />\n          <Grid.Root gap={5}>\n            <Grid.Item col={6} s={12}>\n              <LastEditedWidget />\n            </Grid.Item>\n            <Grid.Item col={6} s={12}>\n              <LastPublishedWidget />\n            </Grid.Item>\n          </Grid.Root>\n        </Flex>\n      </Layouts.Content>\n    </Main>\n  );\n};\n\n/* -------------------------------------------------------------------------------------------------\n * HomePage\n * -----------------------------------------------------------------------------------------------*/\n\nconst HomePage = () => {\n  const Page = useEnterprise(\n    HomePageCE,\n    // eslint-disable-next-line import/no-cycle\n    async () => (await import('../../../../ee/admin/src/pages/HomePage')).HomePageEE\n  );\n\n  // block rendering until the EE component is fully loaded\n  if (!Page) {\n    return null;\n  }\n\n  return <Page />;\n};\n\nexport { HomePage, HomePageCE };\n"],"names":["homepageService","adminApi","enhanceEndpoints","addTagTypes","injectEndpoints","endpoints","builder","getRecentDocuments","query","params","action","transformResponse","response","data","providesTags","res","_err","type","id","useGetRecentDocumentsQuery","Root","title","icon","PuzzlePiece","children","formatMessage","useIntl","React","useId","Icon","_jsxs","Flex","width","hasRadius","direction","alignItems","background","borderColor","shadow","tag","gap","padding","aria-labelledby","_jsx","fill","aria-hidden","Typography","textColor","variant","Box","height","overflow","Loading","justifyContent","Loader","defaultMessage","Error","WarningCircle","NoData","EmptyDocuments","Widget","CellTypography","styled","attrs","maxWidth","display","DocumentStatus","status","statusVariant","Status","size","fontWeight","capitalise","RecentDocumentsTable","documents","trackUsage","useTracking","navigate","useNavigate","getEditViewLink","document","isSingleType","kind","kindPath","queryParams","locale","contentTypeUid","documentId","handleRowClick","link","Table","colCount","rowCount","length","Tbody","map","Tr","onClick","cursor","Td","contentTypeDisplayName","RelativeTime","timestamp","Date","updatedAt","e","stopPropagation","IconButton","Link","to","label","Pencil","LastEditedWidgetContent","isLoading","error","LastEditedWidget","LastPublishedWidgetContent","LastPublishedWidget","CheckCircle","GuidedTourHomepage","guidedTourState","useGuidedTour","state","setSkipped","sections","Object","entries","LAYOUT_DATA","key","val","home","content","LinkButton","trackingEvent","NavLink","cta","target","endIcon","ArrowRight","isDone","values","every","value","activeSectionIndex","findIndex","section","handleSkip","paddingTop","paddingRight","paddingLeft","paddingBottom","index","getState","minWidth","marginRight","Number","marginBottom","marginTop","VerticalDivider","STATES","IS_ACTIVE","Button","IS_DONE","IS_NOT_DONE","GuidedTour","isGuidedTourVisible","isSkipped","showGuidedTour","step","HomePageCE","user","useAuth","displayName","firstname","username","email","Main","Page","Title","Layouts","Header","name","subtitle","Content","Grid","Item","col","s","HomePage","useEnterprise","HomePageEE"],"mappings":"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"}
-\ No newline at end of file
-+{"version":3,"file":"HomePage-Df0YSqNE.js","sources":["../../../admin/src/services/homepage.ts","../../../admin/src/pages/Home/components/Widget.tsx","../../../admin/src/pages/Home/components/ContentManagerWidgets.tsx","../../../admin/src/components/GuidedTour/Homepage.tsx","../../../admin/src/pages/Home/components/GuidedTour.tsx","../../../admin/src/pages/Home/HomePage.tsx"],"sourcesContent":["import * as Homepage from '../../../shared/contracts/homepage';\n\nimport { adminApi } from './api';\n\nconst homepageService = adminApi\n  .enhanceEndpoints({\n    // TODO: remove when the CM widgets are moved to the CM package, the type already exists there\n    addTagTypes: ['RecentDocumentList'],\n  })\n  .injectEndpoints({\n    endpoints: (builder) => ({\n      getRecentDocuments: builder.query<\n        Homepage.GetRecentDocuments.Response['data'],\n        Homepage.GetRecentDocuments.Request['query']\n      >({\n        query: (params) => `/admin/homepage/recent-documents?action=${params.action}`,\n        transformResponse: (response: Homepage.GetRecentDocuments.Response) => response.data,\n        providesTags: (res, _err, { action }) => [\n          { type: 'RecentDocumentList' as const, id: action },\n        ],\n      }),\n    }),\n  });\n\nconst { useGetRecentDocumentsQuery } = homepageService;\n\nexport { useGetRecentDocumentsQuery };\n","import * as React from 'react';\n\nimport { Box, Flex, type FlexProps, Loader, Typography } from '@strapi/design-system';\nimport { PuzzlePiece, WarningCircle } from '@strapi/icons';\nimport { EmptyDocuments } from '@strapi/icons/symbols';\nimport { type MessageDescriptor, useIntl } from 'react-intl';\n\ninterface RootProps {\n  title: MessageDescriptor;\n  icon?: typeof import('@strapi/icons').PuzzlePiece;\n  children: React.ReactNode;\n}\n\nconst Root = ({ title, icon = PuzzlePiece, children }: RootProps) => {\n  const { formatMessage } = useIntl();\n  const id = React.useId();\n  const Icon = icon;\n\n  return (\n    <Flex\n      width=\"100%\"\n      hasRadius\n      direction=\"column\"\n      alignItems=\"flex-start\"\n      background=\"neutral0\"\n      borderColor=\"neutral150\"\n      shadow=\"tableShadow\"\n      tag=\"section\"\n      gap={4}\n      padding={6}\n      aria-labelledby={id}\n    >\n      <Flex direction=\"row\" alignItems=\"center\" gap={2} tag=\"header\">\n        <Icon fill=\"neutral500\" aria-hidden />\n        <Typography textColor=\"neutral500\" variant=\"sigma\" tag=\"h2\" id={id}>\n          {formatMessage(title)}\n        </Typography>\n      </Flex>\n      <Box width=\"100%\" height=\"261px\" overflow=\"auto\" tag=\"main\">\n        {children}\n      </Box>\n    </Flex>\n  );\n};\n\ninterface LoadingProps {\n  children?: string;\n}\n\nconst Loading = ({ children }: LoadingProps) => {\n  const { formatMessage } = useIntl();\n\n  return (\n    <Flex height=\"100%\" justifyContent=\"center\" alignItems=\"center\">\n      <Loader>\n        {children ??\n          formatMessage({\n            id: 'HomePage.widget.loading',\n            defaultMessage: 'Loading widget content',\n          })}\n      </Loader>\n    </Flex>\n  );\n};\n\ninterface ErrorProps {\n  children?: string;\n}\n\nconst Error = ({ children }: ErrorProps) => {\n  const { formatMessage } = useIntl();\n\n  return (\n    <Flex height=\"100%\" direction=\"column\" justifyContent=\"center\" alignItems=\"center\" gap={2}>\n      <WarningCircle width=\"3.2rem\" height=\"3.2rem\" fill=\"danger600\" />\n      <Typography variant=\"delta\">\n        {formatMessage({\n          id: 'global.error',\n          defaultMessage: 'Something went wrong',\n        })}\n      </Typography>\n      <Typography textColor=\"neutral600\">\n        {children ??\n          formatMessage({\n            id: 'HomePage.widget.error',\n            defaultMessage: \"Couldn't load widget content.\",\n          })}\n      </Typography>\n    </Flex>\n  );\n};\n\ninterface NoDataProps {\n  children?: string;\n}\n\nconst NoData = ({ children }: NoDataProps) => {\n  const { formatMessage } = useIntl();\n\n  return (\n    <Flex height=\"100%\" direction=\"column\" justifyContent=\"center\" alignItems=\"center\" gap={6}>\n      <EmptyDocuments width=\"16rem\" height=\"8.8rem\" />\n      <Typography textColor=\"neutral600\">\n        {children ??\n          formatMessage({\n            id: 'HomePage.widget.no-data',\n            defaultMessage: 'No content found.',\n          })}\n      </Typography>\n    </Flex>\n  );\n};\n\nconst Widget = {\n  Root,\n  Loading,\n  Error,\n  NoData,\n};\n\nexport { Widget };\n","import { Box, IconButton, Status, Table, Tbody, Td, Tr, Typography } from '@strapi/design-system';\nimport { CheckCircle, Pencil } from '@strapi/icons';\nimport { useIntl } from 'react-intl';\nimport { Link, useNavigate } from 'react-router-dom';\nimport { styled } from 'styled-components';\n\nimport { RelativeTime } from '../../../components/RelativeTime';\nimport { useTracking } from '../../../features/Tracking';\nimport { useGetRecentDocumentsQuery } from '../../../services/homepage';\nimport { capitalise } from '../../../utils/strings';\n\nimport { Widget } from './Widget';\n\nimport type { RecentDocument } from '../../../../../shared/contracts/homepage';\n\nconst CellTypography = styled(Typography).attrs({ maxWidth: '14.4rem', display: 'block' })`\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n`;\n\ninterface DocumentStatusProps {\n  status: RecentDocument['status'];\n}\n\nconst DocumentStatus = ({ status = 'draft' }: DocumentStatusProps) => {\n  const statusVariant =\n    status === 'draft' ? 'secondary' : status === 'published' ? 'success' : 'alternative';\n\n  const { formatMessage } = useIntl();\n\n  return (\n    <Status variant={statusVariant} size=\"XS\">\n      <Typography tag=\"span\" variant=\"omega\" fontWeight=\"bold\">\n        {formatMessage({\n          id: `content-manager.containers.List.${status}`,\n          defaultMessage: capitalise(status),\n        })}\n      </Typography>\n    </Status>\n  );\n};\n\nconst RecentDocumentsTable = ({ documents }: { documents: RecentDocument[] }) => {\n  const { formatMessage } = useIntl();\n  const { trackUsage } = useTracking();\n  const navigate = useNavigate();\n\n  const getEditViewLink = (document: RecentDocument): string => {\n    // TODO: import the constants for this once the code is moved to the CM package\n    const isSingleType = document.kind === 'singleType';\n    const kindPath = isSingleType ? 'single-types' : 'collection-types';\n    const queryParams = document.locale ? `?plugins[i18n][locale]=${document.locale}` : '';\n\n    return `/content-manager/${kindPath}/${document.contentTypeUid}${isSingleType ? '' : '/' + document.documentId}${queryParams}`;\n  };\n\n  const handleRowClick = (document: RecentDocument) => () => {\n    trackUsage('willEditEntryFromHome');\n    const link = getEditViewLink(document);\n    navigate(link);\n  };\n\n  return (\n    <Table colCount={5} rowCount={documents?.length ?? 0}>\n      <Tbody>\n        {documents?.map((document) => (\n          <Tr onClick={handleRowClick(document)} cursor=\"pointer\" key={document.documentId}>\n            <Td>\n              <CellTypography title={document.title} variant=\"omega\" textColor=\"neutral800\">\n                {document.title}\n              </CellTypography>\n            </Td>\n            <Td>\n              <CellTypography variant=\"omega\" textColor=\"neutral600\">\n                {document.kind === 'singleType'\n                  ? formatMessage({\n                      id: 'content-manager.widget.last-edited.single-type',\n                      defaultMessage: 'Single-Type',\n                    })\n                  : formatMessage({\n                      id: document.contentTypeDisplayName,\n                      defaultMessage: document.contentTypeDisplayName,\n                    })}\n              </CellTypography>\n            </Td>\n            <Td>\n              <Box display=\"inline-block\">\n                {document.status ? (\n                  <DocumentStatus status={document.status} />\n                ) : (\n                  <Typography textColor=\"neutral600\" aria-hidden>\n                    -\n                  </Typography>\n                )}\n              </Box>\n            </Td>\n            <Td>\n              <Typography textColor=\"neutral600\">\n                <RelativeTime timestamp={new Date(document.updatedAt)} />\n              </Typography>\n            </Td>\n            <Td onClick={(e) => e.stopPropagation()}>\n              <Box display=\"inline-block\">\n                <IconButton\n                  tag={Link}\n                  to={getEditViewLink(document)}\n                  onClick={() => trackUsage('willEditEntryFromHome')}\n                  label={formatMessage({\n                    id: 'content-manager.actions.edit.label',\n                    defaultMessage: 'Edit',\n                  })}\n                  variant=\"ghost\"\n                >\n                  <Pencil />\n                </IconButton>\n              </Box>\n            </Td>\n          </Tr>\n        ))}\n      </Tbody>\n    </Table>\n  );\n};\n\n/* -------------------------------------------------------------------------------------------------\n * LastEditedWidget\n * -----------------------------------------------------------------------------------------------*/\n\nconst LastEditedWidgetContent = () => {\n  const { formatMessage } = useIntl();\n  const { data, isLoading, error } = useGetRecentDocumentsQuery({ action: 'update' });\n\n  if (isLoading) {\n    return <Widget.Loading />;\n  }\n\n  if (error || !data) {\n    return <Widget.Error />;\n  }\n\n  if (data.length === 0) {\n    return (\n      <Widget.NoData>\n        {formatMessage({\n          id: 'content-manager.widget.last-edited.no-data',\n          defaultMessage: 'No edited entries',\n        })}\n      </Widget.NoData>\n    );\n  }\n\n  return <RecentDocumentsTable documents={data} />;\n};\n\nconst LastEditedWidget = () => {\n  return (\n    <Widget.Root\n      title={{\n        id: 'content-manager.widget.last-edited.title',\n        defaultMessage: 'Last edited entries',\n      }}\n      icon={Pencil}\n    >\n      <LastEditedWidgetContent />\n    </Widget.Root>\n  );\n};\n\n/* -------------------------------------------------------------------------------------------------\n * LastPublishedWidget\n * -----------------------------------------------------------------------------------------------*/\n\nconst LastPublishedWidgetContent = () => {\n  const { formatMessage } = useIntl();\n  const { data, isLoading, error } = useGetRecentDocumentsQuery({ action: 'publish' });\n\n  if (isLoading) {\n    return <Widget.Loading />;\n  }\n\n  if (error || !data) {\n    return <Widget.Error />;\n  }\n\n  if (data.length === 0) {\n    return (\n      <Widget.NoData>\n        {formatMessage({\n          id: 'content-manager.widget.last-published.no-data',\n          defaultMessage: 'No published entries',\n        })}\n      </Widget.NoData>\n    );\n  }\n\n  return <RecentDocumentsTable documents={data} />;\n};\n\nconst LastPublishedWidget = () => {\n  return (\n    <Widget.Root\n      title={{\n        id: 'content-manager.widget.last-published.title',\n        defaultMessage: 'Last published entries',\n      }}\n      icon={CheckCircle}\n    >\n      <LastPublishedWidgetContent />\n    </Widget.Root>\n  );\n};\n\nexport { LastEditedWidget, LastPublishedWidget };\n","import { Box, Button, Flex, Typography, LinkButton } from '@strapi/design-system';\nimport { ArrowRight } from '@strapi/icons';\nimport { useIntl } from 'react-intl';\nimport { NavLink } from 'react-router-dom';\n\nimport { useTracking } from '../../features/Tracking';\n\nimport { LAYOUT_DATA, States, STATES } from './constants';\nimport { Number, VerticalDivider } from './Ornaments';\nimport { GuidedTourContextValue, useGuidedTour } from './Provider';\n\ntype SectionName = keyof GuidedTourContextValue['guidedTourState'];\n\nconst GuidedTourHomepage = () => {\n  const guidedTourState = useGuidedTour('GuidedTourHomepage', (state) => state.guidedTourState);\n  const setSkipped = useGuidedTour('GuidedTourHomepage', (state) => state.setSkipped);\n  const { formatMessage } = useIntl();\n  const { trackUsage } = useTracking();\n\n  const sections = Object.entries(LAYOUT_DATA).map(([key, val]) => ({\n    key: key,\n    title: val.home.title,\n    content: (\n      <LinkButton\n        onClick={() => trackUsage(val.home.trackingEvent)}\n        tag={NavLink}\n        to={val.home.cta.target}\n        endIcon={<ArrowRight />}\n      >\n        {formatMessage(val.home.cta.title)}\n      </LinkButton>\n    ),\n    isDone: Object.values(guidedTourState[key as SectionName]).every((value) => value === true),\n  }));\n\n  const activeSectionIndex = sections.findIndex((section) => !section.isDone);\n\n  const handleSkip = () => {\n    setSkipped(true);\n    trackUsage('didSkipGuidedtour');\n  };\n\n  return (\n    <Box\n      hasRadius\n      shadow=\"tableShadow\"\n      paddingTop={7}\n      paddingRight={4}\n      paddingLeft={7}\n      paddingBottom={4}\n      background=\"neutral0\"\n    >\n      <Flex direction=\"column\" alignItems=\"stretch\" gap={6}>\n        <Typography variant=\"beta\" tag=\"h2\">\n          {formatMessage({\n            id: 'app.components.GuidedTour.title',\n            defaultMessage: '3 steps to get started',\n          })}\n        </Typography>\n        <Box>\n          {sections.map((section, index) => {\n            const state = getState(activeSectionIndex, index);\n\n            return (\n              <Box key={section.key}>\n                <Flex>\n                  <Box minWidth={`3rem`} marginRight={5}>\n                    <Number state={state}>{index + 1}</Number>\n                  </Box>\n                  <Typography variant=\"delta\" tag=\"h3\">\n                    {formatMessage(section.title)}\n                  </Typography>\n                </Flex>\n                <Flex alignItems=\"flex-start\">\n                  <Flex\n                    justifyContent=\"center\"\n                    minWidth={`3rem`}\n                    marginBottom={3}\n                    marginTop={3}\n                    marginRight={5}\n                  >\n                    {index === sections.length - 1 ? null : <VerticalDivider state={state} />}\n                  </Flex>\n                  <Box marginTop={2}>{state === STATES.IS_ACTIVE ? section.content : null}</Box>\n                </Flex>\n              </Box>\n            );\n          })}\n        </Box>\n      </Flex>\n      <Flex justifyContent=\"flex-end\">\n        <Button variant=\"tertiary\" onClick={handleSkip}>\n          {formatMessage({ id: 'app.components.GuidedTour.skip', defaultMessage: 'Skip the tour' })}\n        </Button>\n      </Flex>\n    </Box>\n  );\n};\n\nconst getState = (activeSectionIndex: number, index: number): States => {\n  if (activeSectionIndex === -1) {\n    return STATES.IS_DONE;\n  }\n  if (index < activeSectionIndex) {\n    return STATES.IS_DONE;\n  }\n  if (index > activeSectionIndex) {\n    return STATES.IS_NOT_DONE;\n  }\n  return STATES.IS_ACTIVE;\n};\n\nexport { GuidedTourHomepage };\n","import { GuidedTourHomepage } from '../../../components/GuidedTour/Homepage';\nimport { useGuidedTour } from '../../../components/GuidedTour/Provider';\n\nexport const GuidedTour = () => {\n  const guidedTourState = useGuidedTour('HomePage', (state) => state.guidedTourState);\n  const isGuidedTourVisible = useGuidedTour('HomePage', (state) => state.isGuidedTourVisible);\n  const isSkipped = useGuidedTour('HomePage', (state) => state.isSkipped);\n  const showGuidedTour =\n    !Object.values(guidedTourState).every((section) =>\n      Object.values(section).every((step) => step)\n    ) &&\n    isGuidedTourVisible &&\n    !isSkipped;\n\n  if (!showGuidedTour) {\n    return null;\n  }\n\n  return <GuidedTourHomepage />;\n};\n","import * as React from 'react';\n\nimport { Flex, Grid, Main } from '@strapi/design-system';\nimport { useIntl } from 'react-intl';\n\nimport { Layouts } from '../../components/Layouts/Layout';\nimport { Page } from '../../components/PageHelpers';\nimport { useEnterprise } from '../../ee';\nimport { useAuth } from '../../features/Auth';\n\nimport { LastEditedWidget, LastPublishedWidget } from './components/ContentManagerWidgets';\nimport { GuidedTour } from './components/GuidedTour';\n\n/* -------------------------------------------------------------------------------------------------\n * HomePageCE\n * -----------------------------------------------------------------------------------------------*/\n\nconst HomePageCE = () => {\n  const { formatMessage } = useIntl();\n  const user = useAuth('HomePageCE', (state) => state.user);\n  const displayName = user?.firstname ?? user?.username ?? user?.email;\n\n  return (\n    <Main>\n      <Page.Title>\n        {formatMessage({ id: 'HomePage.head.title', defaultMessage: 'Homepage' })}\n      </Page.Title>\n      <Layouts.Header\n        title={formatMessage(\n          { id: 'HomePage.header.title', defaultMessage: 'Hello {name}' },\n          { name: displayName }\n        )}\n        subtitle={formatMessage({\n          id: 'HomePage.header.subtitle',\n          defaultMessage: 'Welcome to Copyright Knowledge administration panel!',\n        })}\n      />\n      <Layouts.Content>\n        <Flex direction=\"column\" alignItems=\"stretch\" gap={8} paddingBottom={10}>\n          <GuidedTour />\n          <Grid.Root gap={5}>\n            <Grid.Item col={6} s={12}>\n              <LastEditedWidget />\n            </Grid.Item>\n            <Grid.Item col={6} s={12}>\n              <LastPublishedWidget />\n            </Grid.Item>\n          </Grid.Root>\n        </Flex>\n      </Layouts.Content>\n    </Main>\n  );\n};\n\n/* -------------------------------------------------------------------------------------------------\n * HomePage\n * -----------------------------------------------------------------------------------------------*/\n\nconst HomePage = () => {\n  const Page = useEnterprise(\n    HomePageCE,\n    // eslint-disable-next-line import/no-cycle\n    async () => (await import('../../../../ee/admin/src/pages/HomePage')).HomePageEE\n  );\n\n  // block rendering until the EE component is fully loaded\n  if (!Page) {\n    return null;\n  }\n\n  return <Page />;\n};\n\nexport { HomePage, HomePageCE };\n"],"names":["homepageService","adminApi","enhanceEndpoints","addTagTypes","injectEndpoints","endpoints","builder","getRecentDocuments","query","params","action","transformResponse","response","data","providesTags","res","_err","type","id","useGetRecentDocumentsQuery","Root","title","icon","PuzzlePiece","children","formatMessage","useIntl","React","useId","Icon","_jsxs","Flex","width","hasRadius","direction","alignItems","background","borderColor","shadow","tag","gap","padding","aria-labelledby","_jsx","fill","aria-hidden","Typography","textColor","variant","Box","height","overflow","Loading","justifyContent","Loader","defaultMessage","Error","WarningCircle","NoData","EmptyDocuments","Widget","CellTypography","styled","attrs","maxWidth","display","DocumentStatus","status","statusVariant","Status","size","fontWeight","capitalise","RecentDocumentsTable","documents","trackUsage","useTracking","navigate","useNavigate","getEditViewLink","document","isSingleType","kind","kindPath","queryParams","locale","contentTypeUid","documentId","handleRowClick","link","Table","colCount","rowCount","length","Tbody","map","Tr","onClick","cursor","Td","contentTypeDisplayName","RelativeTime","timestamp","Date","updatedAt","e","stopPropagation","IconButton","Link","to","label","Pencil","LastEditedWidgetContent","isLoading","error","LastEditedWidget","LastPublishedWidgetContent","LastPublishedWidget","CheckCircle","GuidedTourHomepage","guidedTourState","useGuidedTour","state","setSkipped","sections","Object","entries","LAYOUT_DATA","key","val","home","content","LinkButton","trackingEvent","NavLink","cta","target","endIcon","ArrowRight","isDone","values","every","value","activeSectionIndex","findIndex","section","handleSkip","paddingTop","paddingRight","paddingLeft","paddingBottom","index","getState","minWidth","marginRight","Number","marginBottom","marginTop","VerticalDivider","STATES","IS_ACTIVE","Button","IS_DONE","IS_NOT_DONE","GuidedTour","isGuidedTourVisible","isSkipped","showGuidedTour","step","HomePageCE","user","useAuth","displayName","firstname","username","email","Main","Page","Title","Layouts","Header","name","subtitle","Content","Grid","Item","col","s","HomePage","useEnterprise","HomePageEE"],"mappings":"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"}
-diff --git a/node_modules/@strapi/admin/dist/admin/chunks/en-CJjqxA2Q.js b/node_modules/@strapi/admin/dist/admin/chunks/en-CJjqxA2Q.js
-index 4f26763..f024d20 100644
---- a/node_modules/@strapi/admin/dist/admin/chunks/en-CJjqxA2Q.js
-+++ b/node_modules/@strapi/admin/dist/admin/chunks/en-CJjqxA2Q.js
-@@ -83,7 +83,7 @@ var en = {
-     "Files Upload": "Files Upload",
-     "HomePage.head.title": "Homepage",
-     "HomePage.header.title": "Hello {name}",
--    "HomePage.header.subtitle": "Welcome to your administration panel",
-+    "HomePage.header.subtitle": "Welcome to Copyright Knowledge administration panel!",
-     "HomePage.widget.loading": "Loading widget content",
-     "HomePage.widget.error": "Couldn't load widget content.",
-     "HomePage.widget.no-data": "No content found.",
-diff --git a/node_modules/@strapi/admin/dist/admin/chunks/en-CRu3-kTC.mjs b/node_modules/@strapi/admin/dist/admin/chunks/en-CRu3-kTC.mjs
-index b9427db..217174e 100644
---- a/node_modules/@strapi/admin/dist/admin/chunks/en-CRu3-kTC.mjs
-+++ b/node_modules/@strapi/admin/dist/admin/chunks/en-CRu3-kTC.mjs
-@@ -81,7 +81,7 @@ var en = {
-     "Files Upload": "Files Upload",
-     "HomePage.head.title": "Homepage",
-     "HomePage.header.title": "Hello {name}",
--    "HomePage.header.subtitle": "Welcome to your administration panel",
-+    "HomePage.header.subtitle": "Welcome to Copyright Knowledge administration panel!",
-     "HomePage.widget.loading": "Loading widget content",
-     "HomePage.widget.error": "Couldn't load widget content.",
-     "HomePage.widget.no-data": "No content found.",
+ /* -------------------------------------------------------------------------------------------------
+  * HomePage
+  * -----------------------------------------------------------------------------------------------*/ const HomePage = ()=>{
 diff --git a/node_modules/@strapi/admin/dist/admin/chunks/index-BUGouNML.mjs b/node_modules/@strapi/admin/dist/admin/chunks/index-BUGouNML.mjs
-index f380192..2041883 100644
+index f380192..349d265 100644
 --- a/node_modules/@strapi/admin/dist/admin/chunks/index-BUGouNML.mjs
 +++ b/node_modules/@strapi/admin/dist/admin/chunks/index-BUGouNML.mjs
-@@ -6740,41 +6740,82 @@ const ContentBox = ({ title, subtitle, icon, iconBackground, endAction, titleEll
+@@ -6736,7 +6736,7 @@ const SortIcon = styled(CaretDown)`
+     Empty
+ };
+ 
+-const ContentBox = ({ title, subtitle, icon, iconBackground, endAction, titleEllipsis = false })=>{
++const ContentBox = ({ title, subtitle, icon, iconBackground, endAction, titleEllipsis = false,showFrames = false })=>{
      if (title && title.length > 70 && titleEllipsis) {
          title = `${title.substring(0, 70)}...`;
      }
--    return /*#__PURE__*/ jsxs(Flex, {
--        shadow: "tableShadow",
-+
-+    const showFrames = true;
-+
-+  return /* @__PURE__ */ jsxs(Flex, {
-+    shadow: "tableShadow",
-+    hasRadius: true,
-+    padding: 6,
-+    background: "neutral0",
-+    children: [
-+      /* @__PURE__ */ jsx(IconWrapper, {
-+        background: iconBackground,
-         hasRadius: true,
--        padding: 6,
--        background: "neutral0",
-+        padding: 3,
-+        children: icon
-+      }),
-+      /* @__PURE__ */ jsxs(Flex, {
-+        direction: "column",
-+        alignItems: "stretch",
-+        gap: endAction ? 0 : 1,
-         children: [
--            /*#__PURE__*/ jsx(IconWrapper, {
--                background: iconBackground,
--                hasRadius: true,
--                padding: 3,
--                children: icon
--            }),
--            /*#__PURE__*/ jsxs(Flex, {
--                direction: "column",
--                alignItems: "stretch",
--                gap: endAction ? 0 : 1,
-+          /* @__PURE__ */ jsxs(Flex, {
-+            children: [
-+              /* @__PURE__ */ jsx(TypographyWordBreak, {
-+                fontWeight: "semiBold",
-+                variant: "pi",
-+                children: title
-+              }),
-+              endAction
-+            ]
-+          }),
-+          /* @__PURE__ */ jsx(Typography, {
-+            textColor: "neutral600",
-+            children: subtitle
-+          }),
-+          showFrames
-+            ? jsx("div", {
-                 children: [
--                    /*#__PURE__*/ jsxs(Flex, {
--                        children: [
--                            /*#__PURE__*/ jsx(TypographyWordBreak, {
--                                fontWeight: "semiBold",
--                                variant: "pi",
--                                children: title
--                            }),
--                            endAction
--                        ]
--                    }),
--                    /*#__PURE__*/ jsx(Typography, {
--                        textColor: "neutral600",
--                        children: subtitle
+@@ -6770,7 +6770,15 @@ const ContentBox = ({ title, subtitle, icon, iconBackground, endAction, titleEll
+                     /*#__PURE__*/ jsx(Typography, {
+                         textColor: "neutral600",
+                         children: subtitle
 -                    })
-+                  jsx("iframe", {
-+                    src: "https://www.youtube.com/embed/wZcxJbMzgGo?si=-D9xmhIg2RKp0DE7",
-+                    width: "560",
-+                    height: "315",
-+                    frameBorder: "0",
-+                    allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-+                    allowFullScreen: true
-+                  }),
-+                  jsx("iframe", {
-+                    src: "https://www.youtube.com/embed/Gqe0oBM1qns?si=qAaMZP0oAWD4lwkM",
-+                    width: "560",
-+                    height: "315",
-+                    frameBorder: "0",
-+                    allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-+                    allowFullScreen: true
-+                  }),
-+                  jsx("iframe", {
-+                    src: "https://www.youtube.com/embed/JM4FdsHbTn8?si=LRjw9BevkVYn6m2_",
-+                    width: "560",
-+                    height: "315",
-+                    frameBorder: "0",
-+                    allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-+                    allowFullScreen: true
-+                  }),
-+                  jsx("iframe", {
-+                    src: "https://www.youtube.com/embed/73kXOhZlr2k?si=f2m4_RxDcfBGNXcl",
-+                    width: "560",
-+                    height: "315",
-+                    frameBorder: "0",
-+                    allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-+                    allowFullScreen: true
-+                  })
++                    }),
++                      showFrames ? jsx("div", {
++                                children: [
++                                    /* @__PURE__ */ jsx("iframe", { src: "https://www.youtube.com/embed/wZcxJbMzgGo?si=-D9xmhIg2RKp0DE7", width: "560", height: "315", frameBorder: "0", allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", referrerPolicy: "strict-origin-when-cross-origin", allowFullScreen: true }),
++                                    /* @__PURE__ */ jsx("iframe", { src: "https://www.youtube.com/embed/Gqe0oBM1qns?si=qAaMZP0oAWD4lwkM", width: "560", height: "315", frameBorder: "0", allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", referrerPolicy: "strict-origin-when-cross-origin", allowFullScreen: true }),
++                                    /* @__PURE__ */ jsx("iframe", { src: "https://www.youtube.com/embed/JM4FdsHbTn8?si=I2UpB7TzOOFxX8Bl", width: "560", height: "315", frameBorder: "0", allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", referrerPolicy: "strict-origin-when-cross-origin", allowFullScreen: true }),
++                                    /* @__PURE__ */ jsx("iframe", { src: "https://www.youtube.com/embed/73kXOhZlr2k?si=oUNpKZJ4AnIul9If", width: "560", height: "315", frameBorder: "0", allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", referrerPolicy: "strict-origin-when-cross-origin", allowFullScreen: true })
++                                  ]
++                              }) : null
                  ]
--            })
-+              })
-+            : null
+             })
          ]
--    });
-+      })
-+    ]
-+  });
- };
- const IconWrapper = styled(Flex)`
-   margin-right: ${({ theme })=>theme.spaces[6]};
 diff --git a/node_modules/@strapi/admin/dist/admin/chunks/index-D7OmC33R.js b/node_modules/@strapi/admin/dist/admin/chunks/index-D7OmC33R.js
-index 53cd025..78603bc 100644
+index 53cd025..1efe920 100644
 --- a/node_modules/@strapi/admin/dist/admin/chunks/index-D7OmC33R.js
 +++ b/node_modules/@strapi/admin/dist/admin/chunks/index-D7OmC33R.js
-@@ -6760,41 +6760,81 @@ const ContentBox = ({ title, subtitle, icon, iconBackground, endAction, titleEll
+@@ -6756,7 +6756,7 @@ const SortIcon = styledComponents.styled(icons.CaretDown)`
+     Empty
+ };
+ 
+-const ContentBox = ({ title, subtitle, icon, iconBackground, endAction, titleEllipsis = false })=>{
++const ContentBox = ({ title, subtitle, icon, iconBackground, endAction, titleEllipsis = false, showFrames = false })=>{
      if (title && title.length > 70 && titleEllipsis) {
          title = `${title.substring(0, 70)}...`;
      }
--    return /*#__PURE__*/ jsxRuntime.jsxs(designSystem.Flex, {
--        shadow: "tableShadow",
-+    const showFrames = true;
-+
-+  return /* @__PURE__ */ jsxs(Flex, {
-+    shadow: "tableShadow",
-+    hasRadius: true,
-+    padding: 6,
-+    background: "neutral0",
-+    children: [
-+      /* @__PURE__ */ jsx(IconWrapper, {
-+        background: iconBackground,
-         hasRadius: true,
--        padding: 6,
--        background: "neutral0",
-+        padding: 3,
-+        children: icon
-+      }),
-+      /* @__PURE__ */ jsxs(Flex, {
-+        direction: "column",
-+        alignItems: "stretch",
-+        gap: endAction ? 0 : 1,
-         children: [
--            /*#__PURE__*/ jsxRuntime.jsx(IconWrapper, {
--                background: iconBackground,
--                hasRadius: true,
--                padding: 3,
--                children: icon
--            }),
--            /*#__PURE__*/ jsxRuntime.jsxs(designSystem.Flex, {
--                direction: "column",
--                alignItems: "stretch",
--                gap: endAction ? 0 : 1,
-+          /* @__PURE__ */ jsxs(Flex, {
-+            children: [
-+              /* @__PURE__ */ jsx(TypographyWordBreak, {
-+                fontWeight: "semiBold",
-+                variant: "pi",
-+                children: title
-+              }),
-+              endAction
-+            ]
-+          }),
-+          /* @__PURE__ */ jsx(Typography, {
-+            textColor: "neutral600",
-+            children: subtitle
-+          }),
-+          showFrames
-+            ? jsx("div", {
-                 children: [
--                    /*#__PURE__*/ jsxRuntime.jsxs(designSystem.Flex, {
--                        children: [
--                            /*#__PURE__*/ jsxRuntime.jsx(TypographyWordBreak, {
--                                fontWeight: "semiBold",
--                                variant: "pi",
--                                children: title
--                            }),
--                            endAction
--                        ]
--                    }),
--                    /*#__PURE__*/ jsxRuntime.jsx(designSystem.Typography, {
--                        textColor: "neutral600",
--                        children: subtitle
+@@ -6790,7 +6790,15 @@ const ContentBox = ({ title, subtitle, icon, iconBackground, endAction, titleEll
+                     /*#__PURE__*/ jsxRuntime.jsx(designSystem.Typography, {
+                         textColor: "neutral600",
+                         children: subtitle
 -                    })
-+                  jsx("iframe", {
-+                    src: "https://www.youtube.com/embed/wZcxJbMzgGo?si=-D9xmhIg2RKp0DE7",
-+                    width: "560",
-+                    height: "315",
-+                    frameBorder: "0",
-+                    allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-+                    allowFullScreen: true
-+                  }),
-+                  jsx("iframe", {
-+                    src: "https://www.youtube.com/embed/Gqe0oBM1qns?si=qAaMZP0oAWD4lwkM",
-+                    width: "560",
-+                    height: "315",
-+                    frameBorder: "0",
-+                    allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-+                    allowFullScreen: true
-+                  }),
-+                  jsx("iframe", {
-+                    src: "https://www.youtube.com/embed/JM4FdsHbTn8?si=LRjw9BevkVYn6m2_",
-+                    width: "560",
-+                    height: "315",
-+                    frameBorder: "0",
-+                    allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-+                    allowFullScreen: true
-+                  }),
-+                  jsx("iframe", {
-+                    src: "https://www.youtube.com/embed/73kXOhZlr2k?si=f2m4_RxDcfBGNXcl",
-+                    width: "560",
-+                    height: "315",
-+                    frameBorder: "0",
-+                    allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-+                    allowFullScreen: true
-+                  })
++                    }),
++                      showFrames ? jsxRuntime.jsx("div", {
++                                children: [
++                                  <iframe src="https://www.youtube.com/embed/wZcxJbMzgGo?si=-D9xmhIg2RKp0DE7" width="560" height="315" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowFullScreen />,
++                                  <iframe src="https://www.youtube.com/embed/Gqe0oBM1qns?si=qAaMZP0oAWD4lwkM" width="560" height="315" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowFullScreen />,
++                                  <iframe src="https://www.youtube.com/embed/JM4FdsHbTn8?si=I2UpB7TzOOFxX8Bl" width="560" height="315" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowFullScreen />,
++                                  <iframe src="https://www.youtube.com/embed/73kXOhZlr2k?si=oUNpKZJ4AnIul9If" width="560" height="315" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowFullScreen />
++                                ]
++                              }) : null
                  ]
--            })
-+              })
-+            : null
+             })
          ]
--    });
-+      })
-+    ]
-+  });
- };
- const IconWrapper = styledComponents.styled(designSystem.Flex)`
-   margin-right: ${({ theme })=>theme.spaces[6]};
