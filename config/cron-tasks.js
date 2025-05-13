@@ -1,7 +1,7 @@
 const { updateEmbelishCE } = require('../src/cronjobs/updateEmbelishCE.ts');
 const { populateRelations } = require('../src/cronjobs/populate_relations_userseu_ce.ts');
 const https = require('https');
-const S2_API_KEY = 'EEnArnIbFz7UyomYkXSJf8KnAOiBmqQc41oZnjpH';
+const S2_API_KEY = 'TPryTJ9m838pMjkp7iWKy5wlJQNSulHd3mXTLAuC';
 
 // Function to fetch data from a given URL
 function fetchData(url, method = 'GET', payload = null) {

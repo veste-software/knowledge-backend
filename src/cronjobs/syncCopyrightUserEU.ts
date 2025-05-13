@@ -1,6 +1,6 @@
 const https = require('https');
 //const Strapi = require('strapi-sdk-javascript');
-const S2_API_KEY = 'EEnArnIbFz7UyomYkXSJf8KnAOiBmqQc41oZnjpH';
+const S2_API_KEY = 'TPryTJ9m838pMjkp7iWKy5wlJQNSulHd3mXTLAuC';
 //const strapi = new Strapi('http://localhost:1337'); // Update with your Strapi instance URL
 
 

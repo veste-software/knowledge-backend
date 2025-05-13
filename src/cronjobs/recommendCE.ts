@@ -1,7 +1,7 @@
 const https = require('https');
 //const Strapi = require('strapi-sdk-javascript');
 
-const S2_API_KEY = 'EEnArnIbFz7UyomYkXSJf8KnAOiBmqQc41oZnjpH';
+const S2_API_KEY = 'TPryTJ9m838pMjkp7iWKy5wlJQNSulHd3mXTLAuC';
 //const strapi = new Strapi('http://localhost:1337'); // Update with your Strapi instance URL
 
 // Function to fetch data from a given URL
@@ -114,8 +114,6 @@ async function main() {
   for (let i = 0; i < randomizedPaperIds.length; i += 20) {
     // Create an array of the next 20 paperIds
     const myPositivePaperIds = randomizedPaperIds.slice(i, i + 20);
-
-
 
 
     // Step 6: Post to Semantic Scholar API with positivePaperIds payload

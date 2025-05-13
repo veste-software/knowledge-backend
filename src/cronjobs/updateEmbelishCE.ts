@@ -1,5 +1,5 @@
 const https = require('https');
-const S2_API_KEY = 'EEnArnIbFz7UyomYkXSJf8KnAOiBmqQc41oZnjpH';
+const S2_API_KEY = 'TPryTJ9m838pMjkp7iWKy5wlJQNSulHd3mXTLAuC';
 
 function fetchData(url) {
   return new Promise((resolve, reject) => {
