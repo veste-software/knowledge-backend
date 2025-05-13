@@ -66,9 +66,9 @@ module.exports = {
   },
   populateRelationsCE_CU: {
     task: async ({ strapi }) => {
-      console.log('Starting cron job "populateRelationsCE_CU"');
-      strapi.log.info('Starting cron job "populateRelationsCE_CU"');
-      await populateRelations(strapi);
+      console.log('DISABLED Starting cron job "populateRelationsCE_CU"');
+      strapi.log.info('DISABLED Starting cron job "populateRelationsCE_CU"');
+//      await populateRelations(strapi);
     },
     options: {
       start: true,

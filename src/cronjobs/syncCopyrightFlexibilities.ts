@@ -106,6 +106,6 @@ async function main() {
   }
 }
 
-console.log('Executing cron job "semanticallyEmbelLishCE"');
+console.log('Executing cron job "semanticallyFlexibilities"');
 // Run the main function
 main();
