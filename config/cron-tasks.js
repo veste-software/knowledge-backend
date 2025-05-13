@@ -61,7 +61,7 @@ module.exports = {
     },
     options: {
       start: true,
-      cron: '0 0 * * *', // Run every hour
+      cron: '0 3,15 * * *', // Run at 3 AM and 3 PM every day
     },
   },
   populateRelationsCE_CU: {
@@ -72,18 +72,18 @@ module.exports = {
     },
     options: {
       start: true,
-      cron: '0 0 * * *', // Run every hour
+      cron: '0 3,15 * * *', // Run at 3 AM and 3 PM every day
     },
   },
   recommendCE: {
     task: async ({ strapi }) => {
       console.log('Starting cron job "recommendCE"');
       strapi.log.info('Starting cron job "recommendCE"');
-      await recommendCE(strapi);
+//      await recommendCE(strapi);
     },
     options: {
       start: true,
-      cron: '0 0 * * *', // Run every hour
+      cron: '0 3,15 * * *', // Run at 3 AM and 3 PM every day
     },
   },
   updateEmbelishCE: {
@@ -94,7 +94,7 @@ module.exports = {
     },
     options: {
       start: true,
-      cron: '0 0 * * *', // Run every hour
+      cron: '0 3,15 * * *', // Run at 3 AM and 3 PM every day
     },
   },
 };
