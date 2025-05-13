@@ -80,7 +80,7 @@ async function updateEmbelishCE(strapi) {
         const CE_Authors = item.printouts.Author.map(author => author.fulltext);
 
         // Fetch Semantic Scholar data (mocked as an empty object for now)
-        const semanticScholarData = {}; // await fetchSemanticScholarData(CE_Title);
+        const semanticScholarData = await fetchSemanticScholarData(CE_Title);
 
         // Flatten SemanticScholarData and add it to the resultObject
         updatedResultObject[id] = {

@@ -1,4 +1,5 @@
 const { updateEmbelishCE } = require('../src/cronjobs/updateEmbelishCE.ts');
+const { recommendCE } = require('../src/cronjobs/recommendCE.ts');
 const { populateRelations } = require('../src/cronjobs/populate_relations_userseu_ce.ts');
 const https = require('https');
 const S2_API_KEY = 'TPryTJ9m838pMjkp7iWKy5wlJQNSulHd3mXTLAuC';
@@ -67,7 +68,18 @@ module.exports = {
     task: async ({ strapi }) => {
       console.log('Starting cron job "populateRelationsCE_CU"');
       strapi.log.info('Starting cron job "populateRelationsCE_CU"');
-//      await populateRelations(strapi);
+      await populateRelations(strapi);
+    },
+    options: {
+      start: true,
+      cron: '0 0 * * *', // Run every hour
+    },
+  },
+  recommendCE: {
+    task: async ({ strapi }) => {
+      console.log('Starting cron job "recommendCE"');
+      strapi.log.info('Starting cron job "recommendCE"');
+      await recommendCE(strapi);
     },
     options: {
       start: true,
@@ -78,7 +90,7 @@ module.exports = {
     task: async ({ strapi }) => {
       console.log('Starting disabled update cron job "updateEmbelishCE"');
       strapi.log.info('Starting disabled update cron job "updateEmbelishCE"');
-      // await updateEmbelishCE(strapi);
+       await updateEmbelishCE(strapi);
     },
     options: {
       start: true,

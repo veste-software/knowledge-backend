@@ -77,7 +77,9 @@ async function fetchStrapiData(collection) {
 //}
 
 // Main function
-async function main() {
+async function recommendCE() {
+
+console.log('Executing cron job "recommendCE"');
   // Step 1: Fetch records from 'api::suggestions-copyright-evidence.suggestions-copyright-evidence'
   const suggestions_list = await fetchStrapiData('api::suggestions-copyright-evidence.suggestions-copyright-evidence');
 
@@ -187,6 +189,7 @@ async function writeOrUpdateOrNothing(embellishedEntry, suggestions_list, embell
     }
   }
 
-console.log('Executing cron job "recommendCE"');
 // Run the main function
-main();
+//main();
+
+module.exports = { recommendCE };

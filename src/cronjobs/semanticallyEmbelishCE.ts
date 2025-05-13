@@ -49,8 +49,9 @@ async function fetchSemanticScholarData(title) {
     return null;
   }
 }
-
-async function main() {
+let strapi;
+async function main(strapi) {
+strapi = strapi;
   // Fetch base data from the Strapi collection
   const baseECData = await strapi.db.query('api::data-embellished-copyright-evidence.data-embellished-copyright-evidence').findMany();
 
