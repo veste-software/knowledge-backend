@@ -79,11 +79,11 @@ module.exports = {
     task: async ({ strapi }) => {
       console.log('Starting cron job "recommendCE"');
       strapi.log.info('Starting cron job "recommendCE"');
-//      await recommendCE(strapi);
+      await recommendCE(strapi);
     },
     options: {
       start: true,
-      cron: '0 3,15 * * *', // Run at 3 AM and 3 PM every day
+      cron: '0 0 * * *', // Run at 3 AM and 3 PM every day
     },
   },
   updateEmbelishCE: {
