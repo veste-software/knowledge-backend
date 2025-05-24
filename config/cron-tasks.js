@@ -83,7 +83,7 @@ module.exports = {
     },
     options: {
       start: true,
-      cron: '0 0 * * *', // Run at 3 AM and 3 PM every day
+      cron: '0 3,15 * * *', // Run at 3 AM and 3 PM every day
     },
   },
   updateEmbelishCE: {
