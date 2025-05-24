@@ -1,5 +1,4 @@
 const https = require('https');
-
 const S2_API_KEY = 'TPryTJ9m838pMjkp7iWKy5wlJQNSulHd3mXTLAuC';
 
 function fetchData(url, method = 'GET', payload = null) {
@@ -62,19 +61,63 @@ function mapPaperToSuggestion(paper) {
   };
 }
 
-async function writeOrUpdateOrNothing(paper, suggestions_list, embellished_list) {
-  const { paperId } = paper;
+function mapPaperToSuggestion(paper) {
+  return {
+    paperId: paper.paperId,
+    corpusId: "" + paper.corpusId,
+    url: paper.url,
+    title: paper.title,
+    venue: paper.venue,
+    year: paper.year,
+    citationCount: paper.citationCount || 0,
+    referenceCount: paper.referenceCount || 0,
+    influentialCitationCount: paper.influentialCitationCount || 0,
+    fieldsOfStudy: JSON.stringify(paper.fieldsOfStudy || []),
+    publicationDate: paper.publicationDate,
+    journal: paper.journal || {},
+    citationStyles: paper.citationStyles || {},
+    authors: paper.authors || [],
+    externalIds: paper.externalIds || {},
+    s2FieldsOfStudy: paper.s2FieldsOfStudy || [],
+    publicationTypes: paper.publicationTypes || [],
+    openAccessPdf: paper.openAccessPdf || {},
+    abstract: paper.abstract,
+    suggestionCount: 1,
+    CE_ENTRY_LINK: '', // you can populate this later if needed
+    approvalLog: '',   // to be updated during moderation
+  };
+}
 
-  if (!paperId || embellished_list.some(e => e.paperId === paperId)) return;
+async function writeOrUpdateOrNothing(paper, suggestions_list, embellished_list) {
+  const { paperId, title } = paper;
+
+
+  if (!paperId || !paperId || !title) {
+    return;
+  }
 
   const existing = suggestions_list.find(s => s.paperId === paperId);
 
   if (!existing) {
-    await strapi.query('api::suggestions-copyright-evidence.suggestions-copyright-evidence')
+
+                     await strapi.query('api::suggestions-copyright-evidence.suggestions-copyright-evidence')
       .create({ data: mapPaperToSuggestion(paper) });
+
+    try {
+      const result = await strapi.entityService.create('api::suggestions-copyright-evidence.suggestions-copyright-evidence', {
+        data: mapPaperToSuggestion(paper),
+      });
+    } catch (error) {
+      console.error('Error creating suggestion:', error.message);
+    }
+
   } else if (existing.approved !== false) {
-    await strapi.query('api::suggestions-copyright-evidence.suggestions-copyright-evidence')
-      .update({ where: { id: existing.id }, data: { suggestionCount: existing.suggestionCount + 1 } });
+  console.debug("existing!", existing);
+    await strapi.entityService.update('api::suggestions-copyright-evidence.suggestions-copyright-evidence', existing.id, {
+      data: {
+        suggestionCount: existing.suggestionCount + 1,
+      },
+    });
   }
 }
 

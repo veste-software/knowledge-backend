@@ -24,8 +24,11 @@ module.exports = {
 
 //    console.debug('afterUpdate event:', (event));
 
-    const { approved, CE_ENTRY_LINK, year, abstract, title, approvalLog, openAccessPdf, id, authors, updatedBy } = result;
+    let { approved, CE_ENTRY_LINK, year, abstract, title, approvalLog, openAccessPdf, id, authors, updatedBy } = result;
 
+    if (!updatedBy) {
+      updatedBy = { firstname: 'automated by script', lastname: 'automated by script' };
+    }
     console.debug("XXXXXXXXX (!approved && (typeof CE_ENTRY_LINK !== undefined && CE_ENTRY_LINK !== null)) {", (!approved && (typeof CE_ENTRY_LINK !== "undefined" && CE_ENTRY_LINK !== null)), CE_ENTRY_LINK, approved);
 
     if (approved && (typeof CE_ENTRY_LINK === "undefined" || CE_ENTRY_LINK === null || CE_ENTRY_LINK === "")) {
@@ -92,7 +95,7 @@ module.exports = {
           },
         });
 
-    } else if (!approved && (typeof CE_ENTRY_LINK !== "undefined" && CE_ENTRY_LINK !== null)) {
+    } else if (approved === false && (typeof CE_ENTRY_LINK !== "undefined" && CE_ENTRY_LINK !== null)) {
       // go delete the entry and delete the CE_ENTRY_LINK
       const ce_id_spaces = formatArrayStrings(authors.map(author => {
                                                   // Split the name by space and get the last part
@@ -110,7 +113,7 @@ module.exports = {
           },
         });
 
-    } else if (!approved && (typeof CE_ENTRY_LINK === "undefined" || CE_ENTRY_LINK == null) && (approvalLog === "" || approvalLog == null)) {
+    } else if (approved === false && (typeof CE_ENTRY_LINK === "undefined" || CE_ENTRY_LINK == null) && (approvalLog === "" || approvalLog == null)) {
           strapi.entityService.update('api::suggestions-copyright-evidence.suggestions-copyright-evidence', id, {
               data: {
                 approvalLog: approvalLog + 'Rejected by ' + (updatedBy || {}).firstname + ' ' + (updatedBy || {}).lastname + ' on ' + new Date().toGMTString() + ', \n',
